@@ -1,11 +1,25 @@
-import './App.css';
+import './App.css'
+import AudioPlayerComponent from './components/AudioPlayerComponent';
+import SideBarComponent from './components/SideBarComponent';
+import TrackListComponent from './components/TrackListComponent';
+import NavMenuComponent from './components/NavMenuComponent';
 
-function App() {
+const App = () => {
   return (
-        <p className='App-title'>
-          Здесь скоро будет Skypro.Music
-        </p>
+    <div className="wrapper">
+      <div className="container">
+        <main className="main">
+          <NavMenuComponent />
+          <TrackListComponent />
+          <SideBarComponent />
+        </main>
+          <AudioPlayerComponent />
+          <footer class="footer"></footer>
+      </div>
+    </div>
   );
+
+
 }
 
 export default App;
