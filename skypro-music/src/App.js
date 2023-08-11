@@ -1,4 +1,4 @@
-import './App.css'
+import './App.css';
 import AudioPlayerComponent from './components/AudioPlayerComponent';
 import SideBarComponent from './components/SideBarComponent';
 import TrackListComponent from './components/TrackListComponent';
@@ -13,13 +13,11 @@ const App = () => {
           <TrackListComponent />
           <SideBarComponent />
         </main>
-          <AudioPlayerComponent />
-          <footer class="footer"></footer>
+        <AudioPlayerComponent />
+        <footer class="footer"></footer>
       </div>
     </div>
   );
-
-
-}
+};
 
 export default App;
