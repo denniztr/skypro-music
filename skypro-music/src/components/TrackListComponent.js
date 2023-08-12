@@ -23,7 +23,7 @@ const trackListComponent = () => {
           <div className="playlist-title__col col03">АЛЬБОМ</div>
           <div className="playlist-title__col col04">
             <svg className="playlist-title__svg" alt="time">
-              <use xlinkHref="../public/icon/watch.svg"></use>
+              <use xlinkHref="../public/img/icon/watch.svg"></use>
             </svg>
           </div>
         </div>

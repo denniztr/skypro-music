@@ -12,27 +12,27 @@ const audioPlayerComponent = () => {
             <div className="player__controls">
               <div className="player__btn-prev">
                 <svg className="player__btn-prev-svg" src={PrevSvg} alt="prev">
-                  <use xlinkHref="public/icon/sprite.svg#icon-prev"></use>
+                  <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
                 </svg>
               </div>
               <div className="player__btn-play _btn">
                 <svg className="player__btn-play-svg" alt="play">
-                  <use xlinkHref="public/icon/sprite.svg#icon-play"></use>
+                  <use xlinkHref="img/icon/sprite.svg#icon-play"></use>
                 </svg>
               </div>
               <div className="player__btn-next">
                 <svg className="player__btn-next-svg" alt="next">
-                  <use xlinkHref="public/icon/sprite.svg#icon-next"></use>
+                  <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
                 </svg>
               </div>
               <div className="player__btn-repeat _btn-icon">
                 <svg className="player__btn-repeat-svg" alt="repeat">
-                  <use xlinkHref="public/icon/sprite.svg#icon-repeat"></use>
+                  <use xlinkHref="img/icon/sprite.svg#icon-repeat"></use>
                 </svg>
               </div>
               <div className="player__btn-shuffle _btn-icon">
                 <svg className="player__btn-shuffle-svg" alt="shuffle">
-                  <use xlinkHref="public/icon/sprite.svg#icon-shuffle"></use>
+                  <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
                 </svg>
               </div>
             </div>
@@ -72,7 +72,7 @@ const audioPlayerComponent = () => {
             <div className="volume__content">
               <div className="volume__image">
                 <svg className="volume__svg" alt="volume">
-                  <use xlinkHref="public/icon/sprite.svg#icon-volume"></use>
+                  <use xlinkHref="img/icon/sprite.svg#icon-volume"></use>
                 </svg>
               </div>
               <div className="volume__progress _btn">

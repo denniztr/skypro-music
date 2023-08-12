@@ -1,5 +1,6 @@
 import '../PlayList.css';
 import '../App.css';
+import '../Sidebar.css'
 import PlayListComponent from '../components/PlayListComponent';
 
 

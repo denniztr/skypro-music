@@ -1,9 +1,6 @@
-import React from 'react'
 import '../PlayList.css';
 import '../App.css';
-import Playlist01 from '../components/playlist01.png'
-import Playlist02 from '../components/playlist02.png'
-import Playlist03 from '../components/playlist03.png'
+
 
 const playListComponent = () => {
   return (
@@ -12,7 +9,7 @@ const playListComponent = () => {
         <a className="sidebar__link" href="#">
           <img
             className="sidebar__img"
-            src={Playlist01}
+            src="./img/playlist01.png"
             alt="day's playlist"
           />
         </a>
@@ -21,7 +18,7 @@ const playListComponent = () => {
         <a className="sidebar__link" href="#">
           <img
             className="sidebar__img"
-            src={Playlist02}
+            src="/img/playlist02.png"
             alt="day's playlist"
           />
         </a>
@@ -30,7 +27,7 @@ const playListComponent = () => {
         <a className="sidebar__link" href="#">
           <img
             className="sidebar__img"
-            src={Playlist03}
+            src="/img/playlist03.png"
             alt="day's playlist"
           />
         </a>
