@@ -2,7 +2,7 @@ import '../TrackListItems.css';
 import '../App.css';
 
 
-const trackListItemsComponent = () => {
+const TrackListItemsComponent = () => {
   return (
     <div className="content__playlist playlist">
       <div className="playlist__item">
@@ -577,4 +577,4 @@ const trackListItemsComponent = () => {
   );
 };
 
-export default trackListItemsComponent;
+export default TrackListItemsComponent;

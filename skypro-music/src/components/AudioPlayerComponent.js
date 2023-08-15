@@ -2,7 +2,7 @@ import '../AudioPlayer.css';
 import '../App.css';
 const PrevSvg = './prev.svg'
 
-const audioPlayerComponent = () => {
+const AudioPlayerComponent = () => {
   return (
     <div className="bar">
       <div className="bar__content">
@@ -90,4 +90,4 @@ const audioPlayerComponent = () => {
   );
 };
 
-export default audioPlayerComponent;
+export default AudioPlayerComponent;

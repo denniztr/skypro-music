@@ -2,7 +2,7 @@ import '../PlayList.css';
 import '../App.css';
 
 
-const playListComponent = () => {
+const PlayListComponent = () => {
   return (
     <div className="sidebar__list">
       <div className="sidebar__item">
@@ -36,4 +36,4 @@ const playListComponent = () => {
   );
 };
 
-export default playListComponent;
+export default PlayListComponent;

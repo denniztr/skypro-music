@@ -1,7 +1,7 @@
 import '../Search.css';
 import '../App.css';
 
-const searchComponent = () => {
+const SearchComponent = () => {
   return (
     <div className="centerblock__search search">
       <svg className="search__svg">
@@ -17,4 +17,4 @@ const searchComponent = () => {
   );
 };
 
-export default searchComponent;
+export default SearchComponent;

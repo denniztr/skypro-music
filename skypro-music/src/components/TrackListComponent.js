@@ -3,7 +3,7 @@ import '../App.css';
 import TrackListItemsComponent from '../components/TrackListItemsComponent';
 import SearchComponent from '../components/SearchComponent';
 
-const trackListComponent = () => {
+const TrackListComponent = () => {
   return (
     <div className="main__centerblock centerblock">
       <SearchComponent />
@@ -33,4 +33,4 @@ const trackListComponent = () => {
   );
 };
 
-export default trackListComponent;
+export default TrackListComponent;
