@@ -1,9 +1,9 @@
 import '../App.css';
 import '../Sidebar.css'
-import PlayListComponent from '../components/PlayListComponent';
+import PlayListComponent from './PlayListComponent';
 
 
-const SideBarComponent = () => {
+export default function SideBarComponent () {
   return (
     <div className="main__sidebar sidebar">
       <div className="sidebar__personal">
@@ -21,5 +21,3 @@ const SideBarComponent = () => {
   );
 };
 
-
-export default SideBarComponent

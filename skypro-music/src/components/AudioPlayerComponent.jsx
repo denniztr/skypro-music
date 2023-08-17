@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import LoadingComponent from '../components/LoadingComponent'
+import LoadingComponent from './LoadingComponent';
 import '../AudioPlayer.css';
 import '../App.css';
-const PrevSvg = './prev.svg'
+const PrevSvg = './prev.svg';
 
-const AudioPlayerComponent = () => {
+export default function AudioPlayerComponent () {
   
   const [isLoading, setIsLoading] = useState(true);
-
+  
   useEffect(() => {
     const loading = setTimeout(() => {
       setIsLoading(false);
@@ -110,5 +110,3 @@ const AudioPlayerComponent = () => {
     </div>
   );
 };
-
-export default AudioPlayerComponent;

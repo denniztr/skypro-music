@@ -1,10 +1,9 @@
 import React from 'react';
 import '../Skeleton.css'
 
-const LoadingComponent = () => {
+export default function LoadingComponent () {
     return (
         <div className='skeleton'/>
     )
 }
 
-export default LoadingComponent;

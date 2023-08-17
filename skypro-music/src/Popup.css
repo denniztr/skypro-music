@@ -1,0 +1,31 @@
+.popup__container {
+    border-radius: 12px;
+    background-color: rgba(49, 49, 49, 1);
+    display: flex;
+} 
+
+.popup__content {
+    padding: 34px;
+}
+
+.popup__list {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.popup__list-item {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.popup__list-item:hover {
+    cursor: pointer; 
+    color: rgba(182, 114, 255, 1);
+    text-decoration: underline;
+    text-decoration-color: rgba(182, 114, 255, 1);
+}
+
+
+

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import LoadingComponent from '../components/LoadingComponent'
+import LoadingComponent from './LoadingComponent'
 import '../PlayList.css';
 import '../App.css';
 
-
-const PlayListComponent = () => {
+export default function PlayListComponent () {
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -59,5 +58,3 @@ const PlayListComponent = () => {
     </div>
   );
 };
-
-export default PlayListComponent;
