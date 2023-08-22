@@ -1,7 +1,8 @@
 import React from 'react';
 import '../Popup.css';
 
-const PopupComponent = ({ isOpen, content }) => {
+export default function PopupComponent ({ isOpen, content })  {
+
   return isOpen ? (
     <div className="popup__container">
       <div className="popup__content">
@@ -16,5 +17,3 @@ const PopupComponent = ({ isOpen, content }) => {
     </div>
   ) : null;
 };
-
-export default PopupComponent;
