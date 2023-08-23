@@ -1,8 +1,21 @@
+import { useState, useEffect } from 'react';
+import LoadingComponent from './LoadingComponent';
 import '../AudioPlayer.css';
 import '../App.css';
-const PrevSvg = './prev.svg'
+const PrevSvg = './prev.svg';
 
-const audioPlayerComponent = () => {
+export default function AudioPlayerComponent () {
+  
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    const loading = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(loading);
+  }, []);
+
   return (
     <div className="bar">
       <div className="bar__content">
@@ -40,29 +53,37 @@ const audioPlayerComponent = () => {
               <div className="track-play__contain">
                 <div className="track-play__image">
                   <svg className="track-play__svg" alt="music">
-                    <use xlinkHref="public/icon/note.svg"></use>
+                    <use xlinkHref="../img/icon/sprite.svg#icon-note"></use>
                   </svg>
                 </div>
                 <div className="track-play__author">
+                {isLoading ? (
+                <LoadingComponent />
+                ) : (
                   <a className="track-play__author-link" href="http://">
                     Ты та...
                   </a>
+                )}
                 </div>
                 <div className="track-play__album">
+                {isLoading ? (
+                <LoadingComponent />
+                ) : (
                   <a className="track-play__album-link" href="http://">
                     Баста
                   </a>
-                </div>
+                )}
+              </div>
               </div>
               <div className="track-play__like-dis">
                 <div className="track-play__like _btn-icon">
                   <svg className="track-play__like-svg" alt="like">
-                    <use xlinkHref="public/icon/sprite.svg#icon-like"></use>
+                    <use xlinkHref="../img/icon/sprite.svg#icon-like"></use>
                   </svg>
                 </div>
                 <div className="track-play__dislike _btn-icon">
                   <svg className="track-play__dislike-svg" alt="dislike">
-                    <use xlinkHref="public/icon/sprite.svg#icon-dislike"></use>
+                    <use xlinkHref="../img/icon/sprite.svg#icon-dislike"></use>
                   </svg>
                 </div>
               </div>
@@ -89,5 +110,3 @@ const audioPlayerComponent = () => {
     </div>
   );
 };
-
-export default audioPlayerComponent;

@@ -1,9 +1,14 @@
+import React, { useState } from 'react';
 import '../NavMenu.css';
 import '../App.css';
 const Logo = './logo.png'
 
+const NavMenuComponent = () => {
 
-const navMenuComponent = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
   return (
     <nav className="main__nav nav">
       <div className="nav__logo logo">
@@ -12,14 +17,15 @@ const navMenuComponent = () => {
         src={Logo}
         alt="logo" />
       </div>
-      <div className="nav__burger burger">
+      <div className="nav__burger burger" onClick={toggleMenu}>
         <span className="burger__line"></span>
         <span className="burger__line"></span>
         <span className="burger__line"></span>
-      </div>
+      </div>    
       <div className="nav__menu menu">
-        <ul className="menu__list">
-          <li className="menu__item">
+        {isMenuOpen ? (
+            <ul className="menu__list">
+            <li className="menu__item">
             <a href="#" className="menu__link">
               Главное
             </a>
@@ -34,10 +40,11 @@ const navMenuComponent = () => {
               Войти
             </a>
           </li>
-        </ul>
+          </ul>
+          ) : null}
       </div>
     </nav>
   );
 };
 
-export default navMenuComponent;
+export default NavMenuComponent;

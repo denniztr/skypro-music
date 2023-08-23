@@ -14,7 +14,7 @@ const App = () => {
           <SideBarComponent />
         </main>
         <AudioPlayerComponent />
-        <footer class="footer"></footer>
+        <footer className="footer"></footer>
       </div>
     </div>
   );
