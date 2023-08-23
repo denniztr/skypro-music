@@ -79,6 +79,7 @@ export default function SortButtonsComponent() {
         }
       };
 
+      
 
     return (
     <div className="centerblock__filter filter">
