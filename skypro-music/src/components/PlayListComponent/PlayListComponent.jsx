@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import LoadingComponent from './LoadingComponent'
-import '../PlayList.css';
-import '../App.css';
+import LoadingComponent from '../LoadingComponent/LoadingComponent'
+import * as S from './Playlist.styles'
 
 export default function PlayListComponent () {
 
@@ -17,44 +16,43 @@ export default function PlayListComponent () {
   }, []);
 
   return (
-    <div className="sidebar__list">
-      <div className="sidebar__item">
-        <a className="sidebar__link" href="#">
+    <S.SidebarList>
+      <S.SidebarItem>
+        <S.SidebarLink href="#">
           {isLoading ? (
             <LoadingComponent/> 
           ) : (
-            <img
-            className="sidebar__img"
+            <S.SidebarImg
             src="./img/playlist01.png"
             alt="day's playlist"
           />
           )}
-        </a>
-      </div>
-      <div className="sidebar__item">
-        <a className="sidebar__link" href="#">
+        </S.SidebarLink>
+      </S.SidebarItem>
+      <S.SidebarItem>
+        <S.SidebarLink href="#">
         {isLoading ? (
             <LoadingComponent/> 
           ) : (
-            <img
-            className="sidebar__img"
+            <S.SidebarImg
             src="./img/playlist02.png"
             alt="day's playlist"
           />
           )}
-        </a>
-      </div>
-      <div className="sidebar__item">
+        </S.SidebarLink>
+      </S.SidebarItem>
+      <S.SidebarItem>
+      <S.SidebarLink href="#">
       {isLoading ? (
             <LoadingComponent/> 
           ) : (
-            <img
-            className="sidebar__img"
+            <S.SidebarImg
             src="./img/playlist03.png"
             alt="day's playlist"
           />
           )}
-      </div>
-    </div>
+        </S.SidebarLink>
+      </S.SidebarItem>
+    </S.SidebarList>
   );
 };
