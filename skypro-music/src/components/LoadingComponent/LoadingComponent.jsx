@@ -1,9 +1,9 @@
 import React from 'react';
-import '../Skeleton.css'
+import * as S from './Loading.styles';
 
 export default function LoadingComponent () {
     return (
-        <div className='skeleton'/>
+        <S.Skeleton />
     )
 }
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import '../TrackList.css';
-import '../App.css'
-import PopupComponent from './PopUpComponent';
+// import './TrackList.css';
+import * as S from './SortButtons.styles'
+import PopupComponent from '../PopupComponent/PopUpComponent';
 
 export default function SortButtonsComponent() {
 
@@ -79,33 +79,31 @@ export default function SortButtonsComponent() {
         }
       };
 
-      
-
     return (
-    <div className="centerblock__filter filter">
-        <div className="filter__title">Искать по:</div>
-            <div className='filter__container'>
-                <div className="filter__button button-author _btn-text" onClick={() => handlePerformersPopupToggle(performersList)}>исполнителю</div>
+    <S.CenterblockFilter>
+        <S.FilterTitle>Искать по:</S.FilterTitle>
+            <S.FilterContainer>
+                <S.FilterButton className="button-author _btn-text" onClick={() => handlePerformersPopupToggle(performersList)}>исполнителю</S.FilterButton>
                 <PopupComponent
                     isOpen={performersPopup.isOpen}
                     content={performersPopup.content}
                     />
-            </div>
-            <div className='filter__container'>
-                <div className="filter__button button-year _btn-text" onClick={() => handleSortingPopupToggle(sortingList)}>году выпуска</div>
+            </S.FilterContainer>
+            <S.FilterContainer>
+                <S.FilterButton className="button-year _btn-text" onClick={() => handleSortingPopupToggle(sortingList)}>году выпуска</S.FilterButton>
                 <PopupComponent
                     isOpen={sortingPopup.isOpen}
                     content={sortingPopup.content}
                 />
-            </div>
-            <div className='filter__container'>
-                <div className="filter__button button-genre _btn-text" onClick={() => handleGenrePopupToggle(genreSorting)}>жанру</div>
+            </S.FilterContainer>
+            <S.FilterContainer>
+                <S.FilterButton className="button-genre _btn-text" onClick={() => handleGenrePopupToggle(genreSorting)}>жанру</S.FilterButton>
                 <PopupComponent
                     isOpen={genrePopup.isOpen}
                     content={genrePopup.content}
                 />
-            </div>
-    </div>
+          </S.FilterContainer>
+    </S.CenterblockFilter>
   );
 }
 
