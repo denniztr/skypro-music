@@ -1,10 +1,6 @@
-// import './App.css';
-import AudioPlayerComponent from './components/AudioPlayerComponent/AudioPlayerComponent';
-import SideBarComponent from './components/SideBarComponent/SideBarComponent';
-import TrackListComponent from './components/TrackListComponent/TrackListComponent';
-import NavMenuComponent from './components/NavMenuComponent/NavMenuComponent';
-import styled, { createGlobalStyle } from 'styled-components';
-import * as S from './App.styles'
+import { createGlobalStyle } from 'styled-components';
+// import { Main } from './pages/main/Main';
+import  { AppRoutes }  from './routes';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -99,22 +95,12 @@ const GlobalStyle = createGlobalStyle`
   } 
 
 `
-
 const App = () => {
-  return (
+
+return (
     <>
-    <GlobalStyle/>
-      <S.Wrapper>
-        <S.Container>
-          <S.Main>
-            <NavMenuComponent />
-            <TrackListComponent />
-            <SideBarComponent />
-          </S.Main>
-          <AudioPlayerComponent />
-          <footer className="footer"></footer>
-        </S.Container>
-      </S.Wrapper>
+      <GlobalStyle/>
+      <AppRoutes/>
     </>
   );
 };

@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import * as S from './NavMenu.styles'
+import { Link } from 'react-router-dom';
 const Logo = './logo.png'
 
 
 export default function NavMenuComponent () {
+
+  const linkStyle = { 'color': '#ffffff', 
+                      'font-weight': '400',
+                      'font-size': '16px',
+                      'line-height': '24px', 
+                    }
+
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -23,15 +31,30 @@ export default function NavMenuComponent () {
         {isMenuOpen ? (
             <S.MenuList>
               <S.MenuItem>
-              <S.MenuLink href="#"> Главное </S.MenuLink>
-            </S.MenuItem>
-            <S.MenuItem>
-              <S.MenuLink href="#"> Мой плейлист </S.MenuLink>
-            </S.MenuItem>
-            <S.MenuItem>
-              <S.MenuLink href="../signin.html"> Войти </S.MenuLink>
-            </S.MenuItem>
-          </S.MenuList>
+                <Link 
+                  to="/" 
+                  style={linkStyle} 
+                > 
+                  Главное 
+                </Link>
+              </S.MenuItem>
+              <S.MenuItem>
+                <Link 
+                  to="/favorites" 
+                  style={linkStyle}
+                > 
+                  Мой плейслист 
+                </Link>
+              </S.MenuItem>
+              <S.MenuItem>
+                <Link 
+                  to="/signin" 
+                  style={linkStyle}
+                > 
+                  Войти 
+                </Link>
+              </S.MenuItem>
+            </S.MenuList>
           ) : null}
       </S.NavMenu>
     </S.MainNav>
