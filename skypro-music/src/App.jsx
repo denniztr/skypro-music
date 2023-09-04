@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
-// import { Main } from './pages/main/Main';
-import  { AppRoutes }  from './routes';
+import { AppRoutes } from './routes';
+import { useState } from 'react';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -94,13 +94,21 @@ const GlobalStyle = createGlobalStyle`
       height: 10px;
   } 
 
-`
-const App = () => {
+`;
 
-return (
+const App = () => {
+  const [user, setUser] = useState(null);
+
+  const handleLogin = () => setUser(localStorage.setItem('user', 'token'));
+
+  return (
     <>
-      <GlobalStyle/>
-      <AppRoutes/>
+      <GlobalStyle />
+      <AppRoutes
+        user={user}
+        setUser={setUser}
+        onAuthButtonClick={handleLogin}
+      />
     </>
   );
 };

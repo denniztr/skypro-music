@@ -1,5 +1,6 @@
 import PlayListComponent from '../PlayListComponent/PlayListComponent';
-import * as S from './SideBar.styles'
+import * as S from './SideBar.styles';
+import { PLAYLISTS } from '../../constants';
 
 export default function SideBarComponent() {
   return (
@@ -13,7 +14,7 @@ export default function SideBarComponent() {
         </S.SideBarIcon>
       </S.SideBarPersonal>
       <S.SideBarBlock>
-        <PlayListComponent />
+        <PlayListComponent playlists={PLAYLISTS} />
       </S.SideBarBlock>
     </S.MainSidebar>
   );

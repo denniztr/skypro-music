@@ -15,9 +15,9 @@ export const SidebarList = styled.div`
 export const SidebarItem = styled.div`
     width: 250px;
     height: 150px;
-    &:not(:last-child) {
-        margin-bottom: 30px;
-    }
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 `
 export const SidebarLink = styled.a`
     width: 100%;
@@ -26,4 +26,5 @@ export const SidebarLink = styled.a`
 export const SidebarImg = styled.img`
     width: 100%;
     height: auto;
+    
 `

@@ -1,16 +1,16 @@
-import NavMenuComponent from "../../components/NavMenuComponent/NavMenuComponent";
-import TrackListComponent from "../../components/TrackListComponent/TrackListComponent";
-import SideBarComponent from "../../components/SideBarComponent/SideBarComponent";
-import AudioPlayerComponent from "../../components/AudioPlayerComponent/AudioPlayerComponent";
+import NavMenuComponent from '../../components/NavMenuComponent/NavMenuComponent';
+import TrackListComponent from '../../components/TrackListComponent/TrackListComponent';
+import SideBarComponent from '../../components/SideBarComponent/SideBarComponent';
+import AudioPlayerComponent from '../../components/AudioPlayerComponent/AudioPlayerComponent';
 import * as S from './Main.styles';
 
-export const Main = () => {
+export const Main = ({ setUser }) => {
   return (
     <>
       <S.Wrapper>
         <S.Container>
           <S.Main>
-            <NavMenuComponent />
+            <NavMenuComponent setUser={setUser} />
             <TrackListComponent />
             <SideBarComponent />
           </S.Main>
@@ -20,4 +20,4 @@ export const Main = () => {
       </S.Wrapper>
     </>
   );
-}
+};

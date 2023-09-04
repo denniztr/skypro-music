@@ -50,3 +50,9 @@ export const MenuItem = styled.li`
   padding: 5px 0;
   margin-bottom: 16px;
 `
+export const MenuLink = styled.a`
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+`

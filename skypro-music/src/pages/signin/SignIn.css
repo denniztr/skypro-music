@@ -86,7 +86,7 @@
   .modal__form-login {
     width: 366px;
     height: 439px;
-    background-color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.85);
     border-radius: 12px;
     display: -webkit-box;
     display: -ms-flexbox;
