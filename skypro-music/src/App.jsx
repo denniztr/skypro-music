@@ -1,10 +1,6 @@
-// import './App.css';
-import AudioPlayerComponent from './components/AudioPlayerComponent/AudioPlayerComponent';
-import SideBarComponent from './components/SideBarComponent/SideBarComponent';
-import TrackListComponent from './components/TrackListComponent/TrackListComponent';
-import NavMenuComponent from './components/NavMenuComponent/NavMenuComponent';
-import styled, { createGlobalStyle } from 'styled-components';
-import * as S from './App.styles'
+import { createGlobalStyle } from 'styled-components';
+import { AppRoutes } from './routes';
+import { useState } from 'react';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -98,23 +94,21 @@ const GlobalStyle = createGlobalStyle`
       height: 10px;
   } 
 
-`
+`;
 
 const App = () => {
+  const [user, setUser] = useState(null);
+
+  const handleLogin = () => setUser(localStorage.setItem('user', 'token'));
+
   return (
     <>
-    <GlobalStyle/>
-      <S.Wrapper>
-        <S.Container>
-          <S.Main>
-            <NavMenuComponent />
-            <TrackListComponent />
-            <SideBarComponent />
-          </S.Main>
-          <AudioPlayerComponent />
-          <footer className="footer"></footer>
-        </S.Container>
-      </S.Wrapper>
+      <GlobalStyle />
+      <AppRoutes
+        user={user}
+        setUser={setUser}
+        onAuthButtonClick={handleLogin}
+      />
     </>
   );
 };

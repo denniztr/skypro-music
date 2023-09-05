@@ -52,7 +52,7 @@ export const MenuItem = styled.li`
 `
 export const MenuLink = styled.a`
   color: #ffffff;
-  font-weight: 400;
   font-size: 16px;
+  font-weight: 400;
   line-height: 24px;
 `

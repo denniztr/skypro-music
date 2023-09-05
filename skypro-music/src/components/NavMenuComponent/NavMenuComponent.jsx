@@ -1,13 +1,24 @@
 import React, { useState } from 'react';
-import * as S from './NavMenu.styles'
-const Logo = './logo.png'
+import * as S from './NavMenu.styles';
+import { Link, useNavigate } from 'react-router-dom';
+const Logo = './logo.png';
 
-
-export default function NavMenuComponent () {
+export default function NavMenuComponent({ setUser }) {
+  const linkStyle = {
+    color: '#ffffff',
+    fontWeight: '400',
+    fontSize: '16px',
+    lineHeight: '24px',
+  };
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    setUser(localStorage.clear());
+    navigate('/signin', { replace: true });
+  };
 
   return (
     <S.MainNav>
@@ -18,24 +29,53 @@ export default function NavMenuComponent () {
         <S.BurgerLine />
         <S.BurgerLine />
         <S.BurgerLine />
-      </S.NavBurger>    
+      </S.NavBurger>
       <S.NavMenu>
         {isMenuOpen ? (
-            <S.MenuList>
-              <S.MenuItem>
-              <S.MenuLink href="#"> Главное </S.MenuLink>
+          <S.MenuList>
+            <S.MenuItem>
+              <Link to="/" style={linkStyle}>
+                Главное
+              </Link>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink href="#"> Мой плейлист </S.MenuLink>
+              <Link to="/favorites" style={linkStyle}>
+                Мой плейслист
+              </Link>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink href="../signin.html"> Войти </S.MenuLink>
+              {setUser ? (
+                <S.MenuLink onClick={handleLogout}>Выйти</S.MenuLink>
+              ) : (
+                <Link to="/signin">
+                  <S.MenuLink>Войти</S.MenuLink>
+                </Link>
+              )}
             </S.MenuItem>
           </S.MenuList>
-          ) : null}
+        ) : null}
       </S.NavMenu>
     </S.MainNav>
   );
-};
+}
 
+{
+  /* <Link onClick={onAuthButtonClick} to='/signin' style={linkStyle}>
+{user ? 'Выйти' : 'Войти'}
+</Link> */
+}
 
+{
+  /* <S.MenuItem user={user}>
+<Link 
+  to="/signin" 
+  style={linkStyle}
+> 
+  Войти 
+</Link>
+</S.MenuItem> */
+}
+
+// <Link onClick={onAuthButtonClick}  style={linkStyle}>
+// {user ? 'Выйти' : 'Войти'}
+// </Link>
