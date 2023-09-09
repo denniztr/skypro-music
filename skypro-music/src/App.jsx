@@ -1,6 +1,9 @@
 import { createGlobalStyle } from 'styled-components';
 import { AppRoutes } from './routes';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getAllTracks } from './api';
+import { AudioPlayer } from './AudioPlayer';
+import { TRACKS } from './constants';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -98,8 +101,20 @@ const GlobalStyle = createGlobalStyle`
 
 const App = () => {
   const [user, setUser] = useState(null);
-
   const handleLogin = () => setUser(localStorage.setItem('user', 'token'));
+
+  const [tracks, setTracks] = useState(TRACKS);
+  const [getAllTracksError, stGetAllTracksError] = useState(null);
+
+  useEffect(() => {
+    getAllTracks()
+      .then((tracks) => setTracks(tracks))
+      .catch((error) => {
+        stGetAllTracksError(error.message);
+      });
+  }, []);
+
+  const [currentTrack, setCurrentTrack] = useState(null);
 
   return (
     <>
@@ -108,7 +123,19 @@ const App = () => {
         user={user}
         setUser={setUser}
         onAuthButtonClick={handleLogin}
+        tracks={tracks}
+        setTracks={setTracks}
+        currentTrack={currentTrack}
+        setCurrentTrack={setCurrentTrack}
+        getAllTracksError={getAllTracksError}
       />
+
+      {currentTrack ? (
+        <AudioPlayer
+          currentTrack={currentTrack}
+          setCurrentTrack={setCurrentTrack}
+        />
+      ) : null}
     </>
   );
 };

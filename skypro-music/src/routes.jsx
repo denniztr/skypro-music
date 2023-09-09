@@ -7,24 +7,54 @@ import { NotFound } from './pages/notfound/NotFound';
 import { Playlist } from './pages/playlist/Playlist';
 import { ProtectedRoute } from './components/protected-route/ProtectedRoute';
 
-export const AppRoutes = ({ setUser, onAuthButtonClick }) => {
-
+export const AppRoutes = ({
+  setUser,
+  onAuthButtonClick,
+  tracks,
+  setTracks,
+  currentTrack,
+  setCurrentTrack,
+  getAllTracksError,
+}) => {
   return (
     <Routes>
-
-      <Route path="/signin" element={<SignIn onAuthButtonClick={onAuthButtonClick} />}  />
+      <Route
+        path="/signin"
+        element={<SignIn onAuthButtonClick={onAuthButtonClick} />}
+      />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/" element={ <ProtectedRoute> <Main setUser={setUser}/> </ProtectedRoute> } />
-      <Route path="/playlist/:id" element={ <ProtectedRoute> <Playlist/>  </ProtectedRoute> }/>
-      <Route path="/favorites" element={ <ProtectedRoute> <FavoriteSongs/> </ProtectedRoute>  } />
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <Main
+              setUser={setUser}
+              tracks={tracks}
+              setTracks={setTracks}
+              currentTrack={currentTrack}
+              setCurrentTrack={setCurrentTrack}
+              getAllTracksError={getAllTracksError}
+            />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/playlist/:id"
+        element={
+          <ProtectedRoute>
+            <Playlist />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/favorites"
+        element={
+          <ProtectedRoute>
+            <FavoriteSongs />
+          </ProtectedRoute>
+        }
+      />
       <Route path="*" element={<NotFound />} />
-      
-        {/* <Route element={<ProtectedRoute isAllowed={Boolean(user)}/>} >
-            <Route path="/" element={<Main />} />
-            <Route path="/playlist/:id" element={ <Playlist/> }/>
-            <Route path="/favorites" element={ <FavoriteSongs/> } />
-        </Route> */}
-
     </Routes>
   );
 };

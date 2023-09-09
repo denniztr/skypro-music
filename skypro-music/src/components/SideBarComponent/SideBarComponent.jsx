@@ -1,8 +1,8 @@
-import PlayListComponent from '../PlayListComponent/PlayListComponent';
+import { PlayListComponent } from '../PlayListComponent/PlayListComponent';
 import * as S from './SideBar.styles';
 import { PLAYLISTS } from '../../constants';
 
-export default function SideBarComponent() {
+export function SideBarComponent() {
   return (
     <S.MainSidebar>
       <S.SideBarPersonal>

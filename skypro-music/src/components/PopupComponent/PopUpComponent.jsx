@@ -1,7 +1,7 @@
 import React from 'react';
 import * as S from './PopUp.styles'
 
-export default function PopupComponent ({ isOpen, content })  {
+export function PopupComponent ({ isOpen, content })  {
 
   return isOpen ? (
     <S.PopupContainer>

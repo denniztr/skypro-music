@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import LoadingComponent from '../LoadingComponent/LoadingComponent';
+import { LoadingComponent } from '../LoadingComponent/LoadingComponent';
 import { Link } from 'react-router-dom';
 import * as S from './Playlist.styles';
 
-export default function PlayListComponent({ playlists }) {
+export function PlayListComponent({ playlists }) {
   const playlistLinkStyle = {
     width: '100%',
     height: '100%',
