@@ -3,7 +3,7 @@ import * as S from './NavMenu.styles';
 import { Link, useNavigate } from 'react-router-dom';
 const Logo = './logo.png';
 
-export default function NavMenuComponent({ setUser }) {
+export function NavMenuComponent({ setUser }) {
   const linkStyle = {
     color: '#ffffff',
     fontWeight: '400',
@@ -58,24 +58,3 @@ export default function NavMenuComponent({ setUser }) {
     </S.MainNav>
   );
 }
-
-{
-  /* <Link onClick={onAuthButtonClick} to='/signin' style={linkStyle}>
-{user ? 'Выйти' : 'Войти'}
-</Link> */
-}
-
-{
-  /* <S.MenuItem user={user}>
-<Link 
-  to="/signin" 
-  style={linkStyle}
-> 
-  Войти 
-</Link>
-</S.MenuItem> */
-}
-
-// <Link onClick={onAuthButtonClick}  style={linkStyle}>
-// {user ? 'Выйти' : 'Войти'}
-// </Link>

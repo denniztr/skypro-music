@@ -1,8 +1,6 @@
-// import '../Search.css';
-// import '../App.css';
 import * as S from './Search.styles'
 
-export default function SearchComponent () {
+export function SearchComponent () {
   return (
     <S.CenterblockSearch>
       <S.SearchSvg>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 // import './TrackList.css';
 import * as S from './SortButtons.styles'
-import PopupComponent from '../PopupComponent/PopUpComponent';
+import { PopupComponent } from '../PopupComponent/PopUpComponent';
 
-export default function SortButtonsComponent() {
+export function SortButtonsComponent() {
 
     const performersList = [
         'Ariana Grande',

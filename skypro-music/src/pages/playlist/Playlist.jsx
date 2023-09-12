@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { PLAYLISTS } from '../../constants';
-
+import { Link } from 'react-router-dom';
 import './Playlist.css';
 
 export const Playlist = () => {
@@ -10,11 +10,11 @@ export const Playlist = () => {
     return (
     <>
         <div className='playlist__container'>
-                <a href="../">
+                <Link to='/'>
                     <div className="modal__logo fav__logo">
                         <img className='playlist__logo-src' src="../logo.png" alt="logo" />
                     </div>
-                </a>
+                </Link>
             <div className="playlist">
                 <h3 className='playlist__title' >{playlist.title}</h3>
             </div>

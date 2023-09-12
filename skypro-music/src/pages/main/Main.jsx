@@ -1,20 +1,30 @@
-import NavMenuComponent from '../../components/NavMenuComponent/NavMenuComponent';
-import TrackListComponent from '../../components/TrackListComponent/TrackListComponent';
-import SideBarComponent from '../../components/SideBarComponent/SideBarComponent';
-import AudioPlayerComponent from '../../components/AudioPlayerComponent/AudioPlayerComponent';
+import { NavMenuComponent } from '../../components/NavMenuComponent/NavMenuComponent';
+import { TrackListComponent } from '../../components/TrackListComponent/TrackListComponent';
+import { SideBarComponent } from '../../components/SideBarComponent/SideBarComponent';
 import * as S from './Main.styles';
 
-export const Main = ({ setUser }) => {
+export const Main = ({
+  setUser,
+  tracks,
+  setTracks,
+  currentTrack,
+  setCurrentTrack,
+  getAllTracksError,
+}) => {
   return (
     <>
       <S.Wrapper>
         <S.Container>
           <S.Main>
             <NavMenuComponent setUser={setUser} />
-            <TrackListComponent />
+            <TrackListComponent
+              tracks={tracks}
+              setTracks={setTracks}
+              setCurrentTrack={setCurrentTrack}
+              getAllTracksError={getAllTracksError}
+            />
             <SideBarComponent />
           </S.Main>
-          <AudioPlayerComponent />
           <footer className="footer"></footer>
         </S.Container>
       </S.Wrapper>
