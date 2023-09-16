@@ -3,36 +3,19 @@ import React, { useState } from 'react';
 import * as S from './SortButtons.styles'
 import { PopupComponent } from '../PopupComponent/PopUpComponent';
 
-export function SortButtonsComponent() {
+export function SortButtonsComponent({ tracks }) {
 
-    const performersList = [
-        'Ariana Grande',
-        'Arctic Monkeys',
-        'Blind Channel',
-        'Calvin Harris',
-        'Frank Sinatra',
-        'Lindsey Stirling',
-        'Madilyn Bailey',
-        'Zhu',
-    ];
-    
+    const unfilteredPerformersList = tracks.map(authors => authors.author);
+    const performersList = [...new Set(unfilteredPerformersList)];
+
       const sortingList = [
         'По умолчанию', 
         'Сначала новые', 
         'Сначала старые'
-    ];
+      ];
     
-      const genreSorting = [
-        'Рок', 
-        'Хип-хоп', 
-        'Поп-музыка', 
-        'Техно', 
-        'Инди',
-        'Классика',
-        'Электронная',
-        'Джаз',
-        'Блюз',
-    ];
+    const unfilteredGenreSorting = tracks.map(genres => genres.genre);
+    const genreSorting = [...new Set(unfilteredGenreSorting)];
 
     const [performersPopup, setPerformersPopup] = useState({ 
         isOpen: false, 

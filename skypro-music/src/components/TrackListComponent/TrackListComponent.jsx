@@ -8,7 +8,7 @@ export function TrackListComponent({ tracks, setTracks, setCurrentTrack, getAllT
     <S.MainCenterblock>
       <SearchComponent />
       <S.CenterblockTitle>Треки</S.CenterblockTitle>
-      <SortButtonsComponent />
+      <SortButtonsComponent tracks={tracks}/>
       <S.CenterblockContent>
         <S.ContentTitle>
           <S.Col1>Трек</S.Col1>
