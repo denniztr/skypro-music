@@ -22,6 +22,17 @@ export const BarPlayerProgress = styled.div`
     background: #2e2e2e;
 `
 
+export const BarPlayerTime = styled.p`
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    letter-spacing: 0.1%;
+    color: #696969;
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    `
+
 export const BarPlayerBlock = styled.div`
     height: 73px;
     display: -webkit-box;
@@ -92,11 +103,14 @@ export const PlayerButtonPrevSvg = styled.svg`
 export const PlayerButtonPlay = styled(PlayerButton)`
     margin-right: 23px;
 `
+
+
 export const PlayerButtonPlaySvg = styled.svg`
     width: 22px;
     height: 20px;
     fill: #d9d9d9;
 `
+
 export const PlayerButtonNext = styled(PlayerButton)`
     margin-right: 28px;
     fill: #a53939;
@@ -116,6 +130,10 @@ export const PlayerButtonRepeatSvg = styled.svg`
     fill: transparent;
     stroke: #696969;
 `
+export const PlayerButtonRepeatSvgActive = styled(PlayerButtonRepeatSvg)`
+    stroke: #ffffff;
+`
+
 export const PlayerButtonShuffle = styled(PlayerButton)`
     display: -webkit-box;
     display: -ms-flexbox;
@@ -267,5 +285,57 @@ export const VolumeProgress = styled.div`
     width: 109px;
 `
 export const VolumeProgressLine = styled.input`
-    width: 109px;
+      --progress-height: 8px;
+  --progress-color: #b672ff;
+  --progress-color: ${(props) => props.$color ?? '#b672ff'};
+
+  --progress-bg-color: #2e2e2e;
+
+  margin: 0;
+  width: 100%;
+  height: var(--progress-height);
+  -webkit-appearance: none;
+  cursor: pointer;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+
+  &::-webkit-slider-runnable-track {
+    position: relative;
+    height: var(--progress-height);
+    background: var(--progress-bg-color);
+  }
+  &::-webkit-slider-thumb {
+    --thumb-height: 1px;
+    --thumb-width: 1px;
+    position: relative;
+    -webkit-appearance: none;
+    width: var(--thumb-width, var(--thumb-height));
+    box-shadow: calc(-100vmax - var(--thumb-width, var(--thumb-height))) 0 0
+      100vmax var(--progress-color);
+  }
+
+  &::-webkit-slider-runnable-track {
+    background: var(--progress-bg-color);
+  }
+
+  /* FF */
+  &::-moz-range-track {
+    width: 100%;
+    height: var(--progress-height);
+    background: var(--progress-bg-color);
+    border: none;
+    border-radius: 0px;
+  }
+  &::-moz-range-thumb {
+    border: none;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background: transparent;
+  }
+  &::-moz-range-progress {
+    background-color: var(--progress-color);
+    height: var(--progress-height);
+  }
 `

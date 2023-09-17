@@ -8,7 +8,7 @@ export const ContentPlaylist = styled.div`
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    overflow-y: auto;
+    overflow: auto;
 `
 export const PlaylistItem = styled.div`
     width: 100%;

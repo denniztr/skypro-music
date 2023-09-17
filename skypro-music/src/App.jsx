@@ -97,6 +97,10 @@ const GlobalStyle = createGlobalStyle`
       height: 10px;
   } 
 
+  audio {
+    display: none;
+  }
+
 `;
 
 const App = () => {
