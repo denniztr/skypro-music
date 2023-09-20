@@ -104,11 +104,13 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App = () => {
-  const [user, setUser] = useState(null);
-  const handleLogin = () => setUser(localStorage.setItem('user', 'token'));
+  // const [user, setUser] = useState(localStorage.setItem('userData'));
+  // const handleLogin = () => setUser(localStorage.setItem('user', 'token'));
 
   const [tracks, setTracks] = useState(TRACKS);
   const [getAllTracksError, stGetAllTracksError] = useState(null);
+  const [currentTrack, setCurrentTrack] = useState(null);
+  
 
   useEffect(() => {
     getAllTracks()
@@ -118,15 +120,15 @@ const App = () => {
       });
   }, []);
 
-  const [currentTrack, setCurrentTrack] = useState(null);
+  
 
   return (
     <>
       <GlobalStyle />
       <AppRoutes
-        user={user}
-        setUser={setUser}
-        onAuthButtonClick={handleLogin}
+        // user={user}
+        // setUser={setUser}
+        // onAuthButtonClick={handleLogin}
         tracks={tracks}
         setTracks={setTracks}
         currentTrack={currentTrack}

@@ -8,7 +8,6 @@ export function AudioPlayer({ currentTrack }) {
   const [currentTime, setCurrentTime] = useState(0);
   const [looping, setLooping] = useState(false);
 
-
   const audioRef = useRef(null);
 
   const handleStart = () => {
@@ -28,7 +27,6 @@ export function AudioPlayer({ currentTrack }) {
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
-      audioRef.current.src = currentTrack.track_file;
       handleStart();
     }
   }, [currentTrack]);
@@ -78,13 +76,16 @@ export function AudioPlayer({ currentTrack }) {
     const formattedSeconds = String(seconds).padStart(2, '0');
 
     return `${formattedMinutes}:${formattedSeconds}`;
-  }
+  };
 
   return (
     <>
-      <audio controls ref={audioRef} onTimeUpdate={handleTimeUpdate}>
-        <source src={currentTrack.track_file} />
-      </audio>
+      <audio
+        controls
+        ref={audioRef}
+        onTimeUpdate={handleTimeUpdate}
+        src={currentTrack.track_file}
+      />
 
       <S.Bar>
         <S.BarContent>

@@ -1,11 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
 import { Main } from './pages/main/Main';
-import { SignIn } from './pages/signin/SignIn';
-import { SignUp } from './pages/signup/SignUp';
+// import { SignIn } from './pages/signin/SignIn';
+// import { SignUp } from './pages/signup/SignUp';
 import { FavoriteSongs } from './pages/favorites/Favorites';
 import { NotFound } from './pages/notfound/NotFound';
 import { Playlist } from './pages/playlist/Playlist';
 import { ProtectedRoute } from './components/protected-route/ProtectedRoute';
+import { AuthPage } from './pages/auth/AuthPage';
 
 export const AppRoutes = ({
   setUser,
@@ -18,11 +19,9 @@ export const AppRoutes = ({
 }) => {
   return (
     <Routes>
-      <Route
-        path="/signin"
-        element={<SignIn onAuthButtonClick={onAuthButtonClick} />}
-      />
-      <Route path="/signup" element={<SignUp />} />
+      <Route path="/register" element={<AuthPage isLoginMode={false} />} />
+      <Route path="/login" element={<AuthPage isLoginMode={true} />} />
+
       <Route
         path="/"
         element={
