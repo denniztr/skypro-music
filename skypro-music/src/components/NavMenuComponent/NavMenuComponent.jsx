@@ -17,7 +17,7 @@ export function NavMenuComponent({ setUser }) {
   const navigate = useNavigate();
   const handleLogout = () => {
     setUser(localStorage.clear());
-    navigate('/signin', { replace: true });
+    navigate('/login', { replace: true });
   };
 
   return (
@@ -35,7 +35,7 @@ export function NavMenuComponent({ setUser }) {
           <S.MenuList>
             <S.MenuItem>
               <Link to="/" style={linkStyle}>
-                Главное
+                Главная
               </Link>
             </S.MenuItem>
             <S.MenuItem>
@@ -47,7 +47,7 @@ export function NavMenuComponent({ setUser }) {
               {setUser ? (
                 <S.MenuLink onClick={handleLogout}>Выйти</S.MenuLink>
               ) : (
-                <Link to="/signin">
+                <Link to="/login">
                   <S.MenuLink>Войти</S.MenuLink>
                 </Link>
               )}
