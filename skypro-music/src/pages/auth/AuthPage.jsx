@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import * as S from "./AuthPage.styles";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { registerUser, loginUser } from "../../api";
+import { UserContext } from "../../context";
 
 export function AuthPage({ isLoginMode = false }) {
   const [error, setError] = useState(null);
@@ -11,30 +12,44 @@ export function AuthPage({ isLoginMode = false }) {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [username, setUsername] = useState("");
 
-
+  const [user, setUser] = useContext(UserContext);
   const navigate = useNavigate();
 
+  const [loginButton, setLoginButton] = useState(false);
+  
   const handleLogin = async () => {
 
     if (!email) {
       setError('Введите почту')
+      return
     }
     if (!password) {
       setError('Введите пароль')
+      return
     }
+    setLoginButton(true)
+    loginUser({ email, password })
+    .then((object) => {
+      const status = object.status;
+      const data = object.data;
+      if (status === 200) {
+        setError(null);
+        window.localStorage.setItem('user', data.username)
+        setUser(data.username);
+        navigate('/')
+      } else {
+        const message = data.detail;
+        setError(message);
+        setLoginButton(false)
+      }
+    }).catch((error) => setError(error.message))
+    
 
-    try {
-      const userData = await loginUser({ email, password })
-      localStorage.setItem('userData', JSON.stringify(userData))
-      console.log(userData)
-      navigate('/', {replace: true})
-    } catch (error) {
-      console.error('Error message: ' + error)
-    }
-
-    alert(`Выполняется вход: ${email} ${password}`);
-    setError("Неизвестная ошибка входа");
+    // alert(`Выполняется вход: ${email} ${password}`);
+    // setError("Неизвестная ошибка входа");
   };
+
+  console.log(loginButton)
 
   const handleRegister = async () => {
 
@@ -55,18 +70,25 @@ export function AuthPage({ isLoginMode = false }) {
       return
     }
 
-    try {
-      const userData = await registerUser({ email, password, username })
-      console.log(userData)
-      localStorage.setItem('userData', JSON.stringify(userData))
-      console.log(localStorage)
-      navigate('/', {replace: true})
-    } catch (error) {
-      console.error('Error message: ' + error)
-    }
-
-    alert(`Выполняется регистрация: ${email} ${password}`);
-    setError("Неизвестная ошибка регистрации");
+    registerUser( { email, password, username })
+    .then((object) => {
+      const status = object.status;
+      const data = object.data;
+      console.log(status)
+      console.log(data)
+      if (status === 201) {
+        setError(null)
+        window.localStorage.setItem('user', data.username)
+        setUser(data.username)
+        navigate('/')
+      } else {
+        const message = data.email || data.username || data.password[0]|| data.password[1]|| data.password[2];
+        setError(message)
+      }
+    }).catch ((error) => setError(error.message))
+    
+    // alert(`Выполняется регистрация: ${email} ${password}`);
+    // setError("Неизвестная ошибка регистрации");
   };
 
   // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы
@@ -108,6 +130,7 @@ export function AuthPage({ isLoginMode = false }) {
             <S.Buttons>
               <S.PrimaryButton 
               onClick={() => handleLogin({ email, password })}
+              disabled={loginButton}
               to="/"
               >
                 Войти

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { getAllTracks } from './api';
 import { AudioPlayer } from './AudioPlayer';
 import { TRACKS } from './constants';
+import { UserContext } from './context';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -104,13 +105,12 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App = () => {
-  // const [user, setUser] = useState(localStorage.setItem('userData'));
-  // const handleLogin = () => setUser(localStorage.setItem('user', 'token'));
+  
+  const [user, setUser] = useState(window.localStorage.getItem('user') || 'Empty');
 
   const [tracks, setTracks] = useState(TRACKS);
   const [getAllTracksError, stGetAllTracksError] = useState(null);
   const [currentTrack, setCurrentTrack] = useState(null);
-  
 
   useEffect(() => {
     getAllTracks()
@@ -120,28 +120,28 @@ const App = () => {
       });
   }, []);
 
-  
-
   return (
     <>
       <GlobalStyle />
-      <AppRoutes
-        // user={user}
-        // setUser={setUser}
-        // onAuthButtonClick={handleLogin}
-        tracks={tracks}
-        setTracks={setTracks}
-        currentTrack={currentTrack}
-        setCurrentTrack={setCurrentTrack}
-        getAllTracksError={getAllTracksError}
-      />
-
-      {currentTrack ? (
-        <AudioPlayer
+      <UserContext.Provider value={[user, setUser]}>
+        <AppRoutes
+          user={user}
+          setUser={setUser}
+          tracks={tracks}
+          setTracks={setTracks}
           currentTrack={currentTrack}
           setCurrentTrack={setCurrentTrack}
+          getAllTracksError={getAllTracksError}
         />
-      ) : null}
+
+        {currentTrack ? (
+          <AudioPlayer
+            currentTrack={currentTrack}
+            setCurrentTrack={setCurrentTrack}
+          />
+        ) : null}
+      </UserContext.Provider>
+
     </>
   );
 };
