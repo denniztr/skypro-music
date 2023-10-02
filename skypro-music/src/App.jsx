@@ -5,6 +5,7 @@ import { getAllTracks } from './api';
 import { AudioPlayer } from './AudioPlayer';
 import { TRACKS } from './constants';
 import { UserContext } from './context';
+import { useSelector } from 'react-redux';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -102,15 +103,18 @@ const GlobalStyle = createGlobalStyle`
     display: none;
   }
 
+
 `;
 
 const App = () => {
-  
-  const [user, setUser] = useState(window.localStorage.getItem('user') || 'Empty');
+  const [user, setUser] = useState(
+    window.localStorage.getItem('user') || 'Empty'
+  );
 
   const [tracks, setTracks] = useState(TRACKS);
   const [getAllTracksError, stGetAllTracksError] = useState(null);
-  const [currentTrack, setCurrentTrack] = useState(null);
+
+  const currentTrack = useSelector((state) => state.tracks.currentTrack);
 
   useEffect(() => {
     getAllTracks()
@@ -129,19 +133,11 @@ const App = () => {
           setUser={setUser}
           tracks={tracks}
           setTracks={setTracks}
-          currentTrack={currentTrack}
-          setCurrentTrack={setCurrentTrack}
           getAllTracksError={getAllTracksError}
         />
 
-        {currentTrack ? (
-          <AudioPlayer
-            currentTrack={currentTrack}
-            setCurrentTrack={setCurrentTrack}
-          />
-        ) : null}
+        {currentTrack ? <AudioPlayer tracks={tracks} /> : null}
       </UserContext.Provider>
-
     </>
   );
 };

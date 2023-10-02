@@ -11,8 +11,6 @@ export const AppRoutes = ({
   setUser,
   tracks,
   setTracks,
-  currentTrack,
-  setCurrentTrack,
   getAllTracksError,
 }) => {
   return (
@@ -22,48 +20,11 @@ export const AppRoutes = ({
         <Route path="/login" element={<AuthPage isLoginMode={true}/>} />
         <Route element={<ProtectedRoute isAllowed={user} />} >
             <Route path='/playlist/:id' element={<Playlist/>} />
-            <Route path='/favorites' element={<FavoriteSongs/>} />
-            <Route path='/' element={<Main setUser={setUser} tracks={tracks} setTracks={setTracks} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} getAllTracksError={getAllTracksError}/>} />
+            <Route path='/favorites' element={<FavoriteSongs setUser={setUser} tracks={tracks}/>} />
+            <Route path='/' element={<Main setUser={setUser} tracks={tracks} setTracks={setTracks} getAllTracksError={getAllTracksError}/>} />
         </Route>
         <Route path="*" element={<NotFound />} />
     </Routes>
-
-    /* <Routes>
-
-
-      <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <Main
-              setUser={setUser}
-              tracks={tracks}
-              setTracks={setTracks}
-              currentTrack={currentTrack}
-              setCurrentTrack={setCurrentTrack}
-              getAllTracksError={getAllTracksError}
-            />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/playlist/:id"
-        element={
-          <ProtectedRoute>
-            <Playlist />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/favorites"
-        element={
-          <ProtectedRoute>
-            <FavoriteSongs />
-          </ProtectedRoute>
-        }
-      />
-      <Route path="*" element={<NotFound />} />
-    </Routes> */
 
   );
 };

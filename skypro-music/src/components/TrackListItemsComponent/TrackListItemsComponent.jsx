@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react';
 import { LoadingComponent } from '../LoadingComponent/LoadingComponent';
 import * as S from './TrackListItems.styles';
 
-export function TrackListItemsComponent({
-  tracks,
-  setCurrentTrack,
-  getAllTracksError,
-}) {
+import { useDispatch } from 'react-redux';
+import { setCurrentTrack } from '../../pages/store/trackSlice';
+
+export function TrackListItemsComponent({ tracks }) {
+  const dispatch = useDispatch();
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -31,7 +32,10 @@ export function TrackListItemsComponent({
     <S.ContentPlaylist>
       {tracks.map((track) => {
         return (
-          <S.PlaylistItem key={track.id} onClick={() => setCurrentTrack(track)}>
+          <S.PlaylistItem
+            key={track.id}
+            onClick={() => dispatch(setCurrentTrack(track))}
+          >
             <S.PlaylistTrack>
               <S.TrackTitle>
                 <S.TrackTitleImage>

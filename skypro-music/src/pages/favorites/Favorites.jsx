@@ -1,19 +1,49 @@
-import { Link } from 'react-router-dom';
-import './Favorites.css';
+import { NavMenuComponent } from '../../components/NavMenuComponent/NavMenuComponent';
+import { SearchComponent } from '../../components/SearchComponent/SearchComponent';
+import { SortButtonsComponent } from '../../components/SortButtonsComponent/SortButtonsComponent';
+import { SideBarComponent } from '../../components/SideBarComponent/SideBarComponent';
 
-export const FavoriteSongs = () => {
+
+import { useEffect, useState } from 'react';
+
+import * as S from './Favorites.styles';
+
+export const FavoriteSongs = ({ setUser, tracks, email, password }) => {
+
+  const [accessToken, setAccessToken] = useState(null);
+  const [favoriteTracks, setFavoriteTracks] = useState([]);
+  const [error, setError] = useState('');
+
+
   return (
     <>
-      <div className="fav__container">
-        <Link to='/'>
-          <div className="modal__logo fav__logo">
-            <img className="fav__logo-src" src="./logo.png" alt="logo" />
-          </div>
-        </Link>
-        <div className="fav">
-          <h3 className="fav__title">Favorites</h3>
-        </div>
-      </div>
+      <S.Wrapper>
+        <S.Container>
+          <S.Main>
+            <NavMenuComponent setUser={setUser} />
+            <S.MainCenterblock>
+              <SearchComponent />
+              <S.CenterblockTitle>Мой плейлист</S.CenterblockTitle>
+              <SortButtonsComponent tracks={tracks} />
+              <S.CenterblockContent>
+                <S.ContentTitle>
+                  <S.Col1>Трек</S.Col1>
+                  <S.Col2>ИСПОЛНИТЕЛЬ</S.Col2>
+                  <S.Col3>АЛЬБОМ</S.Col3>
+                  <S.Col4>
+                    <S.PlaylistTitleSvg alt="time">
+                      <use xlinkHref="../img/icon/sprite.svg#icon-watch" />
+                    </S.PlaylistTitleSvg>
+                  </S.Col4>
+                </S.ContentTitle>
+                <h1>Избранные треки здесь</h1>
+
+              </S.CenterblockContent>
+            </S.MainCenterblock>
+            <SideBarComponent />
+          </S.Main>
+        </S.Container>
+      </S.Wrapper>
     </>
   );
 };

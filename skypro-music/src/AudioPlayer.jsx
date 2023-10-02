@@ -1,9 +1,12 @@
 import { useRef, useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import ProgressBar from './ProgressBar';
 import * as S from './AudioPlayer.styles';
 const PrevSvg = './prev.svg';
 
-export function AudioPlayer({ currentTrack }) {
+export function AudioPlayer() {
+  const currentTrack = useSelector((state) => state.tracks.currentTrack);
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [looping, setLooping] = useState(false);
@@ -27,6 +30,7 @@ export function AudioPlayer({ currentTrack }) {
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
+      console.log(currentTrack);
       handleStart();
     }
   }, [currentTrack]);
@@ -132,7 +136,11 @@ export function AudioPlayer({ currentTrack }) {
                   )}
                 </S.PlayerButtonPlay>
                 <S.PlayerButtonNext>
-                  <S.PlayerButtonNextSvg alt="next" onClick={aintReadyYet}>
+                  <S.PlayerButtonNextSvg
+                    style={{ cursor: 'pointer' }}
+                    alt="next"
+                    onClick={aintReadyYet}
+                  >
                     <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
                   </S.PlayerButtonNextSvg>
                 </S.PlayerButtonNext>

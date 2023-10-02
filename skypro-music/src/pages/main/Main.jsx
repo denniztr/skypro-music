@@ -3,14 +3,7 @@ import { TrackListComponent } from '../../components/TrackListComponent/TrackLis
 import { SideBarComponent } from '../../components/SideBarComponent/SideBarComponent';
 import * as S from './Main.styles';
 
-export const Main = ({
-  setUser,
-  tracks,
-  setTracks,
-  currentTrack,
-  setCurrentTrack,
-  getAllTracksError,
-}) => {
+export const Main = ({ setUser, tracks, setTracks, getAllTracksError }) => {
   return (
     <>
       <S.Wrapper>
@@ -20,7 +13,6 @@ export const Main = ({
             <TrackListComponent
               tracks={tracks}
               setTracks={setTracks}
-              setCurrentTrack={setCurrentTrack}
               getAllTracksError={getAllTracksError}
             />
             <SideBarComponent />
