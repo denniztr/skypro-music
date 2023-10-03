@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { LoadingComponent } from '../LoadingComponent/LoadingComponent';
 
 import { useDispatch, useSelector } from 'react-redux';
-// import { setCurrentTrack } from '../../pages/store/trackSlice';
+
 import { setCurrentTrack, setIsPlaying  } from '../../pages/store/playerSlice';
 
 import * as S from './TrackListItems.styles';

@@ -149,6 +149,10 @@ export const PlayerButtonShuffleSvg = styled.svg`
     stroke: #696969;
 `
 
+export const PlayerButtonShuffleSvgActive = styled(PlayerButtonShuffleSvg)`
+    stroke: #ffffff;
+`
+
 export const PlayerTrackPlay = styled.div`
     display: -webkit-box;
     display: -ms-flexbox;

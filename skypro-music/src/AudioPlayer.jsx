@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setIsPlaying, nextTrack, prevTrack } from './pages/store/playerSlice';
+import { setIsPlaying, nextTrack, prevTrack, initShuffle } from './pages/store/playerSlice';
 
 import ProgressBar from './ProgressBar';
 import * as S from './AudioPlayer.styles';
@@ -13,8 +13,7 @@ export function AudioPlayer() {
 
   const currentTrack = useSelector((state) => state.player.currentTrack);
   const isPlaying = useSelector((state) => state.player.isPlaying);
-
-  const tracks = useSelector((state) => state.player.tracks);
+  const isShuffle = useSelector((state) => state.player.shuffled);
 
   const [currentTime, setCurrentTime] = useState(0);
   const [looping, setLooping] = useState(false);
@@ -168,11 +167,18 @@ export function AudioPlayer() {
                 </S.PlayerButtonRepeat>
                 <S.PlayerButtonShuffle
                   className="_btn-icon"
-                  onClick={aintReadyYet}
+                  onClick={() => dispatch(initShuffle())}
                 >
-                  <S.PlayerButtonShuffleSvg alt="shuffle">
+                  {isShuffle ? (
+                      <S.PlayerButtonShuffleSvgActive>
+                        <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
+                      </S.PlayerButtonShuffleSvgActive>
+                  ) : (
+                    <S.PlayerButtonShuffleSvg alt="shuffle">
                     <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
                   </S.PlayerButtonShuffleSvg>
+                  )}
+
                 </S.PlayerButtonShuffle>
               </S.PlayerControls>
               <S.PlayerTrackPlay>
