@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 import * as S from './Favorites.styles';
 
-export const FavoriteSongs = ({ setUser, tracks, email, password }) => {
+export const FavoriteSongs = ({ setUser, email, password }) => {
 
   const [accessToken, setAccessToken] = useState(null);
   const [favoriteTracks, setFavoriteTracks] = useState([]);
@@ -24,7 +24,7 @@ export const FavoriteSongs = ({ setUser, tracks, email, password }) => {
             <S.MainCenterblock>
               <SearchComponent />
               <S.CenterblockTitle>Мой плейлист</S.CenterblockTitle>
-              <SortButtonsComponent tracks={tracks} />
+              <SortButtonsComponent  />
               <S.CenterblockContent>
                 <S.ContentTitle>
                   <S.Col1>Трек</S.Col1>

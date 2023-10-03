@@ -1,13 +1,21 @@
 import { useRef, useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { setIsPlaying, nextTrack, prevTrack } from './pages/store/playerSlice';
+
 import ProgressBar from './ProgressBar';
 import * as S from './AudioPlayer.styles';
+
 const PrevSvg = './prev.svg';
 
 export function AudioPlayer() {
-  const currentTrack = useSelector((state) => state.tracks.currentTrack);
+  const dispatch = useDispatch();
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  const currentTrack = useSelector((state) => state.player.currentTrack);
+  const isPlaying = useSelector((state) => state.player.isPlaying);
+
+  const tracks = useSelector((state) => state.player.tracks);
+
   const [currentTime, setCurrentTime] = useState(0);
   const [looping, setLooping] = useState(false);
 
@@ -16,21 +24,20 @@ export function AudioPlayer() {
   const handleStart = () => {
     if (audioRef.current) {
       audioRef.current.play();
-      setIsPlaying(true);
+      dispatch(setIsPlaying(true));
     }
   };
 
   const handleStop = () => {
     if (audioRef.current) {
       audioRef.current.pause();
-      setIsPlaying(false);
+      dispatch(setIsPlaying(false));
     }
   };
 
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
-      console.log(currentTrack);
       handleStart();
     }
   }, [currentTrack]);
@@ -108,9 +115,10 @@ export function AudioPlayer() {
               <S.PlayerControls>
                 <S.PlayerButtonPrev>
                   <S.PlayerButtonPrevSvg
+                    style={{ cursor: 'pointer' }}
                     src={PrevSvg}
                     alt="prev"
-                    onClick={aintReadyYet}
+                    onClick={() => dispatch(prevTrack())}
                   >
                     <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
                   </S.PlayerButtonPrevSvg>
@@ -139,7 +147,7 @@ export function AudioPlayer() {
                   <S.PlayerButtonNextSvg
                     style={{ cursor: 'pointer' }}
                     alt="next"
-                    onClick={aintReadyYet}
+                    onClick={() => dispatch(nextTrack())}
                   >
                     <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
                   </S.PlayerButtonNextSvg>
@@ -181,7 +189,7 @@ export function AudioPlayer() {
                   </S.TrackPlayAuthor>
                   <S.TrackPlayAlbum>
                     <S.TrackPlayAlbumLink href="http://">
-                      {currentTrack.author}
+                      {currentTrack.album}
                     </S.TrackPlayAlbumLink>
                   </S.TrackPlayAlbum>
                 </S.TrackPlayContain>

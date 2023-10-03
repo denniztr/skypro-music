@@ -1,11 +1,15 @@
 import { createGlobalStyle } from 'styled-components';
-import { AppRoutes } from './routes';
-import { useState, useEffect } from 'react';
+
 import { getAllTracks } from './api';
-import { AudioPlayer } from './AudioPlayer';
-import { TRACKS } from './constants';
+import { AppRoutes } from './routes';
 import { UserContext } from './context';
-import { useSelector } from 'react-redux';
+
+import { AudioPlayer } from './AudioPlayer';
+
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { setTracks } from './pages/store/playerSlice';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -107,18 +111,19 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App = () => {
+  const dispatch = useDispatch();
+
   const [user, setUser] = useState(
     window.localStorage.getItem('user') || 'Empty'
   );
 
-  const [tracks, setTracks] = useState(TRACKS);
   const [getAllTracksError, stGetAllTracksError] = useState(null);
 
-  const currentTrack = useSelector((state) => state.tracks.currentTrack);
+  const currentTrack = useSelector((state) => state.player.currentTrack);
 
   useEffect(() => {
     getAllTracks()
-      .then((tracks) => setTracks(tracks))
+      .then((tracks) => dispatch(setTracks(tracks)))
       .catch((error) => {
         stGetAllTracksError(error.message);
       });
@@ -131,12 +136,9 @@ const App = () => {
         <AppRoutes
           user={user}
           setUser={setUser}
-          tracks={tracks}
-          setTracks={setTracks}
           getAllTracksError={getAllTracksError}
         />
-
-        {currentTrack ? <AudioPlayer tracks={tracks} /> : null}
+      {currentTrack ? <AudioPlayer /> : null}
       </UserContext.Provider>
     </>
   );
