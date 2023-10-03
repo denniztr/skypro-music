@@ -50,7 +50,7 @@ const playerSlice = createSlice({
     },
     initShuffle: (state, action) => {
       state.shuffled = !state.shuffled;
-      const shuffledArray = state.tracks.map((currentTrack) => currentTrack);
+      const shuffledArray = state.tracks.map((track, index) => ({...track, index}));
       state.shuffledPlaylist = shuffledArray.sort(() => Math.random() - 0.5);
     },
   },
