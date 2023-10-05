@@ -6,6 +6,8 @@ import './Playlist.css';
 export const Playlist = () => {
     const params = useParams();
     const playlist = PLAYLISTS.find((playlist) => playlist.id === Number(params.id));
+    
+
 
     return (
     <>
