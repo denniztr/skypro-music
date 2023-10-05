@@ -1,4 +1,4 @@
-import  { styled } from 'styled-components';
+import  { keyframes, styled } from 'styled-components';
 
 export const ContentPlaylist = styled.div`
     display: -webkit-box;
@@ -67,6 +67,25 @@ export const TrackTitleSvg = styled.svg`
     fill: transparent;
     stroke: #4e4e4e;
 `
+const bubble_out = keyframes`
+   0%,
+  to {
+    transform: scale(0.5);
+  }
+  50% {
+    transform: scale(1);
+  }
+`
+
+export const PlayingDot = styled.svg`
+    width: 16px;
+    height: 16px;
+    background-color: #b672ff;
+    border-radius: 8px;
+    display: block;
+    animation: ${bubble_out} 0.6s ease-in-out infinite both;
+`
+
 export const TrackTitleLink = styled.a`
     font-style: normal;
     font-weight: 400;

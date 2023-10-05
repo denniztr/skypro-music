@@ -1,14 +1,17 @@
-import * as S from './TrackList.styles';
 import { TrackListItemsComponent } from '../TrackListItemsComponent/TrackListItemsComponent';
 import { SearchComponent } from '../SearchComponent/SearchComponent';
 import { SortButtonsComponent } from '../SortButtonsComponent/SortButtonsComponent';
 
-export function TrackListComponent({ tracks, setTracks, setCurrentTrack, getAllTracksError }) {
+import * as S from './TrackList.styles';
+
+export function TrackListComponent({
+  getAllTracksError,
+}) {
   return (
     <S.MainCenterblock>
       <SearchComponent />
       <S.CenterblockTitle>Треки</S.CenterblockTitle>
-      <SortButtonsComponent tracks={tracks}/>
+      <SortButtonsComponent />
       <S.CenterblockContent>
         <S.ContentTitle>
           <S.Col1>Трек</S.Col1>
@@ -21,18 +24,12 @@ export function TrackListComponent({ tracks, setTracks, setCurrentTrack, getAllT
           </S.Col4>
         </S.ContentTitle>
         {getAllTracksError ? (
-          <>
-            {getAllTracksError}
-          </>
+          <>{getAllTracksError}</>
         ) : (
           <TrackListItemsComponent
-          tracks={tracks}
-          setTracks={setTracks}
-          setCurrentTrack={setCurrentTrack}
-          getAllTracksError={getAllTracksError}
-        />
+            getAllTracksError={getAllTracksError}
+          />
         )}
-
       </S.CenterblockContent>
     </S.MainCenterblock>
   );

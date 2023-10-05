@@ -1,10 +1,15 @@
 import { createGlobalStyle } from 'styled-components';
-import { AppRoutes } from './routes';
-import { useState, useEffect } from 'react';
+
 import { getAllTracks } from './api';
-import { AudioPlayer } from './AudioPlayer';
-import { TRACKS } from './constants';
+import { AppRoutes } from './routes';
 import { UserContext } from './context';
+
+import { AudioPlayer } from './AudioPlayer';
+
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { setTracks } from './pages/store/playerSlice';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -102,19 +107,23 @@ const GlobalStyle = createGlobalStyle`
     display: none;
   }
 
+
 `;
 
 const App = () => {
-  
-  const [user, setUser] = useState(window.localStorage.getItem('user') || 'Empty');
+  const dispatch = useDispatch();
 
-  const [tracks, setTracks] = useState(TRACKS);
+  const [user, setUser] = useState(
+    window.localStorage.getItem('user') || 'Empty'
+  );
+
   const [getAllTracksError, stGetAllTracksError] = useState(null);
-  const [currentTrack, setCurrentTrack] = useState(null);
+
+  const currentTrack = useSelector((state) => state.player.currentTrack);
 
   useEffect(() => {
     getAllTracks()
-      .then((tracks) => setTracks(tracks))
+      .then((tracks) => dispatch(setTracks(tracks)))
       .catch((error) => {
         stGetAllTracksError(error.message);
       });
@@ -127,21 +136,10 @@ const App = () => {
         <AppRoutes
           user={user}
           setUser={setUser}
-          tracks={tracks}
-          setTracks={setTracks}
-          currentTrack={currentTrack}
-          setCurrentTrack={setCurrentTrack}
           getAllTracksError={getAllTracksError}
         />
-
-        {currentTrack ? (
-          <AudioPlayer
-            currentTrack={currentTrack}
-            setCurrentTrack={setCurrentTrack}
-          />
-        ) : null}
+      {currentTrack ? <AudioPlayer /> : null}
       </UserContext.Provider>
-
     </>
   );
 };

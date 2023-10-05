@@ -1,26 +1,53 @@
 import { useRef, useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import {
+  setIsPlaying,
+  nextTrack,
+  prevTrack,
+  initShuffle,
+} from './pages/store/playerSlice';
+
 import ProgressBar from './ProgressBar';
 import * as S from './AudioPlayer.styles';
+
 const PrevSvg = './prev.svg';
 
-export function AudioPlayer({ currentTrack }) {
-  const [isPlaying, setIsPlaying] = useState(false);
+export function AudioPlayer() {
+  const dispatch = useDispatch();
+
+  const currentTrack = useSelector((state) => state.player.currentTrack);
+  const isPlaying = useSelector((state) => state.player.isPlaying);
+  const isShuffle = useSelector((state) => state.player.shuffled);
+
   const [currentTime, setCurrentTime] = useState(0);
   const [looping, setLooping] = useState(false);
 
   const audioRef = useRef(null);
 
+  useEffect(() => {
+    const handleTrackEnded = () => dispatch(nextTrack());
+    if (audioRef.current) {
+      audioRef.current.addEventListener('ended', handleTrackEnded);
+    }
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.removeEventListener('ended', handleTrackEnded);
+      }
+    };
+  }, [audioRef, dispatch]);
+
   const handleStart = () => {
     if (audioRef.current) {
       audioRef.current.play();
-      setIsPlaying(true);
+      dispatch(setIsPlaying(true));
     }
   };
 
   const handleStop = () => {
     if (audioRef.current) {
       audioRef.current.pause();
-      setIsPlaying(false);
+      dispatch(setIsPlaying(false));
     }
   };
 
@@ -104,9 +131,10 @@ export function AudioPlayer({ currentTrack }) {
               <S.PlayerControls>
                 <S.PlayerButtonPrev>
                   <S.PlayerButtonPrevSvg
+                    style={{ cursor: 'pointer' }}
                     src={PrevSvg}
                     alt="prev"
-                    onClick={aintReadyYet}
+                    onClick={() => dispatch(prevTrack())}
                   >
                     <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
                   </S.PlayerButtonPrevSvg>
@@ -132,7 +160,11 @@ export function AudioPlayer({ currentTrack }) {
                   )}
                 </S.PlayerButtonPlay>
                 <S.PlayerButtonNext>
-                  <S.PlayerButtonNextSvg alt="next" onClick={aintReadyYet}>
+                  <S.PlayerButtonNextSvg
+                    style={{ cursor: 'pointer' }}
+                    alt="next"
+                    onClick={() => dispatch(nextTrack())}
+                  >
                     <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
                   </S.PlayerButtonNextSvg>
                 </S.PlayerButtonNext>
@@ -152,11 +184,17 @@ export function AudioPlayer({ currentTrack }) {
                 </S.PlayerButtonRepeat>
                 <S.PlayerButtonShuffle
                   className="_btn-icon"
-                  onClick={aintReadyYet}
+                  onClick={() => dispatch(initShuffle())}
                 >
-                  <S.PlayerButtonShuffleSvg alt="shuffle">
-                    <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
-                  </S.PlayerButtonShuffleSvg>
+                  {isShuffle ? (
+                    <S.PlayerButtonShuffleSvgActive>
+                      <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
+                    </S.PlayerButtonShuffleSvgActive>
+                  ) : (
+                    <S.PlayerButtonShuffleSvg alt="shuffle">
+                      <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
+                    </S.PlayerButtonShuffleSvg>
+                  )}
                 </S.PlayerButtonShuffle>
               </S.PlayerControls>
               <S.PlayerTrackPlay>
@@ -173,7 +211,7 @@ export function AudioPlayer({ currentTrack }) {
                   </S.TrackPlayAuthor>
                   <S.TrackPlayAlbum>
                     <S.TrackPlayAlbumLink href="http://">
-                      {currentTrack.author}
+                      {currentTrack.album}
                     </S.TrackPlayAlbumLink>
                   </S.TrackPlayAlbum>
                 </S.TrackPlayContain>

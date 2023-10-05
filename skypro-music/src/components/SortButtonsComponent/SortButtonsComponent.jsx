@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-// import './TrackList.css';
-import * as S from './SortButtons.styles'
+import {useSelector} from 'react-redux'
+
 import { PopupComponent } from '../PopupComponent/PopUpComponent';
 
-export function SortButtonsComponent({ tracks }) {
+import * as S from './SortButtons.styles';
+
+export function SortButtonsComponent() {
+
+    const tracks = useSelector((state) => state.player.tracks);
 
     const unfilteredPerformersList = tracks.map(authors => authors.author);
     const performersList = [...new Set(unfilteredPerformersList)];

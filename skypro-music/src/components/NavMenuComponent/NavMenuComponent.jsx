@@ -23,7 +23,9 @@ export function NavMenuComponent({ setUser }) {
   return (
     <S.MainNav>
       <S.NavLogo>
-        <S.LogoImage src={Logo} alt="logo" />
+        <Link to="/">
+          <S.LogoImage src={Logo} alt="logo" />
+        </Link>
       </S.NavLogo>
       <S.NavBurger onClick={toggleMenu}>
         <S.BurgerLine />
