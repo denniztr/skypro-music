@@ -1,29 +1,34 @@
 import { NavMenuComponent } from '../../components/NavMenuComponent/NavMenuComponent';
 import { SearchComponent } from '../../components/SearchComponent/SearchComponent';
-import { SortButtonsComponent } from '../../components/SortButtonsComponent/SortButtonsComponent';
 import { SideBarComponent } from '../../components/SideBarComponent/SideBarComponent';
+import { FavTracksItemComponent } from '../../components/FavTracksItemComponent/FavTracksItemComponent';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+
+import { updateToken } from '../store/authSlice';
+import { setAccessToken } from '../store/authSlice';
 
 import * as S from './Favorites.styles';
 
-export const FavoriteSongs = ({ setUser, email, password }) => {
+export const FavoriteSongs = ({ setUser }) => {
   const dispatch = useDispatch();
-  const [accessToken, setAccessToken] = useState(null);
-  const [favoriteTracks, setFavoriteTracks] = useState([]);
-  const [error, setError] = useState('');
-  
-  const token = useSelector((state) => state.auth.token)
+
+  const favorites = useSelector((state) => state.auth.favTracks);
+
+  const refreshToken = window.localStorage.getItem('refreshToken');
+  let accessToken = useSelector((state) => state.auth.accessToken);
 
   useEffect(() => {
-    
-    console.log(token);
+    dispatch(updateToken(refreshToken))
+    .then((newAccessToken) => {
+      accessToken = newAccessToken;
+      dispatch(setAccessToken(accessToken))
+      // window.localStorage.setItem('accessToken', accessToken);
+    }).catch((error) => console.error(error.message))
+  }, [dispatch, refreshToken])
 
-  }, [token])
-  
-  
   return (
     <>
       <S.Wrapper>
@@ -33,7 +38,6 @@ export const FavoriteSongs = ({ setUser, email, password }) => {
             <S.MainCenterblock>
               <SearchComponent />
               <S.CenterblockTitle>Мой плейлист</S.CenterblockTitle>
-              <SortButtonsComponent  />
               <S.CenterblockContent>
                 <S.ContentTitle>
                   <S.Col1>Трек</S.Col1>
@@ -45,8 +49,9 @@ export const FavoriteSongs = ({ setUser, email, password }) => {
                     </S.PlaylistTitleSvg>
                   </S.Col4>
                 </S.ContentTitle>
-                <h1>Избранные треки здесь</h1>
 
+                <FavTracksItemComponent/>
+                
               </S.CenterblockContent>
             </S.MainCenterblock>
             <SideBarComponent />

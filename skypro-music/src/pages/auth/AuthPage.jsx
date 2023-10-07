@@ -45,14 +45,8 @@ export function AuthPage({ isLoginMode = false }) {
           setError(null);
           window.localStorage.setItem('user', data.username);
           setUser(data.username);
-          console.log(email)
-          console.log(password)
           dispatch(getToken({ email, password }))
           navigate('/');
-          // const token = await getToken({ email, password });
-          
-          // console.log(token);
-
         } else {
           const message = data.detail;
           setError(message);

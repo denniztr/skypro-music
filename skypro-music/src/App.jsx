@@ -11,6 +11,9 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { setTracks } from './pages/store/playerSlice';
 
+import { setAccessToken } from './pages/store/authSlice';
+import { updateToken } from './pages/store/authSlice';
+
 const GlobalStyle = createGlobalStyle`
 
   * {
@@ -112,14 +115,27 @@ const GlobalStyle = createGlobalStyle`
 
 const App = () => {
   const dispatch = useDispatch();
-
+  
   const [user, setUser] = useState(
     window.localStorage.getItem('user') || 'Empty'
   );
+    
 
   const [getAllTracksError, stGetAllTracksError] = useState(null);
 
   const currentTrack = useSelector((state) => state.player.currentTrack);
+
+  const refreshToken = window.localStorage.getItem('refreshToken');
+  let accessToken = useSelector((state) => state.auth.accessToken);
+
+  useEffect(() => {
+    dispatch(updateToken(refreshToken))
+    .then((newAccessToken) => {
+      accessToken = newAccessToken;
+      dispatch(setAccessToken(accessToken.payload))
+    }).catch((error) => console.error(error.message))
+  }, [dispatch, refreshToken])
+
 
   useEffect(() => {
     getAllTracks()
