@@ -17,8 +17,6 @@ export function SideBarComponent() {
     navigate('/login');
   }
 
-  console.log(user);
-
   return (
     <S.MainSidebar>
       <S.SideBarPersonal>

@@ -22,7 +22,7 @@ export const AppRoutes = ({ user, setUser, getAllTracksError }) => {
         <Route
           path="/"
           element={
-            <Main setUser={setUser} getAllTracksError={getAllTracksError} />
+            <Main user={user} setUser={setUser} getAllTracksError={getAllTracksError} />
           }
         />
       </Route>

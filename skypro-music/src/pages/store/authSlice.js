@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { setIsStarred, setFavTracks } from './playerSlice';
 
 export const getToken = createAsyncThunk(
   'auth/getToken',
@@ -59,7 +60,7 @@ export const updateToken = createAsyncThunk(
       const updatedAccessToken = data.access;
 
       dispatch(getFavoriteTracks(updatedAccessToken));
-      
+
       return updatedAccessToken;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -76,24 +77,70 @@ export const getFavoriteTracks = createAsyncThunk(
         {
           method: 'GET',
           headers: {
-            Authorization: `Bearer ${accessToken}`, //token!
+            Authorization: `Bearer ${accessToken}`,
           },
         }
       );
       const data = await response.json();
-      dispatch(setFavTracks({ data }));
+      dispatch(setFavTracks({data}));
+      
     } catch (error) {
       return rejectWithValue(error.message);
     }
   }
 );
 
+export const addToStarred = createAsyncThunk(
+  'auth/addToStarred',
+  async function({track, accessToken}, { rejectWithValue, dispatch }) {
+    // const trackId = getState().player.tracks.find(track => track.id === id); // Трек, добавленный в избранное
+    
+    try {
+      const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${track.id}/favorite/`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      if (!response.ok) {
+        throw new Error('Cant toggle like. Server error.');
+    }
+       const data = await response.json();
+       console.log(data);
+        // dispatch(setIsStarred({...track, starred: true}))
+
+    } catch (error) {
+      return rejectWithValue(error.message)
+    }
+  }
+)
+
+export const unStarred = createAsyncThunk(
+  'auth/unStarred',
+  async function({track, accessToken}, { rejectWithValue, dispatch }) {
+    try {
+      const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${track.id}/favorite/`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        }
+      })
+      const data = await response.json()
+       console.log(data)
+        // dispatch(setIsStarred({...track, starred: false}))
+    } catch (error) {
+      return rejectWithValue(error.message)
+    }
+  }
+)
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
     accessToken: null,
     refreshToken: null,
-    favTracks: [{}],
+    // favTracks: [],
+    // starred: false,
   },
   reducers: {
     setAccessToken: (state, action) => {
@@ -102,12 +149,24 @@ const authSlice = createSlice({
     setRefreshToken: (state, action) => {
       state.refreshToken = action.payload;
     },
-    setFavTracks: (state, action) => {
-      state.favTracks = action.payload;
-    },
+    // setFavTracks: (state, action) => {
+    //   const updatedArray = action.payload.data.map((track) => ({
+    //     ...track,
+    //     starred: true,
+    //   }))
+    //   state.favTracks = updatedArray;
+    //   // console.log(state.favTracks);
+    //   // state.favTracks = action.payload.data;
+    //   // console.log(state.favTracks);
+    // },
+    // setIsStarred: (state, action) => {  
+    //   // state.starred = action.payload;
+    //   // console.log(state.starred);
+    //   const isStarred = state.favTracks.some((track) => track.id === action.payload.id);
+    //   state.starred = isStarred
+    // }
   },
 });
 
-export const { setAccessToken, setRefreshToken, setFavTracks } =
-  authSlice.actions;
+export const { setAccessToken, setRefreshToken } = authSlice.actions;
 export default authSlice.reducer;

@@ -120,7 +120,6 @@ const App = () => {
     window.localStorage.getItem('user') || 'Empty'
   );
     
-
   const [getAllTracksError, stGetAllTracksError] = useState(null);
 
   const currentTrack = useSelector((state) => state.player.currentTrack);

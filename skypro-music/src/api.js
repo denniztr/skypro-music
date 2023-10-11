@@ -52,33 +52,3 @@ export async function loginUser({ email, password }){
     return object;   
     
   }
-
-  // export async function getToken({ email, password }) {
-
-  //   const response = await fetch('https://skypro-music-api.skyeng.tech/user/token/', {
-  //     method: 'POST',
-  //     body: JSON.stringify({
-  //       email: email,
-  //       password: password,
-  //     }),
-  //     headers: {
-  //       "content-type": "application/json",
-  //     },
-  //   })
-    
-  //   const data = await response.json();
-  //   console.log(data) // token
-  //   return data;
-  // }
-
-// export async function getFavoriteTracks({accessToken}) {
-//   const response = await fetch('https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/', {
-//     method: 'GET',
-//     headers: {
-//       Authorization: `Bearer ${accessToken}`,
-//     },
-//   })
-//   const data = await response.json();
-  
-//   return data;
-// }

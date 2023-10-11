@@ -15,19 +15,18 @@ import * as S from './Favorites.styles';
 export const FavoriteSongs = ({ setUser }) => {
   const dispatch = useDispatch();
 
-  const favorites = useSelector((state) => state.auth.favTracks);
-
   const refreshToken = window.localStorage.getItem('refreshToken');
   let accessToken = useSelector((state) => state.auth.accessToken);
 
   useEffect(() => {
     dispatch(updateToken(refreshToken))
-    .then((newAccessToken) => {
-      accessToken = newAccessToken;
-      dispatch(setAccessToken(accessToken))
-      // window.localStorage.setItem('accessToken', accessToken);
-    }).catch((error) => console.error(error.message))
-  }, [dispatch, refreshToken])
+      .then((newAccessToken) => {
+        accessToken = newAccessToken;
+        dispatch(setAccessToken(accessToken.payload));
+        // window.localStorage.setItem('accessToken', accessToken);
+      })
+      .catch((error) => console.error(error.message));
+  }, [dispatch, refreshToken]);
 
   return (
     <>
@@ -49,9 +48,7 @@ export const FavoriteSongs = ({ setUser }) => {
                     </S.PlaylistTitleSvg>
                   </S.Col4>
                 </S.ContentTitle>
-
-                <FavTracksItemComponent/>
-                
+                <FavTracksItemComponent />
               </S.CenterblockContent>
             </S.MainCenterblock>
             <SideBarComponent />
