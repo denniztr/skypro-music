@@ -4,7 +4,7 @@ import { LoadingComponent } from '../LoadingComponent/LoadingComponent';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setCurrentTrack, setIsPlaying } from '../../pages/store/playerSlice';
+import { setCurrentTrack, setIsPlaying, setTracks } from '../../pages/store/playerSlice';
 
 import { addToStarred, unStarred } from '../../pages/store/authSlice';
 import { setIsStarred } from '../../pages/store/playerSlice';
@@ -21,7 +21,9 @@ export function TrackListItemsComponent() {
   const isPlaying = useSelector((state) => state.player.isPlaying);
   const accessToken = useSelector((state) => state.auth.accessToken);
   const starred = useSelector((state) => state.player.starred);
+
   console.log(tracks);
+
   // Треки добавляются в избранное
 
   const starredTrack = (track) => {
@@ -34,18 +36,21 @@ export function TrackListItemsComponent() {
   // const unStarredTrack = (track) => {
   //   dispatch(unStarred({ track, accessToken }))
   // }
-  
-  const toggleStarred = (track) => {
-    if (track) {
+
+  const toggleStarred = ((track) => {
+    // if (track) {
       if (!starred) {
         dispatch(addToStarred({ track, accessToken }))
-        dispatch(setIsStarred({...track, starred}))
+        dispatch(setIsStarred({...track, starred: true}))
+       // dispatch(setTracks({...track, starred: true}))
       } else {
         dispatch(unStarred({ track, accessToken }))
-        dispatch(setIsStarred({...track, starred }))
+        dispatch(setIsStarred({...track, starred: false}))
+        // dispatch(setTracks({...track, starred: false}))
       }
-    }
-  }
+  //  }
+  })
+
 
   useEffect(() => {
     const loading = setTimeout(() => {
@@ -136,11 +141,12 @@ export function TrackListItemsComponent() {
                   key={track.id} 
                   alt="time" 
                   onClick={(e) => {
-                    starredTrack(track)
+                   //starredTrack(track)
+                   toggleStarred(track)
                     e.stopPropagation()
                   }}
                   >
-
+                    
                     {track.starred ? ( 
                       <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M8.36529 12.751C14.2458 9.25098 17.3111 3.96019 13.9565 1.51832C11.7563 -0.0832586 9.29718 1.19273 8.36529 2.00669H8.34378H8.34372H8.32221C7.39032 1.19273 4.93121 -0.0832586 2.73102 1.51832C-0.623552 3.96019 2.44172 9.25098 8.32221 12.751H8.34372H8.34378H8.36529Z" fill="#B672FF"/>

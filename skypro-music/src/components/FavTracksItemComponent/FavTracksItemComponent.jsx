@@ -12,9 +12,9 @@ export function FavTracksItemComponent () {
     const dispatch = useDispatch();
 
     const favs = useSelector((state) => state.player.favTracks);
+    const tracks = useSelector((state) => state.player.tracks);
+    console.log(tracks);
 
-    // const favorites = favs.data;
-    console.log(favs);
     const currentTrack = useSelector((state) => state.player.currentTrack);
     const isPlaying = useSelector((state) => state.player.isPlaying);
     const accessToken = useSelector((state) => state.auth.accessToken);
@@ -51,8 +51,9 @@ export function FavTracksItemComponent () {
 
     return (
         <S.ContentPlaylist>
-          {favs ? (
-                    favs.map((track) => {
+          {tracks ? (tracks.filter((track) => track.starred === true).map((track) => {
+
+                   // tracks.map((track) => {
                       return (
                         <S.PlaylistItem
                           key={track.id}

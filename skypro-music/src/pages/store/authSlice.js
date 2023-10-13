@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { setIsStarred, setFavTracks } from './playerSlice';
+import { setFavTracks, setTracks } from './playerSlice';
 
 export const getToken = createAsyncThunk(
   'auth/getToken',
@@ -82,7 +82,8 @@ export const getFavoriteTracks = createAsyncThunk(
         }
       );
       const data = await response.json();
-      dispatch(setFavTracks({data}));
+       dispatch(setFavTracks({data}));
+      //dispatch(setTracks({data}))
       
     } catch (error) {
       return rejectWithValue(error.message);
@@ -108,7 +109,6 @@ export const addToStarred = createAsyncThunk(
        const data = await response.json();
        console.log(data);
         // dispatch(setIsStarred({...track, starred: true}))
-
     } catch (error) {
       return rejectWithValue(error.message)
     }
