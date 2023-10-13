@@ -20,7 +20,7 @@ export function SideBarComponent() {
   return (
     <S.MainSidebar>
       <S.SideBarPersonal>
-        <S.SideBarPersonalName> {user} </S.SideBarPersonalName>
+        <S.SideBarPersonalName> {user.username} </S.SideBarPersonalName>
         <S.SideBarIcon className="sidebar__icon" >
           <svg width="100%" height="100%" alt="logout" onClick={buttonClick}>
             <use xlinkHref="img/icon/sprite.svg#logout" ></use>

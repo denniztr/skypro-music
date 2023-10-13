@@ -11,7 +11,7 @@ export const Main = ({ setUser, getAllTracksError }) => {
         <S.Container>
           <S.Main>
             <NavMenuComponent setUser={setUser} />
-            <TrackListComponent getAllTracksError={getAllTracksError} />
+            <TrackListComponent  getAllTracksError={getAllTracksError} />
             <SideBarComponent />
           </S.Main>
           <footer className="footer"></footer>

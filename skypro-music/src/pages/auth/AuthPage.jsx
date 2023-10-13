@@ -43,8 +43,8 @@ export function AuthPage({ isLoginMode = false }) {
         const data = object.data;
         if (status === 200) {
           setError(null);
-          window.localStorage.setItem('user', data.username);
-          setUser(data.username);
+          window.localStorage.setItem('user', data);
+          setUser(data);
           dispatch(getToken({ email, password }))
           navigate('/');
         } else {

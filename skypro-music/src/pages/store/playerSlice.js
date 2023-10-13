@@ -61,20 +61,29 @@ const playerSlice = createSlice({
       state.shuffledPlaylist = shuffledArray.sort(() => Math.random() - 0.5);
     },
     setIsStarred: (state, action) => {
+      state.starred = action.payload.starred;
       state.tracks = state.tracks.map((track) => {
         if (track.id === action.payload.id)
           return {
-            ...track,
-            starred: !state.starred,
-          }
+          ...track, 
+          starred: state.starred,
+        }
         return track
       })
     },
     setFavTracks: (state, action) => {
+      // const favorites = action.payload.data.map((track) => {
+      //   const matchingTracks = state.tracks.find((matchingTrack => matchingTrack.id === track.id));
+      //   if (matchingTracks) {
+      //     return {...matchingTracks, starred: track.starred }
+      //   }
+      //   return state.tracks
+      // })
+      // state.tracks = favorites;
 
       const favorites = action.payload.data.map((track) => ({
         ...track,
-        starred: true,
+        starred: state.starred,
       }))
       state.tracks = favorites;
 

@@ -16,7 +16,7 @@ export function NavMenuComponent({ setUser }) {
 
   const navigate = useNavigate();
   const handleLogout = () => {
-    setUser(localStorage.clear());
+    setUser(localStorage.clear()); // clear user, token
     navigate('/login', { replace: true });
   };
 

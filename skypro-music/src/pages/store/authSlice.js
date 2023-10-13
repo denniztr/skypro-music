@@ -82,6 +82,7 @@ export const getFavoriteTracks = createAsyncThunk(
         }
       );
       const data = await response.json();
+      console.log(data);
        dispatch(setFavTracks({data}));
       //dispatch(setTracks({data}))
       
