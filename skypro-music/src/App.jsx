@@ -125,9 +125,10 @@ const App = () => {
 
   const currentTrack = useSelector((state) => state.player.currentTrack);
 
-  const refreshToken = window.localStorage.getItem('refreshToken');
-  let accessToken = useSelector((state) => state.auth.accessToken);
 
+  let accessToken = useSelector((state) => state.auth.accessToken);
+  
+  const refreshToken = window.localStorage.getItem('refreshToken');
   useEffect(() => {
     console.log('the page refreshing')
     dispatch(updateToken(refreshToken))

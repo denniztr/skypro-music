@@ -26,7 +26,7 @@ export const getToken = createAsyncThunk(
       const refreshToken = data.refresh;
 
       dispatch(setAccessToken(accessToken));
-      dispatch(setRefreshToken(refreshToken));
+      // dispatch(setRefreshToken(refreshToken));
       dispatch(getFavoriteTracks(accessToken));
 
       window.localStorage.setItem('refreshToken', refreshToken);
@@ -38,7 +38,7 @@ export const getToken = createAsyncThunk(
 
 export const updateToken = createAsyncThunk(
   'auth/updateToken',
-  async function (refreshToken, { rejectWithValue, dispatch }) {
+  async function (refreshToken, { rejectWithValue, dispatch }) { 
     try {
       const response = await fetch(
         'https://skypro-music-api.skyeng.tech/user/token/refresh/',

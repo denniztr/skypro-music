@@ -60,26 +60,31 @@ const playerSlice = createSlice({
       state.shuffledPlaylist = shuffledArray.sort(() => Math.random() - 0.5);
     },
     setIsStarred: (state, action) => {
-      const updatedTracks = state.tracks.map((track) => {
-        if (track.id === action.payload.id) {
+      console.log(action.payload)
+      // const trackId = action.payload.id;
+      // const starred = action.payload.starred;
+      // state.tracks = state.tracks.map((track) => {
+      //   if (track.id === trackId) {
+      //     return {
+      //       ...track,
+      //       starred: starred,
+      //     }
+      //   }
+      //   return track
+      // })
+      const starred = !action.payload.starred;
+      const trackId = action.payload.id;
+      state.tracks = state.tracks.map((track) => {
+      
+        if (track.id === trackId) {
           return {
             ...track,
-            starred: !state.starred,
+            starred: starred,
           };
         }
         return track;
       });
-    
-      state.tracks = updatedTracks;
-      // state.starred = !action.payload.starred;
-      // state.tracks = state.tracks.map((track) => {
-      //   if (track.id === action.payload.id)
-      //     return {
-      //     ...track, 
-      //     starred: action.payload.starred,
-      //   }
-      //   return track
-      // })
+
     },
     setFavTracks: (state, action) => {
       // state.favTracks = action.payload.data;
