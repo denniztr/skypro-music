@@ -14,6 +14,7 @@ import { setTracks } from './pages/store/playerSlice';
 import { setAccessToken } from './pages/store/authSlice';
 import { updateToken } from './pages/store/authSlice';
 
+
 const GlobalStyle = createGlobalStyle`
 
   * {
@@ -115,9 +116,9 @@ const GlobalStyle = createGlobalStyle`
 
 const App = () => {
   const dispatch = useDispatch();
-  
+
   const [user, setUser] = useState(
-    window.localStorage.getItem('user') || 'Empty'
+    window.localStorage.getItem('user') || null
   );
     
   const [getAllTracksError, stGetAllTracksError] = useState(null);
@@ -128,6 +129,7 @@ const App = () => {
   let accessToken = useSelector((state) => state.auth.accessToken);
 
   useEffect(() => {
+    console.log('the page refreshing')
     dispatch(updateToken(refreshToken))
     .then((newAccessToken) => {
       accessToken = newAccessToken;

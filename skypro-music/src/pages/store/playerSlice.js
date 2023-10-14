@@ -24,7 +24,6 @@ const playerSlice = createSlice({
         starred: state.starred,
       }));
       state.tracks = updatedArray
-      console.log(state.tracks);
     },
     nextTrack: (state, action) => {
       const selectedTrack = state.currentTrack;
@@ -61,32 +60,34 @@ const playerSlice = createSlice({
       state.shuffledPlaylist = shuffledArray.sort(() => Math.random() - 0.5);
     },
     setIsStarred: (state, action) => {
-      state.starred = action.payload.starred;
-      state.tracks = state.tracks.map((track) => {
-        if (track.id === action.payload.id)
+      const updatedTracks = state.tracks.map((track) => {
+        if (track.id === action.payload.id) {
           return {
-          ...track, 
-          starred: state.starred,
+            ...track,
+            starred: !state.starred,
+          };
         }
-        return track
-      })
+        return track;
+      });
+    
+      state.tracks = updatedTracks;
+      // state.starred = !action.payload.starred;
+      // state.tracks = state.tracks.map((track) => {
+      //   if (track.id === action.payload.id)
+      //     return {
+      //     ...track, 
+      //     starred: action.payload.starred,
+      //   }
+      //   return track
+      // })
     },
     setFavTracks: (state, action) => {
-      // const favorites = action.payload.data.map((track) => {
-      //   const matchingTracks = state.tracks.find((matchingTrack => matchingTrack.id === track.id));
-      //   if (matchingTracks) {
-      //     return {...matchingTracks, starred: track.starred }
-      //   }
-      //   return state.tracks
-      // })
-      // state.tracks = favorites;
-
+      // state.favTracks = action.payload.data;
       const favorites = action.payload.data.map((track) => ({
         ...track,
-        starred: state.starred,
+        starred: true,
       }))
-      state.tracks = favorites;
-
+      state.favTracks = favorites
     },
   },
 });

@@ -4,15 +4,15 @@ import { SideBarComponent } from '../../components/SideBarComponent/SideBarCompo
 
 import * as S from './Main.styles';
 
-export const Main = ({ setUser, getAllTracksError }) => {
+export const Main = ({ user, setUser, getAllTracksError }) => {
   return (
     <>
       <S.Wrapper>
         <S.Container>
           <S.Main>
             <NavMenuComponent setUser={setUser} />
-            <TrackListComponent  getAllTracksError={getAllTracksError} />
-            <SideBarComponent />
+            <TrackListComponent user={user} getAllTracksError={getAllTracksError} />
+            <SideBarComponent user={user}/>
           </S.Main>
           <footer className="footer"></footer>
         </S.Container>

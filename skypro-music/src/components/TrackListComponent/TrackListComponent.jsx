@@ -5,6 +5,7 @@ import { SortButtonsComponent } from '../SortButtonsComponent/SortButtonsCompone
 import * as S from './TrackList.styles';
 
 export function TrackListComponent({
+  user,
   getAllTracksError,
 }) {
   return (
@@ -27,6 +28,7 @@ export function TrackListComponent({
           <>{getAllTracksError}</>
         ) : (
           <TrackListItemsComponent
+            user={user}
             getAllTracksError={getAllTracksError}
           />
         )}

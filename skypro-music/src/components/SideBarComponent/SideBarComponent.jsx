@@ -7,13 +7,14 @@ import { UserContext } from '../../context';
 
 
 export function SideBarComponent() {
-
   const [user, setUser] = useContext(UserContext);
+  
   const navigate = useNavigate();
+ 
 
   const buttonClick = () => {
     window.localStorage.removeItem('user');
-    setUser(window.localStorage.getItem('user'));
+    // setUser(window.localStorage.getItem('user'));
     navigate('/login');
   }
 

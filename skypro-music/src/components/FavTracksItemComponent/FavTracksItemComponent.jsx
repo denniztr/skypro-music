@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { LoadingComponent } from '../LoadingComponent/LoadingComponent';
 
 import * as S from './FavTracksItem.styles';
@@ -8,12 +8,21 @@ import { setCurrentTrack, setIsPlaying } from '../../pages/store/playerSlice';
 
 import { unStarred, getFavoriteTracks } from '../../pages/store/authSlice';
 
+import { UserContext } from '../../context';
+
+import { setIsStarred } from '../../pages/store/playerSlice';
+
 export function FavTracksItemComponent () {
+
+  const [user, setUser] = useContext(UserContext);
+  console.log(user)
+
+
     const dispatch = useDispatch();
 
     const favs = useSelector((state) => state.player.favTracks);
     const tracks = useSelector((state) => state.player.tracks);
-    console.log(tracks);
+    console.log(favs);
 
     const currentTrack = useSelector((state) => state.player.currentTrack);
     const isPlaying = useSelector((state) => state.player.isPlaying);
@@ -30,6 +39,13 @@ export function FavTracksItemComponent () {
           console.error(error.message)
       }
     }
+
+    // const handleUnStarred = (track) => {
+    //   if (track.stared_user.find((user) => user.id === currentUser.id)) {
+    //     dispatch(unStarred({ track, accessToken }))
+    //     dispatch(setIsStarred({...track, starred}))
+    //   }
+    // }
 
     useEffect(() => {
         const loading = setTimeout(() => {
@@ -51,7 +67,7 @@ export function FavTracksItemComponent () {
 
     return (
         <S.ContentPlaylist>
-          {tracks ? (tracks.filter((track) => track.starred === true).map((track) => {
+          {favs ? (favs.map((track) => {
 
                    // tracks.map((track) => {
                       return (
