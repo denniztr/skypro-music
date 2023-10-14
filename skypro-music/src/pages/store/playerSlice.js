@@ -74,6 +74,8 @@ const playerSlice = createSlice({
       // })
       const starred = !action.payload.starred;
       const trackId = action.payload.id;
+      const stared_user = action.payload.stared_user;
+      console.log(stared_user);
       state.tracks = state.tracks.map((track) => {
       
         if (track.id === trackId) {
