@@ -8,8 +8,6 @@ const playerSlice = createSlice({
     tracks: [],
     shuffledPlaylist: [{}],
     shuffled: false,
-    starred: false,
-    favTracks: [],
   },
   reducers: {
     setCurrentTrack: (state, action) => {
@@ -19,11 +17,7 @@ const playerSlice = createSlice({
       state.isPlaying = action.payload;
     },
     setTracks: (state, action) => {
-      const updatedArray = action.payload.map((track) => ({
-        ...track,
-        starred: state.starred,
-      }));
-      state.tracks = updatedArray
+      state.tracks = action.payload;
     },
     nextTrack: (state, action) => {
       const selectedTrack = state.currentTrack;
@@ -59,43 +53,23 @@ const playerSlice = createSlice({
       const shuffledArray = state.tracks.map((track, index) => ({...track, index}));
       state.shuffledPlaylist = shuffledArray.sort(() => Math.random() - 0.5);
     },
-    setIsStarred: (state, action) => {
-      console.log(action.payload)
-      // const trackId = action.payload.id;
-      // const starred = action.payload.starred;
-      // state.tracks = state.tracks.map((track) => {
-      //   if (track.id === trackId) {
-      //     return {
-      //       ...track,
-      //       starred: starred,
-      //     }
-      //   }
-      //   return track
-      // })
-      const starred = !action.payload.starred;
-      const trackId = action.payload.id;
-      const stared_user = action.payload.stared_user;
-      console.log(stared_user);
-      state.tracks = state.tracks.map((track) => {
-      
-        if (track.id === trackId) {
-          return {
-            ...track,
-            starred: starred,
-          };
-        }
-        return track;
-      });
+    toggleTrackStarred: (state, action) => {
+      const { track, currentUser } = action.payload;
+      const trackIndex = state.tracks.findIndex((el) => el.id === track.id);
 
-    },
-    setFavTracks: (state, action) => {
-      // state.favTracks = action.payload.data;
-      const favorites = action.payload.data.map((track) => ({
-        ...track,
-        starred: true,
-      }))
-      state.favTracks = favorites
-    },
+      if (trackIndex !== -1) {
+        const updatedTrack = { ...state.tracks[trackIndex] };
+        const starred = updatedTrack.stared_user.find((user) => user.id === currentUser.id);
+        
+        if (starred) {
+          updatedTrack.stared_user = updatedTrack.stared_user.filter((user) => user.id !== currentUser.id);
+        } else {
+          updatedTrack.stared_user.push(currentUser);
+        }
+        
+        state.tracks[trackIndex] = updatedTrack;
+      }
+    }
   },
 });
 
@@ -106,7 +80,6 @@ export const {
   nextTrack,
   prevTrack,
   initShuffle,
-  setIsStarred,
-  setFavTracks,
+  toggleTrackStarred,
 } = playerSlice.actions;
 export default playerSlice.reducer;

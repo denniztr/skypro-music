@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
-import * as S from './NavMenu.styles';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context';
+
+import * as S from './NavMenu.styles';
+
 const Logo = './logo.png';
 
-export function NavMenuComponent({ setUser }) {
+export function NavMenuComponent() {
   const linkStyle = {
     color: '#ffffff',
     fontWeight: '400',
@@ -11,12 +14,14 @@ export function NavMenuComponent({ setUser }) {
     lineHeight: '24px',
   };
 
+  const [setUser] = useContext(UserContext);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const navigate = useNavigate();
   const handleLogout = () => {
-    setUser(localStorage.clear()); // clear user, token
+    setUser(localStorage.clear()); 
     navigate('/login', { replace: true });
   };
 

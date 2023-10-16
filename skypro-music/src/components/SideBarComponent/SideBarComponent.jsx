@@ -7,7 +7,7 @@ import { UserContext } from '../../context';
 
 
 export function SideBarComponent() {
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
   
   const navigate = useNavigate();
  

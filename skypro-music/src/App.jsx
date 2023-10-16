@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from 'react';
+
 import { createGlobalStyle } from 'styled-components';
 
 import { getAllTracks } from './api';
@@ -6,12 +8,11 @@ import { UserContext } from './context';
 
 import { AudioPlayer } from './AudioPlayer';
 
-import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { setTracks } from './pages/store/playerSlice';
 
-import { setAccessToken } from './pages/store/authSlice';
+import { setAccessToken, setUserRed } from './pages/store/authSlice';
 import { updateToken } from './pages/store/authSlice';
 
 
@@ -117,18 +118,29 @@ const GlobalStyle = createGlobalStyle`
 const App = () => {
   const dispatch = useDispatch();
 
+
+  console.log(localStorage)
+  useEffect(() => {
+  const currentUser = JSON.parse(localStorage.getItem('user'));
+  dispatch(setUserRed(currentUser))
+  setUser(currentUser)
+
+ }, [dispatch])
+
+
   const [user, setUser] = useState(
-    window.localStorage.getItem('user') || null
+    localStorage.getItem('user') || 
+    null
   );
-    
+
   const [getAllTracksError, stGetAllTracksError] = useState(null);
 
   const currentTrack = useSelector((state) => state.player.currentTrack);
-
-
+  
   let accessToken = useSelector((state) => state.auth.accessToken);
   
   const refreshToken = window.localStorage.getItem('refreshToken');
+
   useEffect(() => {
     console.log('the page refreshing')
     dispatch(updateToken(refreshToken))
@@ -151,12 +163,8 @@ const App = () => {
     <>
       <GlobalStyle />
       <UserContext.Provider value={[user, setUser]}>
-        <AppRoutes
-          user={user}
-          setUser={setUser}
-          getAllTracksError={getAllTracksError}
-        />
-      {currentTrack ? <AudioPlayer /> : null}
+        <AppRoutes  getAllTracksError={getAllTracksError}/>
+        {currentTrack ? <AudioPlayer /> : null}
       </UserContext.Provider>
     </>
   );

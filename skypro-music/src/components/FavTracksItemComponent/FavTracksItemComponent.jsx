@@ -6,43 +6,26 @@ import * as S from './FavTracksItem.styles';
 
 import { setCurrentTrack, setIsPlaying } from '../../pages/store/playerSlice';
 
-import { unStarred, getFavoriteTracks } from '../../pages/store/authSlice';
+import { unStarred } from '../../pages/store/authSlice';
 
 import { UserContext } from '../../context';
 
-import { setIsStarred } from '../../pages/store/playerSlice';
+import { toggleTrackStarred } from '../../pages/store/playerSlice';
 
 export function FavTracksItemComponent() {
-  const [user, setUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
   const currentUser = user;
 
-  console.log(currentUser);
   const dispatch = useDispatch();
 
-  const favs = useSelector((state) => state.player.favTracks);
+
   const tracks = useSelector((state) => state.player.tracks);
 
   const currentTrack = useSelector((state) => state.player.currentTrack);
   const isPlaying = useSelector((state) => state.player.isPlaying);
   const accessToken = useSelector((state) => state.auth.accessToken);
-  // const starred = useSelector((state) => state.player.starred);
-
-  const starred = tracks.map((track) =>
-    track.stared_user.find((user) => user.id === currentUser.id)
-  );
-  console.log(starred);
 
   const [isLoading, setIsLoading] = useState(true);
-
-  const handleUnStarred = async (track) => {
-    try {
-      await dispatch(unStarred({ track, accessToken }));
-      await dispatch(getFavoriteTracks(accessToken));
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
-
 
   useEffect(() => {
     const loading = setTimeout(() => {
@@ -65,13 +48,19 @@ export function FavTracksItemComponent() {
   const favorites = tracks.filter((track) => {
     return track.stared_user.find((user) => user.id === currentUser.id);
   });
+  
+  const handleUnStarred = (track) => {
+    if (track.stared_user.some((user) => user.id === currentUser.id)) {
+      dispatch(unStarred({ track, accessToken }))
+    }
+    dispatch(toggleTrackStarred({ track, currentUser }));
+  };
 
-  // track.stared_user.find((user) => user.id === currentUser.id)
+
   return (
     <S.ContentPlaylist>
       {favorites ? (
         favorites.map((track) => {
-          // tracks.map((track) => {
           return (
             <S.PlaylistItem
               key={track.id}
@@ -162,8 +151,8 @@ export function FavTracksItemComponent() {
                         />
                       </svg>
                     ) : (
-                      <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                    )}
+                     <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
+                   )}
 
                   </S.TrackTimeSvg>
 

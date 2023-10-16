@@ -1,14 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
 
-import { registerUser, loginUser, 
-  // getToken 
-} from '../../api';
+import { registerUser, loginUser } from '../../api';
 
 import { UserContext } from '../../context';
 
 import { useDispatch } from 'react-redux';
-import { getToken } from '../store/authSlice';
+import { getToken, setUserRed  } from '../store/authSlice';
 
 import * as S from './AuthPage.styles';
 
@@ -43,8 +41,9 @@ export function AuthPage({ isLoginMode = false }) {
         const data = object.data;
         if (status === 200) {
           setError(null);
-          window.localStorage.setItem('user', data);
+          localStorage.setItem('user', JSON.stringify(data));
           setUser(data);
+          dispatch(setUserRed(data))
           dispatch(getToken({ email, password }))
           navigate('/');
         } else {

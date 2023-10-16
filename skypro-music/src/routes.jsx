@@ -8,21 +8,22 @@ import { NotFound } from './pages/notfound/NotFound';
 import { Playlist } from './pages/playlist/Playlist';
 import { AuthPage } from './pages/auth/AuthPage';
 
-export const AppRoutes = ({ user, setUser, getAllTracksError }) => {
+
+export const AppRoutes = ({ getAllTracksError }) => {
   return (
     <Routes>
       <Route path="/register" element={<AuthPage isLoginMode={false} />} />
       <Route path="/login" element={<AuthPage isLoginMode={true} />} />
-      <Route element={<ProtectedRoute isAllowed={user} />}>
+      <Route element={<ProtectedRoute />}>
         <Route path="/playlist/:id" element={<Playlist />} />
-        <Route
+        <Route 
           path="/favorites"
-          element={<FavoriteSongs setUser={setUser} />}
+          element={<FavoriteSongs/>}
         />
         <Route
           path="/"
           element={
-            <Main user={user} setUser={setUser} getAllTracksError={getAllTracksError} />
+            <Main getAllTracksError={getAllTracksError} />
           }
         />
       </Route>

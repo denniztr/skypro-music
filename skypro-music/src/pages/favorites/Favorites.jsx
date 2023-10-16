@@ -12,7 +12,7 @@ import { setAccessToken } from '../store/authSlice';
 
 import * as S from './Favorites.styles';
 
-export const FavoriteSongs = ({ setUser }) => {
+export const FavoriteSongs = () => {
   const dispatch = useDispatch();
 
   const refreshToken = window.localStorage.getItem('refreshToken');
@@ -33,7 +33,7 @@ export const FavoriteSongs = ({ setUser }) => {
       <S.Wrapper>
         <S.Container>
           <S.Main>
-            <NavMenuComponent setUser={setUser} />
+            <NavMenuComponent/>
             <S.MainCenterblock>
               <SearchComponent />
               <S.CenterblockTitle>Мой плейлист</S.CenterblockTitle>

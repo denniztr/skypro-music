@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { setFavTracks, setIsStarred } from './playerSlice';
+
 
 export const getToken = createAsyncThunk(
   'auth/getToken',
@@ -26,7 +26,6 @@ export const getToken = createAsyncThunk(
       const refreshToken = data.refresh;
 
       dispatch(setAccessToken(accessToken));
-      // dispatch(setRefreshToken(refreshToken));
       dispatch(getFavoriteTracks(accessToken));
 
       window.localStorage.setItem('refreshToken', refreshToken);
@@ -57,7 +56,6 @@ export const updateToken = createAsyncThunk(
         throw new Error('an Error occurred in updateToken function');
 
       const data = await response.json();
-      console.log(data) // новый accessToken
       const updatedAccessToken = data.access;
 
       dispatch(getFavoriteTracks(updatedAccessToken));
@@ -83,9 +81,7 @@ export const getFavoriteTracks = createAsyncThunk(
         }
       );
       const data = await response.json();
-       dispatch(setFavTracks({data}));
-      //dispatch(setTracks({data}))
-      
+      return data
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -95,8 +91,6 @@ export const getFavoriteTracks = createAsyncThunk(
 export const addToStarred = createAsyncThunk(
   'auth/addToStarred',
   async function({track, accessToken}, { rejectWithValue, dispatch }) {
-    // const trackId = getState().player.tracks.find(track => track.id === id); // Трек, добавленный в избранное
-    
     try {
       const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${track.id}/favorite/`, {
         method: 'POST',
@@ -108,7 +102,7 @@ export const addToStarred = createAsyncThunk(
         throw new Error('Cant toggle like. Server error.');
     }
        const data = await response.json();
-       console.log(data);
+       console.log(data)
     } catch (error) {
       return rejectWithValue(error.message)
     }
@@ -117,7 +111,7 @@ export const addToStarred = createAsyncThunk(
 
 export const unStarred = createAsyncThunk(
   'auth/unStarred',
-  async function({track, accessToken}, { rejectWithValue, dispatch }) {
+  async function({track, accessToken}, { rejectWithValue }) {
     try {
       const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${track.id}/favorite/`, {
         method: 'DELETE',
@@ -126,8 +120,7 @@ export const unStarred = createAsyncThunk(
         }
       })
       const data = await response.json()
-       console.log(data)
-        // dispatch(setIsStarred({...track, starred: false}))
+      console.log(data)
     } catch (error) {
       return rejectWithValue(error.message)
     }
@@ -137,10 +130,9 @@ export const unStarred = createAsyncThunk(
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
+    user: null,
     accessToken: null,
     refreshToken: null,
-    // favTracks: [],
-    // starred: false,
   },
   reducers: {
     setAccessToken: (state, action) => {
@@ -149,24 +141,15 @@ const authSlice = createSlice({
     setRefreshToken: (state, action) => {
       state.refreshToken = action.payload;
     },
-    // setFavTracks: (state, action) => {
-    //   const updatedArray = action.payload.data.map((track) => ({
-    //     ...track,
-    //     starred: true,
-    //   }))
-    //   state.favTracks = updatedArray;
-    //   // console.log(state.favTracks);
-    //   // state.favTracks = action.payload.data;
-    //   // console.log(state.favTracks);
-    // },
-    // setIsStarred: (state, action) => {  
-    //   // state.starred = action.payload;
-    //   // console.log(state.starred);
-    //   const isStarred = state.favTracks.some((track) => track.id === action.payload.id);
-    //   state.starred = isStarred
-    // }
+    setUserRed: (state, action) => {
+      state.user = action.payload;
+      localStorage.setItem('user', JSON.stringify(state.user))
+      // const currentUser = JSON.parse(localStorage.getItem('user'));
+
+      console.log(state.user)
+    }
   },
 });
 
-export const { setAccessToken, setRefreshToken } = authSlice.actions;
+export const { setAccessToken, setRefreshToken, setUserRed } = authSlice.actions;
 export default authSlice.reducer;
