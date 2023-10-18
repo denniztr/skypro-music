@@ -22,9 +22,23 @@ const playerSlice = createSlice({
     },
     nextTrack: (state, action) => {
       
+      // const selectedTrack = state.currentTrack;
+      
+      // const selectedPlaylist = state.shuffled ? state.shuffledPlaylist : state.tracks;
+
+      // const selectedTrackId = selectedPlaylist.findIndex(
+      //   (currentTrack) => currentTrack.id === selectedTrack.id
+      // );
+      
+
+      // if (selectedTrackId >= selectedPlaylist.length - 1) {
+      //   state.currentTrack = state.tracks[0];
+      // } else {
+      //   state.currentTrack = state.tracks[selectedTrackId + 1];
+      // }
       const selectedTrack = state.currentTrack;
       
-      const selectedPlaylist = state.shuffled ? state.shuffledPlaylist : state.tracks;
+      const selectedPlaylist = state.shuffled ? state.shuffledPlaylist : state.currentPlaylist;
 
       const selectedTrackId = selectedPlaylist.findIndex(
         (currentTrack) => currentTrack.id === selectedTrack.id
@@ -32,9 +46,9 @@ const playerSlice = createSlice({
       
 
       if (selectedTrackId >= selectedPlaylist.length - 1) {
-        state.currentTrack = state.tracks[0];
+        state.currentTrack = state.currentPlaylist[0];
       } else {
-        state.currentTrack = state.tracks[selectedTrackId + 1];
+        state.currentTrack = state.currentPlaylist[selectedTrackId + 1];
       }
     },
     prevTrack: (state, action) => {
@@ -74,7 +88,9 @@ const playerSlice = createSlice({
       }
     },
     setCurrentPlaylist: (state, action) => {
-      state.tracks = action.payload;
+      // state.tracks = action.payload;
+      state.currentPlaylist = action.payload;
+      console.log(state.currentPlaylist)
     }
   },
 });

@@ -21,10 +21,10 @@ export function TrackListItemsComponent() {
   const [user] = useContext(UserContext);
   const currentUser = user;
 
-  useEffect(() => {
-    getAllTracks()
-    .then((tracks) => dispatch(setTracks(tracks)))
-  }, [dispatch])
+  // useEffect(() => {
+  //   getAllTracks()
+  //   .then((tracks) => dispatch(setCurrentPlaylist(tracks)))
+  // }, [dispatch])
 
    const [isLoading, setIsLoading] = useState(true);
 
