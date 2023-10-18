@@ -1,6 +1,7 @@
 import  { keyframes, styled } from 'styled-components';
 
 export const ContentPlaylist = styled.div`
+    height: 1000px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -9,6 +10,23 @@ export const ContentPlaylist = styled.div`
     -ms-flex-direction: column;
     flex-direction: column;
     overflow: auto;
+    
+        /* Скрываем вертикальную полосу прокрутки */
+        scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+
+    /* Стилизация полосы прокрутки в браузерах, поддерживающих вендорные префиксы */
+    &::-webkit-scrollbar {
+        width: 5px; /* Ширина полосы прокрутки */
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: transparent; /* Цвет ползунка полосы прокрутки */
+    }
+    
+    &::-webkit-scrollbar-track {
+        background-color: transparent; /* Цвет фона полосы прокрутки */
+    }
 `
 export const PlaylistItem = styled.div`
     width: 100%;
