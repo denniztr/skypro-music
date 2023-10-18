@@ -118,13 +118,10 @@ const GlobalStyle = createGlobalStyle`
 const App = () => {
   const dispatch = useDispatch();
 
-
-  console.log(localStorage)
   useEffect(() => {
-  const currentUser = JSON.parse(localStorage.getItem('user'));
-  dispatch(setUserRed(currentUser))
-  setUser(currentUser)
-
+    const currentUser = JSON.parse(localStorage.getItem('user'));
+    dispatch(setUserRed(currentUser))
+    setUser(currentUser)
  }, [dispatch])
 
 

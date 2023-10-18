@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, current } from '@reduxjs/toolkit';
 
 const playerSlice = createSlice({
   name: 'player',
@@ -8,6 +8,7 @@ const playerSlice = createSlice({
     tracks: [],
     shuffledPlaylist: [{}],
     shuffled: false,
+    currentPlaylist: [],
   },
   reducers: {
     setCurrentTrack: (state, action) => {
@@ -20,14 +21,16 @@ const playerSlice = createSlice({
       state.tracks = action.payload;
     },
     nextTrack: (state, action) => {
+      
       const selectedTrack = state.currentTrack;
+      
+      const selectedPlaylist = state.shuffled ? state.shuffledPlaylist : state.tracks;
 
-      const selectedPlaylist = state.shuffled
-        ? state.shuffledPlaylist
-        : state.tracks;
       const selectedTrackId = selectedPlaylist.findIndex(
         (currentTrack) => currentTrack.id === selectedTrack.id
       );
+      
+
       if (selectedTrackId >= selectedPlaylist.length - 1) {
         state.currentTrack = state.tracks[0];
       } else {
@@ -69,6 +72,9 @@ const playerSlice = createSlice({
         
         state.tracks[trackIndex] = updatedTrack;
       }
+    },
+    setCurrentPlaylist: (state, action) => {
+      state.tracks = action.payload;
     }
   },
 });
@@ -81,5 +87,6 @@ export const {
   prevTrack,
   initShuffle,
   toggleTrackStarred,
+  setCurrentPlaylist,
 } = playerSlice.actions;
 export default playerSlice.reducer;

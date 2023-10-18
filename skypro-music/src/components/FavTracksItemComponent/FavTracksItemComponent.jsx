@@ -4,7 +4,7 @@ import { LoadingComponent } from '../LoadingComponent/LoadingComponent';
 
 import * as S from './FavTracksItem.styles';
 
-import { setCurrentTrack, setIsPlaying } from '../../pages/store/playerSlice';
+import { setCurrentTrack, setIsPlaying, setCurrentPlaylist } from '../../pages/store/playerSlice';
 
 import { unStarred } from '../../pages/store/authSlice';
 
@@ -17,10 +17,8 @@ export function FavTracksItemComponent() {
   const currentUser = user;
 
   const dispatch = useDispatch();
-
-
+  
   const tracks = useSelector((state) => state.player.tracks);
-
   const currentTrack = useSelector((state) => state.player.currentTrack);
   const isPlaying = useSelector((state) => state.player.isPlaying);
   const accessToken = useSelector((state) => state.auth.accessToken);
@@ -46,14 +44,16 @@ export function FavTracksItemComponent() {
   };
 
   const favorites = tracks.filter((track) => {
-    return track.stared_user.find((user) => user.id === currentUser.id);
+   return track.stared_user.find((user) => user.id === currentUser.id);
   });
-  
+
+
+
   const handleUnStarred = (track) => {
     if (track.stared_user.some((user) => user.id === currentUser.id)) {
       dispatch(unStarred({ track, accessToken }))
     }
-    dispatch(toggleTrackStarred({ track, currentUser }));
+      dispatch(toggleTrackStarred({ track, currentUser }));
   };
 
 
@@ -67,6 +67,7 @@ export function FavTracksItemComponent() {
               onClick={() => {
                 dispatch(setCurrentTrack(track));
                 dispatch(setIsPlaying(true));
+                dispatch(setCurrentPlaylist(favorites));
               }}
             >
               <S.PlaylistTrack>

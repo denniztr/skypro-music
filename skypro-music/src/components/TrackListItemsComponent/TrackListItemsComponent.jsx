@@ -1,31 +1,39 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import { LoadingComponent } from '../LoadingComponent/LoadingComponent';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setCurrentTrack, setIsPlaying, toggleTrackStarred } from '../../pages/store/playerSlice';
+import { setCurrentTrack, setIsPlaying, toggleTrackStarred, setCurrentPlaylist, setTracks } from '../../pages/store/playerSlice';
 
 import { addToStarred, unStarred } from '../../pages/store/authSlice';
 
-import { useContext } from 'react';
 import { UserContext } from '../../context';
+
+import { getAllTracks } from '../../api';
 
 import * as S from './TrackListItems.styles';
 
 
 export function TrackListItemsComponent() {
-
+  const dispatch = useDispatch();
+  
   const [user] = useContext(UserContext);
   const currentUser = user;
 
-  const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    getAllTracks()
+    .then((tracks) => dispatch(setTracks(tracks)))
+  }, [dispatch])
+
+   const [isLoading, setIsLoading] = useState(true);
 
   const tracks = useSelector((state) => state.player.tracks)
   const currentTrack = useSelector((state) => state.player.currentTrack);
   const isPlaying = useSelector((state) => state.player.isPlaying);
   const accessToken = useSelector((state) => state.auth.accessToken);
+
+ 
 
   const toggleStarred = (track) => {
     try {
@@ -68,6 +76,7 @@ export function TrackListItemsComponent() {
             onClick={() => {
               dispatch(setCurrentTrack(track));
               dispatch(setIsPlaying(true));
+              dispatch(setCurrentPlaylist(tracks))
             }}
           >
             <S.PlaylistTrack>

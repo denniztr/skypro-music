@@ -19,6 +19,8 @@ export function AudioPlayer() {
   const currentTrack = useSelector((state) => state.player.currentTrack);
   const isPlaying = useSelector((state) => state.player.isPlaying);
   const isShuffle = useSelector((state) => state.player.shuffled);
+  const currentPlaylist = useSelector((state) => state.player.currentPlaylist);
+  const tracks = useSelector((state) => state.player.tracks);
 
   const [currentTime, setCurrentTime] = useState(0);
   const [looping, setLooping] = useState(false);

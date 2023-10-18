@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-
 export const getToken = createAsyncThunk(
   'auth/getToken',
   async function ({ email, password }, { rejectWithValue, dispatch }) {
@@ -69,7 +68,7 @@ export const updateToken = createAsyncThunk(
 
 export const getFavoriteTracks = createAsyncThunk(
   'auth/getFavoriteTracks',
-  async function (accessToken, { rejectWithValue, dispatch }) {
+  async function (accessToken, { rejectWithValue }) {
     try {
       const response = await fetch(
         'https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/',
@@ -90,7 +89,7 @@ export const getFavoriteTracks = createAsyncThunk(
 
 export const addToStarred = createAsyncThunk(
   'auth/addToStarred',
-  async function({track, accessToken}, { rejectWithValue, dispatch }) {
+  async function({track, accessToken}, { rejectWithValue }) {
     try {
       const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${track.id}/favorite/`, {
         method: 'POST',
@@ -102,7 +101,8 @@ export const addToStarred = createAsyncThunk(
         throw new Error('Cant toggle like. Server error.');
     }
        const data = await response.json();
-       console.log(data)
+
+      return data
     } catch (error) {
       return rejectWithValue(error.message)
     }
@@ -120,7 +120,7 @@ export const unStarred = createAsyncThunk(
         }
       })
       const data = await response.json()
-      console.log(data)
+      return data
     } catch (error) {
       return rejectWithValue(error.message)
     }
@@ -144,9 +144,6 @@ const authSlice = createSlice({
     setUserRed: (state, action) => {
       state.user = action.payload;
       localStorage.setItem('user', JSON.stringify(state.user))
-      // const currentUser = JSON.parse(localStorage.getItem('user'));
-
-      console.log(state.user)
     }
   },
 });
