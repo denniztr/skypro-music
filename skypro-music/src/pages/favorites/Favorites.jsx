@@ -56,6 +56,7 @@ export const FavoriteSongs = () => {
   }, [dispatch, refreshToken]);
 
   console.log(favorites);
+
   // useEffect(() => {
   //   try {
   //     getFavoriteTracks(accessToken).then((tracks) => {
@@ -92,7 +93,7 @@ export const FavoriteSongs = () => {
                   </S.Col4>
                 </S.ContentTitle>
                 {/* <FavTracksItemComponent  isLoading={isLoading}/> */}
-                <TrackListItemsComponent favorites={favorites}/>
+                <TrackListItemsComponent tracks={favorites}/>
               </S.CenterblockContent>
             </S.MainCenterblock>
             <SideBarComponent />

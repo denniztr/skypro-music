@@ -4,7 +4,7 @@ import { SideBarComponent } from '../../components/SideBarComponent/SideBarCompo
 
 import { useState, useEffect } from 'react';
 import { getAllTracks } from '../../api';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setTracks } from '../store/playerSlice';
 
 import * as S from './Main.styles';
@@ -28,14 +28,14 @@ export const Main = () => {
     }
   }, [dispatch])
 
-
+  const tracks = useSelector((state) => state.player.tracks)
   return (
     <>
       <S.Wrapper>
         <S.Container>
           <S.Main>
             <NavMenuComponent />
-            <TrackListComponent isLoading={isLoading}  getAllTracksError={getAllTracksError} />
+            <TrackListComponent isLoading={isLoading} tracks={tracks}  getAllTracksError={getAllTracksError} />
             <SideBarComponent/>
           </S.Main>
           <footer className="footer"></footer>
