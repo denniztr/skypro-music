@@ -35,7 +35,7 @@ export const Main = () => {
         <S.Container>
           <S.Main>
             <NavMenuComponent />
-            <TrackListComponent isLoading={isLoading} getAllTracksError={getAllTracksError} />
+            <TrackListComponent isLoading={isLoading}  getAllTracksError={getAllTracksError} />
             <SideBarComponent/>
           </S.Main>
           <footer className="footer"></footer>

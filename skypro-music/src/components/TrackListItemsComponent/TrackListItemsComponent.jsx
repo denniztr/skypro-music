@@ -14,16 +14,26 @@ import { UserContext } from '../../context';
 import * as S from './TrackListItems.styles';
 
 
-export function TrackListItemsComponent({isLoading}) {
+export function TrackListItemsComponent({isLoading, favorites}) {
   const dispatch = useDispatch();
   
   const [user] = useContext(UserContext);
   const currentUser = user;
 
   const tracks = useSelector((state) => state.player.tracks)
+
+
+  // const favorites = tracks.filter((track) => {  
+  //   return track.stared_user.find((user) => user.id === currentUser.id);
+  // });
+// console.log(tracks);
+
+console.log(favorites);
+
   const currentTrack = useSelector((state) => state.player.currentTrack);
   const isPlaying = useSelector((state) => state.player.isPlaying);
   const accessToken = useSelector((state) => state.auth.accessToken);
+
 
   const toggleStarred = (track) => {
     try {
@@ -52,7 +62,7 @@ export function TrackListItemsComponent({isLoading}) {
  
   return (
     <S.ContentPlaylist>
-      {tracks.map((track) => {
+      {(tracks ? tracks : favorites).map((track) => {
         return (
           <S.PlaylistItem
             key={track.id}

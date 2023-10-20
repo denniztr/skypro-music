@@ -18,7 +18,8 @@ export function FavTracksItemComponent({ isLoading }) {
   const currentUser = user;
 
   const dispatch = useDispatch();
- 
+
+
   // const tracks = useSelector((state) => state.player.tracks);
   const currentTrack = useSelector((state) => state.player.currentTrack);
   const isPlaying = useSelector((state) => state.player.isPlaying);
@@ -26,6 +27,7 @@ export function FavTracksItemComponent({ isLoading }) {
   // dispatch(getFavoriteTracks(accessToken))
  
   const favorites = useSelector((state) => state.player.favorites);
+  
   
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);

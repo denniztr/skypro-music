@@ -2,22 +2,47 @@ import { NavMenuComponent } from '../../components/NavMenuComponent/NavMenuCompo
 import { SearchComponent } from '../../components/SearchComponent/SearchComponent';
 import { SideBarComponent } from '../../components/SideBarComponent/SideBarComponent';
 import { FavTracksItemComponent } from '../../components/FavTracksItemComponent/FavTracksItemComponent';
+import { TrackListItemsComponent } from '../../components/TrackListItemsComponent/TrackListItemsComponent';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-import { updateToken } from '../store/authSlice';
-import { setAccessToken, getFavoriteTracks } from '../store/authSlice';
+import { setAccessToken, updateToken } from '../store/authSlice';
+
+import { UserContext } from '../../context';
+import { useContext } from 'react';
 
 import * as S from './Favorites.styles';
 
-export const FavoriteSongs = ({ isLoading }) => {
+
+export const FavoriteSongs = () => {
+
   const dispatch = useDispatch();
+
+  const [user] = useContext(UserContext);
+  // const currentUser = user;
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const refreshToken = window.localStorage.getItem('refreshToken');
   let accessToken = useSelector((state) => state.auth.accessToken);
-  
+
+  const favorites = useSelector((state) => state.player.favorites.map((item) => {
+    return {
+      ...item,
+      stared_user: [{
+        email: user.email,
+        first_name: '',
+        id: user.id,
+        username: user.username,
+      }]
+    }
+  }))
+
+  console.log(favorites);
+
+ // const favorites = useSelector((state) => state.player.favorites);
 
   useEffect(() => {
     dispatch(updateToken(refreshToken))
@@ -27,10 +52,25 @@ export const FavoriteSongs = ({ isLoading }) => {
         // window.localStorage.setItem('accessToken', accessToken);
       })
       .catch((error) => console.error(error.message));
-      // dispatch(getFavoriteTracks(accessToken))
+     
   }, [dispatch, refreshToken]);
 
-  
+  console.log(favorites);
+  // useEffect(() => {
+  //   try {
+  //     getFavoriteTracks(accessToken).then((tracks) => {
+  //     dispatch(setFavorites(tracks))
+  //     setIsLoading(false)
+  //     })
+  //   } catch (error) {
+  //     console.error(error.message)
+  //     setIsLoading(false)
+  //   }
+    
+  // }, [accessToken, dispatch])
+
+
+
   return (
     <>
       <S.Wrapper>
@@ -51,7 +91,8 @@ export const FavoriteSongs = ({ isLoading }) => {
                     </S.PlaylistTitleSvg>
                   </S.Col4>
                 </S.ContentTitle>
-                <FavTracksItemComponent isLoading={isLoading}/>
+                {/* <FavTracksItemComponent  isLoading={isLoading}/> */}
+                <TrackListItemsComponent favorites={favorites}/>
               </S.CenterblockContent>
             </S.MainCenterblock>
             <SideBarComponent />

@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-
 const playerSlice = createSlice({
   name: 'player',
   initialState: {
@@ -84,7 +83,6 @@ const playerSlice = createSlice({
     },
     setFavorites: (state, action) => {
       state.favorites = action.payload;
-      console.log(state.favorites)
     },
   },
 });
