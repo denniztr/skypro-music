@@ -1,4 +1,5 @@
-import { createSlice, current } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+
 
 const playerSlice = createSlice({
   name: 'player',
@@ -9,6 +10,7 @@ const playerSlice = createSlice({
     shuffledPlaylist: [{}],
     shuffled: false,
     currentPlaylist: [],
+    favorites: [],
   },
   reducers: {
     setCurrentTrack: (state, action) => {
@@ -21,21 +23,6 @@ const playerSlice = createSlice({
       state.tracks = action.payload;
     },
     nextTrack: (state, action) => {
-      
-      // const selectedTrack = state.currentTrack;
-      
-      // const selectedPlaylist = state.shuffled ? state.shuffledPlaylist : state.tracks;
-
-      // const selectedTrackId = selectedPlaylist.findIndex(
-      //   (currentTrack) => currentTrack.id === selectedTrack.id
-      // );
-      
-
-      // if (selectedTrackId >= selectedPlaylist.length - 1) {
-      //   state.currentTrack = state.tracks[0];
-      // } else {
-      //   state.currentTrack = state.tracks[selectedTrackId + 1];
-      // }
       const selectedTrack = state.currentTrack;
       
       const selectedPlaylist = state.shuffled ? state.shuffledPlaylist : state.currentPlaylist;
@@ -55,14 +42,14 @@ const playerSlice = createSlice({
       const selectedTrack = state.currentTrack;
       const selectedPlaylist = state.shuffled
         ? state.shuffledPlaylist
-        : state.tracks;
+        : state.currentPlaylist;
       const selectedTrackId = selectedPlaylist.findIndex(
         (currentTrack) => currentTrack.id === selectedTrack.id
       );
       if (selectedTrackId >= selectedPlaylist.length - 1) {
-        state.currentTrack = state.tracks[0];
+        state.currentTrack = state.currentPlaylist[0];
       } else {
-        state.currentTrack = state.tracks[selectedTrackId - 1];
+        state.currentTrack = state.currentPlaylist[selectedTrackId - 1];
       }
     },
     initShuffle: (state, action) => {
@@ -91,7 +78,14 @@ const playerSlice = createSlice({
       // state.tracks = action.payload;
       state.currentPlaylist = action.payload;
       console.log(state.currentPlaylist)
-    }
+    },
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
+    setFavorites: (state, action) => {
+      state.favorites = action.payload;
+      console.log(state.favorites)
+    },
   },
 });
 
@@ -104,5 +98,6 @@ export const {
   initShuffle,
   toggleTrackStarred,
   setCurrentPlaylist,
+  setFavorites,
 } = playerSlice.actions;
 export default playerSlice.reducer;

@@ -9,7 +9,7 @@ import { Playlist } from './pages/playlist/Playlist';
 import { AuthPage } from './pages/auth/AuthPage';
 
 
-export const AppRoutes = ({ getAllTracksError }) => {
+export const AppRoutes = ({ isLoading, getAllTracksError }) => {
   return (
     <Routes>
       <Route path="/register" element={<AuthPage isLoginMode={false} />} />
@@ -18,12 +18,12 @@ export const AppRoutes = ({ getAllTracksError }) => {
         <Route path="/playlist/:id" element={<Playlist />} />
         <Route 
           path="/favorites"
-          element={<FavoriteSongs/>}
+          element={<FavoriteSongs isLoading={isLoading}/>}
         />
         <Route
           path="/"
           element={
-            <Main getAllTracksError={getAllTracksError} />
+            <Main isLoading={isLoading} getAllTracksError={getAllTracksError} />
           }
         />
       </Route>

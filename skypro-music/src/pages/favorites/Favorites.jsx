@@ -8,15 +8,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
 import { updateToken } from '../store/authSlice';
-import { setAccessToken } from '../store/authSlice';
+import { setAccessToken, getFavoriteTracks } from '../store/authSlice';
 
 import * as S from './Favorites.styles';
 
-export const FavoriteSongs = () => {
+export const FavoriteSongs = ({ isLoading }) => {
   const dispatch = useDispatch();
 
   const refreshToken = window.localStorage.getItem('refreshToken');
   let accessToken = useSelector((state) => state.auth.accessToken);
+  
 
   useEffect(() => {
     dispatch(updateToken(refreshToken))
@@ -26,8 +27,10 @@ export const FavoriteSongs = () => {
         // window.localStorage.setItem('accessToken', accessToken);
       })
       .catch((error) => console.error(error.message));
+      // dispatch(getFavoriteTracks(accessToken))
   }, [dispatch, refreshToken]);
 
+  
   return (
     <>
       <S.Wrapper>
@@ -48,7 +51,7 @@ export const FavoriteSongs = () => {
                     </S.PlaylistTitleSvg>
                   </S.Col4>
                 </S.ContentTitle>
-                <FavTracksItemComponent />
+                <FavTracksItemComponent isLoading={isLoading}/>
               </S.CenterblockContent>
             </S.MainCenterblock>
             <SideBarComponent />

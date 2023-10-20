@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { setFavorites } from './playerSlice';
 
 export const getToken = createAsyncThunk(
   'auth/getToken',
@@ -68,7 +69,7 @@ export const updateToken = createAsyncThunk(
 
 export const getFavoriteTracks = createAsyncThunk(
   'auth/getFavoriteTracks',
-  async function (accessToken, { rejectWithValue }) {
+  async function (accessToken, { rejectWithValue, dispatch }) {
     try {
       const response = await fetch(
         'https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/',
@@ -80,7 +81,8 @@ export const getFavoriteTracks = createAsyncThunk(
         }
       );
       const data = await response.json();
-      return data
+      dispatch(setFavorites(data))
+
     } catch (error) {
       return rejectWithValue(error.message);
     }

@@ -10,30 +10,20 @@ import { addToStarred, unStarred } from '../../pages/store/authSlice';
 
 import { UserContext } from '../../context';
 
-import { getAllTracks } from '../../api';
 
 import * as S from './TrackListItems.styles';
 
 
-export function TrackListItemsComponent() {
+export function TrackListItemsComponent({isLoading}) {
   const dispatch = useDispatch();
   
   const [user] = useContext(UserContext);
   const currentUser = user;
 
-  // useEffect(() => {
-  //   getAllTracks()
-  //   .then((tracks) => dispatch(setCurrentPlaylist(tracks)))
-  // }, [dispatch])
-
-   const [isLoading, setIsLoading] = useState(true);
-
   const tracks = useSelector((state) => state.player.tracks)
   const currentTrack = useSelector((state) => state.player.currentTrack);
   const isPlaying = useSelector((state) => state.player.isPlaying);
   const accessToken = useSelector((state) => state.auth.accessToken);
-
- 
 
   const toggleStarred = (track) => {
     try {
@@ -49,13 +39,6 @@ export function TrackListItemsComponent() {
     }
   }
 
-  useEffect(() => {
-    const loading = setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-
-    return () => clearTimeout(loading);
-  }, []);
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
