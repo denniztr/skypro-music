@@ -14,21 +14,24 @@ export const Main = () => {
   const dispatch = useDispatch();
 
   const [getAllTracksError, stGetAllTracksError] = useState(null);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     try {
+      setIsLoading(true)
       getAllTracks().then((tracks) => {
       dispatch(setTracks(tracks))
       setIsLoading(false)
       })
     } catch (error) {
       stGetAllTracksError(error.message)
-      setIsLoading(false)
+       setIsLoading(false)
     }
+
   }, [dispatch])
 
   const tracks = useSelector((state) => state.player.tracks)
+  
   return (
     <>
       <S.Wrapper>

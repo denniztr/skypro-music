@@ -1,18 +1,10 @@
-import { useState, useEffect, useContext } from 'react';
-
+import { useContext } from 'react';
 import { LoadingComponent } from '../LoadingComponent/LoadingComponent';
-
 import { useDispatch, useSelector } from 'react-redux';
-
-import { setCurrentTrack, setIsPlaying, toggleTrackStarred, setCurrentPlaylist, setTracks } from '../../pages/store/playerSlice';
-
-import { addToStarred, unStarred } from '../../pages/store/authSlice';
-
+import { setCurrentTrack, setIsPlaying, toggleTrackStarred, setCurrentPlaylist } from '../../pages/store/playerSlice';
+import { addToStarred, unStarred, getFavoriteTracks, setIsLoading } from '../../pages/store/authSlice';
 import { UserContext } from '../../context';
-
-
 import * as S from './TrackListItems.styles';
-
 
 export function TrackListItemsComponent({tracks, isLoading}) {
   const dispatch = useDispatch();
@@ -20,19 +12,11 @@ export function TrackListItemsComponent({tracks, isLoading}) {
   const [user] = useContext(UserContext);
   const currentUser = user;
 
-  
-
-   //console.log(favorites);
-
-  // const favorites = tracks.filter((track) => {  
-  //   return track.stared_user.find((user) => user.id === currentUser.id);
-  // });
-// console.log(tracks);
-
   const currentTrack = useSelector((state) => state.player.currentTrack);
   const isPlaying = useSelector((state) => state.player.isPlaying);
   const accessToken = useSelector((state) => state.auth.accessToken);
 
+  
 
   const toggleStarred = (track) => {
     try {
@@ -41,13 +25,11 @@ export function TrackListItemsComponent({tracks, isLoading}) {
       } else {
         dispatch(addToStarred({ track, accessToken }));
       }
-
-      dispatch(toggleTrackStarred({ track, currentUser }));
+        dispatch(toggleTrackStarred({ track, currentUser }));
     } catch (error) {
       console.error(error.message);
     }
   }
-
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -68,7 +50,7 @@ export function TrackListItemsComponent({tracks, isLoading}) {
             onClick={() => {
               dispatch(setCurrentTrack(track));
               dispatch(setIsPlaying(true));
-              dispatch(setCurrentPlaylist(tracks))
+              dispatch(setCurrentPlaylist(tracks));
             }}
           >
             <S.PlaylistTrack>

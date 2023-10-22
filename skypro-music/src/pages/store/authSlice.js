@@ -69,7 +69,7 @@ export const updateToken = createAsyncThunk(
 
 export const getFavoriteTracks = createAsyncThunk(
   'auth/getFavoriteTracks',
-  async function (accessToken, { rejectWithValue, dispatch }) {
+  async function (accessToken, { rejectWithValue, dispatch, getState }) {
     try {
       const response = await fetch(
         'https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/',
@@ -81,8 +81,23 @@ export const getFavoriteTracks = createAsyncThunk(
         }
       );
       const data = await response.json();
-      dispatch(setFavorites(data))
+      const store = getState();
 
+      const transformData = data.map((el) => {
+        return {
+          ...el,
+          stared_user: [{
+            email: store.auth.user.email,
+            first_name: '',
+            id: store.auth.user.id,
+            username: store.auth.user.username,
+          }]
+        }
+      })
+
+      dispatch(setFavorites(transformData))
+
+      return data
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -113,7 +128,8 @@ export const addToStarred = createAsyncThunk(
 
 export const unStarred = createAsyncThunk(
   'auth/unStarred',
-  async function({track, accessToken}, { rejectWithValue }) {
+  async function({track, accessToken}, { rejectWithValue, dispatch }) {
+    
     try {
       const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${track.id}/favorite/`, {
         method: 'DELETE',
@@ -122,6 +138,10 @@ export const unStarred = createAsyncThunk(
         }
       })
       const data = await response.json()
+
+
+      dispatch(getFavoriteTracks(accessToken))
+      dispatch(setIsLoading(false))
       return data
     } catch (error) {
       return rejectWithValue(error.message)
@@ -135,6 +155,7 @@ const authSlice = createSlice({
     user: null,
     accessToken: null,
     refreshToken: null,
+    loading: false,
   },
   reducers: {
     setAccessToken: (state, action) => {
@@ -146,9 +167,23 @@ const authSlice = createSlice({
     setUserRed: (state, action) => {
       state.user = action.payload;
       localStorage.setItem('user', JSON.stringify(state.user))
+    },
+    setIsLoading: (state, action) => {
+      state.loading = action.payload;
     }
   },
+  extraReducers: {
+    [getFavoriteTracks.pending]: (state) => {
+      state.loading = true;
+    },
+    [getFavoriteTracks.fulfilled]: (state) => {
+      state.loading = false;
+    },
+    [getFavoriteTracks.rejected]: (state) => {
+      state.loading = false;
+    },
+  }
 });
 
-export const { setAccessToken, setRefreshToken, setUserRed } = authSlice.actions;
+export const { setAccessToken, setRefreshToken, setUserRed, setIsLoading } = authSlice.actions;
 export default authSlice.reducer;
