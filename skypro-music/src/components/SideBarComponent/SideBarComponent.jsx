@@ -14,7 +14,6 @@ export function SideBarComponent() {
 
   const buttonClick = () => {
     window.localStorage.removeItem('user');
-    // setUser(window.localStorage.getItem('user'));
     navigate('/login');
   }
 

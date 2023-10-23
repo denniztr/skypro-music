@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { setFavorites } from './playerSlice';
+import { setCurrentPlaylist, setFavorites } from './playerSlice';
 
 export const getToken = createAsyncThunk(
   'auth/getToken',
@@ -57,7 +57,7 @@ export const updateToken = createAsyncThunk(
 
       const data = await response.json();
       const updatedAccessToken = data.access;
-
+      dispatch(setAccessToken(updatedAccessToken))
       dispatch(getFavoriteTracks(updatedAccessToken));
 
       return updatedAccessToken;
@@ -96,7 +96,7 @@ export const getFavoriteTracks = createAsyncThunk(
       })
 
       dispatch(setFavorites(transformData))
-
+      
       return data
     } catch (error) {
       return rejectWithValue(error.message);
@@ -142,6 +142,7 @@ export const unStarred = createAsyncThunk(
 
       dispatch(getFavoriteTracks(accessToken))
       dispatch(setIsLoading(false))
+
       return data
     } catch (error) {
       return rejectWithValue(error.message)

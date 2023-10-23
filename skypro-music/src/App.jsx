@@ -129,16 +129,16 @@ const App = () => {
 
   const currentTrack = useSelector((state) => state.player.currentTrack);
   
-  let accessToken = useSelector((state) => state.auth.accessToken);
+ // let accessToken = useSelector((state) => state.auth.accessToken);
   
   const refreshToken = window.localStorage.getItem('refreshToken');
 
   useEffect(() => {
     dispatch(updateToken(refreshToken))
-    .then((newAccessToken) => {
-      accessToken = newAccessToken;
-      dispatch(setAccessToken(accessToken.payload))
-    }).catch((error) => console.error(error.message))
+    // .then((newAccessToken) => {
+    //   accessToken = newAccessToken;
+    //   dispatch(setAccessToken(accessToken.payload))
+    // }).catch((error) => console.error(error.message))
   }, [dispatch, refreshToken])
 
   return (

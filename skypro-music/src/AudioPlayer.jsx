@@ -1,12 +1,16 @@
 import { useRef, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
 import {
   setIsPlaying,
   nextTrack,
   prevTrack,
   initShuffle,
+  toggleTrackStarred,
 } from './pages/store/playerSlice';
+import { unStarred, addToStarred  } from './pages/store/authSlice';
+
+import { useContext } from 'react';
+import { UserContext } from './context';
 
 import ProgressBar from './ProgressBar';
 import * as S from './AudioPlayer.styles';
@@ -16,9 +20,15 @@ const PrevSvg = './prev.svg';
 export function AudioPlayer() {
   const dispatch = useDispatch();
 
+  const [user] = useContext(UserContext);
+  const currentUser = user;
+ 
+
   const currentTrack = useSelector((state) => state.player.currentTrack);
   const isPlaying = useSelector((state) => state.player.isPlaying);
   const isShuffle = useSelector((state) => state.player.shuffled);
+  const accessToken = useSelector((state) => state.auth.accessToken);
+  
   const currentPlaylist = useSelector((state) => state.player.currentPlaylist);
   const tracks = useSelector((state) => state.player.tracks);
 
@@ -26,7 +36,7 @@ export function AudioPlayer() {
   const [looping, setLooping] = useState(false);
 
   const audioRef = useRef(null);
-
+  
   useEffect(() => {
     const handleTrackEnded = () => dispatch(nextTrack());
     if (audioRef.current) {
@@ -88,14 +98,6 @@ export function AudioPlayer() {
     }
   };
 
-  const aintReadyYet = () => {
-    if (aintReadyYet) {
-      audioRef.current.pause();
-      alert('Ещё не реализовано');
-    }
-    audioRef.current.play();
-  };
-
   const formatTime = (decimalNumber) => {
     const wholeNumber = Math.floor(decimalNumber);
     const minutes = Math.floor(wholeNumber / 60);
@@ -105,6 +107,19 @@ export function AudioPlayer() {
     const formattedSeconds = String(seconds).padStart(2, '0');
 
     return `${formattedMinutes}:${formattedSeconds}`;
+  };
+
+  const toggleStarred = (track) => {
+    try {
+      if (track.stared_user.some((user) => user.id === currentUser.id)) {
+        dispatch(unStarred({ track, accessToken }));
+      } else {
+        dispatch(addToStarred({ track, accessToken }));
+      }
+      dispatch(toggleTrackStarred({ track, currentUser }));
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   return (
@@ -218,22 +233,26 @@ export function AudioPlayer() {
                   </S.TrackPlayAlbum>
                 </S.TrackPlayContain>
                 <S.TrackPlayLikeDis>
+
                   <S.TrackPlayLikeButton
                     className="_btn-icon"
-                    onClick={aintReadyYet}
+                    onClick={() => {
+                      toggleStarred(currentTrack)
+                    }}
+                   
                   >
                     <S.TrackPlayLikeSvg alt="like">
-                      <use xlinkHref="../img/icon/sprite.svg#icon-like"></use>
+                      {currentTrack.stared_user.find((user) => user.id === currentUser.id
+                        ) ? (
+                        <svg width="14.34" height="13" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M8.02203 12.7031C13.9025 9.20312 16.9678 3.91234 13.6132 1.47046C11.413 -0.13111 8.95392 1.14488 8.02203 1.95884H8.00052H8.00046H7.97895C7.04706 1.14488 4.58794 -0.13111 2.38775 1.47046C-0.966814 3.91234 2.09846 9.20312 7.97895 12.7031H8.00046H8.00052H8.02203Z" fill="#B672FF"/>
+                          <path d="M8.00046 1.95884H8.02203C8.95392 1.14488 11.413 -0.13111 13.6132 1.47046C16.9678 3.91234 13.9025 9.20312 8.02203 12.7031H8.00046M8.00052 1.95884H7.97895C7.04706 1.14488 4.58794 -0.13111 2.38775 1.47046C-0.966814 3.91234 2.09846 9.20312 7.97895 12.7031H8.00052" stroke="#B672FF"/>
+                        </svg> 
+                      ) : (
+                        <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
+                      )}
                     </S.TrackPlayLikeSvg>
-                  </S.TrackPlayLikeButton>
-                  <S.TrackPlayDislikeButton
-                    className="_btn-icon"
-                    onClick={aintReadyYet}
-                  >
-                    <S.TrackPlayDislikeSvg alt="dislike">
-                      <use xlinkHref="../img/icon/sprite.svg#icon-dislike"></use>
-                    </S.TrackPlayDislikeSvg>
-                  </S.TrackPlayDislikeButton>
+                   </S.TrackPlayLikeButton>
                 </S.TrackPlayLikeDis>
               </S.PlayerTrackPlay>
             </S.BarPlayer>
