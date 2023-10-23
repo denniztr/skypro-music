@@ -10,9 +10,9 @@ export const ContentPlaylist = styled.div`
     -ms-flex-direction: column;
     flex-direction: column;
     overflow: auto;
-
+    
         /* Скрываем вертикальную полосу прокрутки */
-    scrollbar-width: thin;
+        scrollbar-width: thin;
     scrollbar-color: transparent transparent;
 
     /* Стилизация полосы прокрутки в браузерах, поддерживающих вендорные префиксы */
@@ -79,7 +79,7 @@ export const TrackTitleImage = styled.div`
     margin-right: 17px;
 `
 
-export const TrackTitleSvg = styled.svg`
+export const TrackTitleSvgStarred = styled.svg`
     width: 18px;
     height: 17px;
     fill: transparent;

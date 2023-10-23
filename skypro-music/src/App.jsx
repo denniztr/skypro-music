@@ -1,15 +1,17 @@
+import React, { useState, useEffect } from 'react';
+
 import { createGlobalStyle } from 'styled-components';
 
-import { getAllTracks } from './api';
 import { AppRoutes } from './routes';
 import { UserContext } from './context';
 
 import { AudioPlayer } from './AudioPlayer';
 
-import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setTracks } from './pages/store/playerSlice';
+import { setAccessToken, setUserRed } from './pages/store/authSlice';
+import { updateToken } from './pages/store/authSlice';
+
 
 const GlobalStyle = createGlobalStyle`
 
@@ -113,32 +115,38 @@ const GlobalStyle = createGlobalStyle`
 const App = () => {
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    const currentUser = JSON.parse(localStorage.getItem('user'));
+    dispatch(setUserRed(currentUser))
+    setUser(currentUser)
+ }, [dispatch])
+
+
   const [user, setUser] = useState(
-    window.localStorage.getItem('user') || 'Empty'
+    localStorage.getItem('user') || 
+    null
   );
 
-  const [getAllTracksError, stGetAllTracksError] = useState(null);
-
   const currentTrack = useSelector((state) => state.player.currentTrack);
+  
+  let accessToken = useSelector((state) => state.auth.accessToken);
+  
+  const refreshToken = window.localStorage.getItem('refreshToken');
 
   useEffect(() => {
-    getAllTracks()
-      .then((tracks) => dispatch(setTracks(tracks)))
-      .catch((error) => {
-        stGetAllTracksError(error.message);
-      });
-  }, []);
+    dispatch(updateToken(refreshToken))
+    .then((newAccessToken) => {
+      accessToken = newAccessToken;
+      dispatch(setAccessToken(accessToken.payload))
+    }).catch((error) => console.error(error.message))
+  }, [dispatch, refreshToken])
 
   return (
     <>
       <GlobalStyle />
       <UserContext.Provider value={[user, setUser]}>
-        <AppRoutes
-          user={user}
-          setUser={setUser}
-          getAllTracksError={getAllTracksError}
-        />
-      {currentTrack ? <AudioPlayer /> : null}
+        <AppRoutes />
+        {currentTrack ? <AudioPlayer /> : null}
       </UserContext.Provider>
     </>
   );

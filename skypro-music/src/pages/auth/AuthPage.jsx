@@ -1,12 +1,18 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
 
-import { registerUser, loginUser, getToken } from '../../api';
+import { registerUser, loginUser } from '../../api';
+
 import { UserContext } from '../../context';
+
+import { useDispatch } from 'react-redux';
+import { getToken, setUserRed  } from '../store/authSlice';
 
 import * as S from './AuthPage.styles';
 
 export function AuthPage({ isLoginMode = false }) {
+  const dispatch = useDispatch();
+
   const [error, setError] = useState(null);
 
   const [email, setEmail] = useState('');
@@ -35,15 +41,11 @@ export function AuthPage({ isLoginMode = false }) {
         const data = object.data;
         if (status === 200) {
           setError(null);
-          window.localStorage.setItem('user', data.username);
-          setUser(data.username);
+          localStorage.setItem('user', JSON.stringify(data));
+          setUser(data);
+          dispatch(setUserRed(data))
+          dispatch(getToken({ email, password }))
           navigate('/');
-          const token = await getToken({ email, password });
-          const accessToken = token.access;
-          const refreshToken = token.refresh;
-          console.log(token);
-          console.log('accessToken: ' + accessToken);
-          console.log('refreshToken: ' + refreshToken);
         } else {
           const message = data.detail;
           setError(message);
@@ -55,7 +57,7 @@ export function AuthPage({ isLoginMode = false }) {
     // alert(`Выполняется вход: ${email} ${password}`);
     // setError("Неизвестная ошибка входа");
   };
-
+  
   const handleRegister = async () => {
     if (!username) {
       setError('Веедите имя');
@@ -101,7 +103,7 @@ export function AuthPage({ isLoginMode = false }) {
     // setError("Неизвестная ошибка регистрации");
   };
 
-  // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы
+ 
   useEffect(() => {
     setError(null);
   }, [isLoginMode, email, password, repeatPassword]);
@@ -140,6 +142,7 @@ export function AuthPage({ isLoginMode = false }) {
             <S.Buttons>
               <S.PrimaryButton
                 onClick={() => handleLogin({ email, password })}
+                
                 disabled={loginButton}
                 to="/"
               >

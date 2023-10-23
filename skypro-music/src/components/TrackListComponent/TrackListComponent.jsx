@@ -4,9 +4,8 @@ import { SortButtonsComponent } from '../SortButtonsComponent/SortButtonsCompone
 
 import * as S from './TrackList.styles';
 
-export function TrackListComponent({
-  getAllTracksError,
-}) {
+export function TrackListComponent({tracks, isLoading, getAllTracksError}) {
+  
   return (
     <S.MainCenterblock>
       <SearchComponent />
@@ -27,6 +26,8 @@ export function TrackListComponent({
           <>{getAllTracksError}</>
         ) : (
           <TrackListItemsComponent
+            tracks={tracks}
+            isLoading={isLoading}
             getAllTracksError={getAllTracksError}
           />
         )}
