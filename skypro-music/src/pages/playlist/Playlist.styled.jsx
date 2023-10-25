@@ -95,44 +95,4 @@ export const PlaylistTitleSvg = styled.svg`
     stroke: #696969;
 `
 
-// @font-face {
-//     font-family: 'StratosSkyeng';
-//     src: local('StratosSkyeng'), local('StratosSkyeng'),
-//       url('/public//fonts/StratosSkyeng.woff2') format('woff2'),
-//       url('/public/fonts/StratosSkyeng.woff') format('woff');
-//     font-weight: 400;
-//     font-style: normal;
-//   }
-
-// .playlist__container {
-//     width: 100vw;
-//     height: 100vh;
-//     background-color: #181818;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     flex-direction: column;
-//     position: relative;
-// }
-
-// .playlist__title {
-//     font-style: normal;
-//     font-weight: 400;
-//     font-size: 64px;
-//     line-height: 72px;
-//     letter-spacing: -0.8px;
-//     margin-bottom: 45px;
-// } 
-
-// .playlist__logo {
-//     position: absolute;
-//     left: 30px;
-//     top: 30px;
-// }
-
-// .playlist__logo-src {
-//     width: 113.33px;
-//     height: 17px;
-//     color: #181818;
-// }
 

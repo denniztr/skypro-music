@@ -12,6 +12,7 @@ import { getPlaylist } from '../store/playerSlice';
 
 
 export const Playlist = () => {
+
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.player.loading);
 
@@ -49,7 +50,7 @@ console.log(selectedPlaylist)
                   </S.PlaylistTitleSvg>
                 </S.Col4>
               </S.ContentTitle>
-              <TrackListItemsComponent isLoading={isLoading} tracks={selectedPlaylist.items}/>
+              {/* <TrackListItemsComponent isLoading={isLoading} tracks={selectedPlaylist.items}/> */}
             </S.CenterblockContent>
           </S.MainCenterblock>
           <SideBarComponent />

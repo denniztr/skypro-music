@@ -1,22 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-// export const getPlaylist = createAsyncThunk(
-//   'player/getPlaylist',
-//   async function (_, {rejectWithValue, dispatch}) {
-//     try {
-//       const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/selection/`, {
-//         method: 'GET',
-//       });
-//       const data = await response.json();
-
-//       console.log(data)
-
-//     } catch (error) {
-//       return rejectWithValue(error.message)
-//     }
-//   }
-// )
-
 export const getPlaylist = createAsyncThunk(
   'player/getPlaylist',
   async function (id, {rejectWithValue, dispatch}) {
@@ -49,6 +32,7 @@ const playerSlice = createSlice({
     loading: false,
     playlistId: null,
     value: '',
+    selectedAuthors: [],
   },
   reducers: {
     setCurrentTrack: (state, action) => {
@@ -124,11 +108,22 @@ const playerSlice = createSlice({
     },
     setPlaylist: (state, action) => {
       state.playlist = action.payload;
-      console.log(state.playlist);
     },
     setValue: (state, action) => {
       state.value = action.payload;
       console.log(state.value);
+    },
+    toggleAuthorSelection: (state, action) => {
+      const author = action.payload;
+      const index = state.selectedAuthors.indexOf(author);
+      if (index !== -1) {
+        state.selectedAuthors.splice(index, 1);
+      } else {
+        state.selectedAuthors.push(author);
+      }
+    },
+    setFoundTracksLength: (state, action) => {
+      state.foundTracksLength = action.payload;
     }
   },
 });
@@ -146,5 +141,8 @@ export const {
   setFavorites,
   setPlaylist,
   setValue,
+  setIsSortByAuthor,
+  toggleAuthorSelection,
+  setFoundTracksLength,
 } = playerSlice.actions;
 export default playerSlice.reducer;

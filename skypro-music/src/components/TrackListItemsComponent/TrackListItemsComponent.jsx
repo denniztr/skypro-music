@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { LoadingComponent } from '../LoadingComponent/LoadingComponent';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentTrack, setIsPlaying, toggleTrackStarred, setCurrentPlaylist } from '../../pages/store/playerSlice';
+import { setCurrentTrack, setIsPlaying, toggleTrackStarred, setCurrentPlaylist, setIsSortByAuthor } from '../../pages/store/playerSlice';
 import { addToStarred, unStarred } from '../../pages/store/authSlice';
 import { UserContext } from '../../context';
 import * as S from './TrackListItems.styles';
@@ -16,12 +16,19 @@ export function TrackListItemsComponent({isLoading, tracks}) {
   const isPlaying = useSelector((state) => state.player.isPlaying);
   const accessToken = useSelector((state) => state.auth.accessToken);
   const value = useSelector((state) => state.player.value);
+  // const sortByAuthor = useSelector((state) => state.player.sortByAuthor);
+  const selectedAuthors = useSelector((state) => state.player.selectedAuthors);
+
+  // console.log(sortByAuthor);
 
   const filteredTracks = tracks.filter(track => {
+    if (selectedAuthors.length > 0) {
+      // филтруем если есть исполнители
+      return selectedAuthors.includes(track.author) && track.name.toLowerCase().includes(value.toLowerCase());
+    }
     return track.name.toLowerCase().includes(value.toLowerCase())
-  })
 
-console.log(filteredTracks);
+  })
 
   const toggleStarred = (track) => {
     try {
