@@ -1,25 +1,61 @@
+import * as S from './Playlist.styled';
+import { NavMenuComponent } from '../../components/NavMenuComponent/NavMenuComponent';
+import { SearchComponent } from '../../components/SearchComponent/SearchComponent';
+import { TrackListItemsComponent } from '../../components/TrackListItemsComponent/TrackListItemsComponent';
+import { SideBarComponent } from '../../components/SideBarComponent/SideBarComponent';
 import { useParams } from 'react-router-dom';
 import { PLAYLISTS } from '../../constants';
-import { Link } from 'react-router-dom';
-import './Playlist.css';
+// import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPlaylist } from '../store/playerSlice';
+
 
 export const Playlist = () => {
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.player.loading);
+
   const params = useParams();
   const playlist = PLAYLISTS.find((playlist) => playlist.id === Number(params.id)
   );
 
+
+useEffect(() => {
+  dispatch(getPlaylist(playlist.id))
+}, [dispatch, playlist.id])
+
+
+const selectedPlaylist = useSelector((state) => state.player.playlist);
+
+console.log(selectedPlaylist)
+
   return (
     <>
-      <div className="playlist__container">
-        <Link to="/">
-          <div className="modal__logo fav__logo">
-            <img className="playlist__logo-src" src="../logo.png" alt="logo" />
-          </div>
-        </Link>
-        <div className="playlist">
-          <h3 className="playlist__title">{playlist.title}</h3>
-        </div>
-      </div>
-    </>
+    <S.Wrapper>
+      <S.Container>
+        <S.Main>
+          <NavMenuComponent/>
+          <S.MainCenterblock>
+            <SearchComponent />
+            <S.CenterblockTitle>{selectedPlaylist.name}</S.CenterblockTitle>
+            <S.CenterblockContent>
+              <S.ContentTitle>
+                <S.Col1>Трек</S.Col1>
+                <S.Col2>ИСПОЛНИТЕЛЬ</S.Col2>
+                <S.Col3>АЛЬБОМ</S.Col3>
+                <S.Col4>
+                  <S.PlaylistTitleSvg alt="time">
+                    <use xlinkHref="../img/icon/sprite.svg#icon-watch" />
+                  </S.PlaylistTitleSvg>
+                </S.Col4>
+              </S.ContentTitle>
+              <TrackListItemsComponent isLoading={isLoading} tracks={selectedPlaylist.items}/>
+            </S.CenterblockContent>
+          </S.MainCenterblock>
+          <SideBarComponent />
+        </S.Main>
+      </S.Container>
+    </S.Wrapper>
+  </>
   );
 };

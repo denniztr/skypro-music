@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { useEffect } from 'react';
 
-import { setAccessToken, updateToken } from '../store/authSlice';
+import { getFavoriteTracks, setAccessToken, updateToken } from '../store/authSlice';
 
 
 import * as S from './Favorites.styles';
@@ -27,6 +27,7 @@ export const FavoriteSongs = () => {
       .then((newAccessToken) => {
         accessToken = newAccessToken;
         dispatch(setAccessToken(accessToken.payload));
+        // dispatch(getFavoriteTracks(newAccessToken))
       })
       .catch((error) => console.error(error.message));
      

@@ -1,4 +1,39 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
+// export const getPlaylist = createAsyncThunk(
+//   'player/getPlaylist',
+//   async function (_, {rejectWithValue, dispatch}) {
+//     try {
+//       const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/selection/`, {
+//         method: 'GET',
+//       });
+//       const data = await response.json();
+
+//       console.log(data)
+
+//     } catch (error) {
+//       return rejectWithValue(error.message)
+//     }
+//   }
+// )
+
+export const getPlaylist = createAsyncThunk(
+  'player/getPlaylist',
+  async function (id, {rejectWithValue, dispatch}) {
+    try {
+      dispatch(setIsLoading(true))
+      const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/selection/${id}`, {
+        method: 'GET',
+      });
+      const data = await response.json();
+
+      dispatch(setPlaylist(data))
+      dispatch(setIsLoading(false))
+    } catch (error) {
+      return rejectWithValue(error.message)
+    }
+  }
+)
 
 const playerSlice = createSlice({
   name: 'player',
@@ -6,10 +41,14 @@ const playerSlice = createSlice({
     currentTrack: null,
     isPlaying: false,
     tracks: [],
-    shuffledPlaylist: [{}],
+    shuffledPlaylist: [],
     shuffled: false,
     currentPlaylist: [],
     favorites: [],
+    playlist: [],
+    loading: false,
+    playlistId: null,
+    value: '',
   },
   reducers: {
     setCurrentTrack: (state, action) => {
@@ -59,7 +98,6 @@ const playerSlice = createSlice({
     toggleTrackStarred: (state, action) => {
       const { track, currentUser } = action.payload;
       const trackIndex = state.tracks.findIndex((el) => el.id === track.id);
-
       if (trackIndex !== -1) {
         const updatedTrack = { ...state.tracks[trackIndex] };
         const starred = updatedTrack.stared_user.find((user) => user.id === currentUser.id);
@@ -79,11 +117,19 @@ const playerSlice = createSlice({
       console.log(state.currentPlaylist)
     },
     setIsLoading: (state, action) => {
-      state.isLoading = action.payload;
+      state.loading = action.payload;
     },
     setFavorites: (state, action) => {
       state.favorites = action.payload;
     },
+    setPlaylist: (state, action) => {
+      state.playlist = action.payload;
+      console.log(state.playlist);
+    },
+    setValue: (state, action) => {
+      state.value = action.payload;
+      console.log(state.value);
+    }
   },
 });
 
@@ -96,6 +142,9 @@ export const {
   initShuffle,
   toggleTrackStarred,
   setCurrentPlaylist,
+  setIsLoading,
   setFavorites,
+  setPlaylist,
+  setValue,
 } = playerSlice.actions;
 export default playerSlice.reducer;

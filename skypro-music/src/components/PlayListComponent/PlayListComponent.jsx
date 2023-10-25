@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { LoadingComponent } from '../LoadingComponent/LoadingComponent';
 import { Link } from 'react-router-dom';
 import * as S from './Playlist.styles';
+import { getPlaylist } from '../../pages/store/playerSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateToken } from '../../pages/store/authSlice';
+import { useParams } from 'react-router-dom';
+import { PLAYLISTS } from '../../constants';
 
 export function PlayListComponent({ playlists }) {
   const playlistLinkStyle = {
@@ -10,15 +15,8 @@ export function PlayListComponent({ playlists }) {
     display: 'inline-block',
   };
 
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const loading = setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-
-    return () => clearTimeout(loading);
-  }, []);
+  const dispatch = useDispatch();
+  
 
   return (
     <S.SidebarList>
@@ -28,6 +26,9 @@ export function PlayListComponent({ playlists }) {
             style={playlistLinkStyle}
             to={`/playlist/${playlist.id}`}
             key={playlist.id}
+            onClick={() => {
+              dispatch(getPlaylist(playlist.id))
+            }}
           >
             <S.SidebarImg src={playlist.img} alt={playlist.alt} />
           </Link>
@@ -35,32 +36,4 @@ export function PlayListComponent({ playlists }) {
       </S.SidebarItem>
     </S.SidebarList>
   );
-}
-
-{
-  /* <Link to="/playlist">
-{isLoading ? (
-  <LoadingComponent />
-) : (
-  <S.SidebarImg src="./img/playlist01.png" alt="day's playlist" />
-)}
-</Link>
-</S.SidebarItem>
-<S.SidebarItem>
-<Link to="/playlist">
-{isLoading ? (
-  <LoadingComponent />
-) : (
-  <S.SidebarImg src="./img/playlist02.png" alt="day's playlist" />
-)}
-</Link>
-</S.SidebarItem>
-<S.SidebarItem>
-<Link to="/playlist">
-{isLoading ? (
-  <LoadingComponent />
-) : (
-  <S.SidebarImg src="./img/playlist03.png" alt="day's playlist" />
-)}
-</Link> */
 }

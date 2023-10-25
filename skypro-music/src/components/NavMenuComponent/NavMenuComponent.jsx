@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context';
+import { getFavoriteTracks } from '../../pages/store/authSlice';
 
 import * as S from './NavMenu.styles';
 
-const Logo = './logo.png';
+import { useDispatch, useSelector } from 'react-redux';
 
 export function NavMenuComponent() {
   const linkStyle = {
@@ -13,6 +14,8 @@ export function NavMenuComponent() {
     fontSize: '16px',
     lineHeight: '24px',
   };
+  const dispatch = useDispatch();
+  const accessToken = useSelector((state) => state.auth.accessToken);
 
   const [setUser] = useContext(UserContext);
 
@@ -29,7 +32,7 @@ export function NavMenuComponent() {
     <S.MainNav>
       <S.NavLogo>
         <Link to="/">
-          <S.LogoImage src={Logo} alt="logo" />
+          <S.LogoImage src="../logo.png" alt="logo" />
         </Link>
       </S.NavLogo>
       <S.NavBurger onClick={toggleMenu}>
@@ -46,7 +49,7 @@ export function NavMenuComponent() {
               </Link>
             </S.MenuItem>
             <S.MenuItem>
-              <Link to="/favorites" style={linkStyle}>
+              <Link to="/favorites" style={linkStyle} >
                 Мой плейслист
               </Link>
             </S.MenuItem>

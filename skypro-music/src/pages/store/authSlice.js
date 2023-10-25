@@ -57,6 +57,7 @@ export const updateToken = createAsyncThunk(
 
       const data = await response.json();
       const updatedAccessToken = data.access;
+      dispatch(setAccessToken(updatedAccessToken));
 
       dispatch(getFavoriteTracks(updatedAccessToken));
 
@@ -139,8 +140,8 @@ export const unStarred = createAsyncThunk(
       })
       const data = await response.json()
 
-
       dispatch(getFavoriteTracks(accessToken))
+
       dispatch(setIsLoading(false))
       return data
     } catch (error) {
