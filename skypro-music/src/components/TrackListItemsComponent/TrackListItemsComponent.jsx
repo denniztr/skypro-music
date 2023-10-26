@@ -53,11 +53,11 @@ export function TrackListItemsComponent({isLoading, tracks}) {
     return `${formattedMinutes}:${formattedSeconds}`;
   };
 
-  //console.log(tracks)
+  console.log(tracks)
 
   return (
     <S.ContentPlaylist>
- 
+
             {filteredTracks.map((track) => {
                 return (
                   <S.PlaylistItem
@@ -123,8 +123,10 @@ export function TrackListItemsComponent({isLoading, tracks}) {
                         )}
                       </S.TrackAlbum>
                       <S.TrackTime>
-        
-                        <S.TrackTimeSvg
+                      {isLoading ? (
+                          <LoadingComponent />
+                        ) : (
+                          <S.TrackTimeSvg
                           key={track.id} 
                           alt="time" 
                           onClick={(e) => {
@@ -141,6 +143,7 @@ export function TrackListItemsComponent({isLoading, tracks}) {
                                 <use xlinkHref="/img/icon/sprite.svg#icon-like"></use> 
                               )}
                         </S.TrackTimeSvg>
+                        )}
                         <S.TrackTimeText>
                           {formatTime(track.duration_in_seconds)}
                         </S.TrackTimeText>

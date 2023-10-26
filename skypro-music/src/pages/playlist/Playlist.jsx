@@ -17,18 +17,18 @@ export const Playlist = () => {
   const isLoading = useSelector((state) => state.player.loading);
 
   const params = useParams();
-  const playlist = PLAYLISTS.find((playlist) => playlist.id === Number(params.id)
-  );
+  // const playlist = PLAYLISTS.find((playlist) => playlist.id === Number(params.id)
+  // );
+
+  useEffect(() => {
+    dispatch(getPlaylist(params.id))
+  }, [params.id, dispatch])
 
 
-useEffect(() => {
-  dispatch(getPlaylist(playlist.id))
-}, [dispatch, playlist.id])
+  const playlist = useSelector((state) => state.player.playlist);
 
-
-const selectedPlaylist = useSelector((state) => state.player.playlist);
-
-console.log(selectedPlaylist)
+  const tracks = playlist?.items || [];
+  const name = playlist?.name || '';
 
   return (
     <>
@@ -38,7 +38,7 @@ console.log(selectedPlaylist)
           <NavMenuComponent/>
           <S.MainCenterblock>
             <SearchComponent />
-            <S.CenterblockTitle>{selectedPlaylist.name}</S.CenterblockTitle>
+            <S.CenterblockTitle>{name}</S.CenterblockTitle>
             <S.CenterblockContent>
               <S.ContentTitle>
                 <S.Col1>Трек</S.Col1>
@@ -50,7 +50,7 @@ console.log(selectedPlaylist)
                   </S.PlaylistTitleSvg>
                 </S.Col4>
               </S.ContentTitle>
-              {/* <TrackListItemsComponent isLoading={isLoading} tracks={selectedPlaylist.items}/> */}
+              <TrackListItemsComponent isLoading={isLoading} tracks={tracks}/>  
             </S.CenterblockContent>
           </S.MainCenterblock>
           <SideBarComponent />

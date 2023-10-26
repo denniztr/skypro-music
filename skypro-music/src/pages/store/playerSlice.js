@@ -9,9 +9,12 @@ export const getPlaylist = createAsyncThunk(
         method: 'GET',
       });
       const data = await response.json();
-
+      
       dispatch(setPlaylist(data))
+      // dispatch(setPlaylistId(id))
       dispatch(setIsLoading(false))
+      // console.log(data)
+      // return data
     } catch (error) {
       return rejectWithValue(error.message)
     }
@@ -107,7 +110,11 @@ const playerSlice = createSlice({
       state.favorites = action.payload;
     },
     setPlaylist: (state, action) => {
+      // const {id, items} = action.payload;
+      // console.log(id);
+      // console.log(items);
       state.playlist = action.payload;
+      console.log(state.playlist);
     },
     setValue: (state, action) => {
       state.value = action.payload;
@@ -122,9 +129,11 @@ const playerSlice = createSlice({
         state.selectedAuthors.push(author);
       }
     },
-    setFoundTracksLength: (state, action) => {
-      state.foundTracksLength = action.payload;
-    }
+    // setPlaylistId: (state, action) => {
+    //   state.playlistId = action.payload;
+    //   localStorage.setItem('playlist_id', state.playlistId)
+    //   console.log(action.payload)
+    // }
   },
 });
 
@@ -144,5 +153,6 @@ export const {
   setIsSortByAuthor,
   toggleAuthorSelection,
   setFoundTracksLength,
+  setPlaylistId,
 } = playerSlice.actions;
 export default playerSlice.reducer;

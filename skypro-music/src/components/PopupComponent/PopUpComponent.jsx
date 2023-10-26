@@ -16,7 +16,7 @@ export function PopupComponent ({ isOpen, content, sortParameter })  {
             <S.PopupListItem key={i} 
             onClick={() => {
                 dispatch(toggleAuthorSelection(el));
-                dispatch(setFoundTracksLength(content.length))
+              //  dispatch(setFoundTracksLength(content.length))
               }}
               style={{ color: selectedAuthors.includes(el) ? 'rgba(182, 114, 255, 1)' : '#ffffff' }}
               >

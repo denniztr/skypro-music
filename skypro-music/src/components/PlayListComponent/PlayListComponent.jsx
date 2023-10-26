@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateToken } from '../../pages/store/authSlice';
 import { useParams } from 'react-router-dom';
 import { PLAYLISTS } from '../../constants';
+import { setPlaylistId } from '../../pages/store/playerSlice';
 
 export function PlayListComponent({ playlists }) {
   const playlistLinkStyle = {
@@ -16,7 +17,6 @@ export function PlayListComponent({ playlists }) {
   };
 
   const dispatch = useDispatch();
-  
 
   return (
     <S.SidebarList>
@@ -26,9 +26,6 @@ export function PlayListComponent({ playlists }) {
             style={playlistLinkStyle}
             to={`/playlist/${playlist.id}`}
             key={playlist.id}
-            onClick={() => {
-              dispatch(getPlaylist(playlist.id))
-            }}
           >
             <S.SidebarImg src={playlist.img} alt={playlist.alt} />
           </Link>
