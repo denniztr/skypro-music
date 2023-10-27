@@ -25,7 +25,7 @@ export function SortButtonsComponent() {
         isOpen: false, 
         content: [],
     });
-
+    
     const [sortingPopup, setSortingPopup] = useState({
          isOpen: false, 
          content: [], 
@@ -72,6 +72,7 @@ export function SortButtonsComponent() {
             <S.FilterContainer>
                 <S.FilterButton className="button-author _btn-text" onClick={() => handlePerformersPopupToggle(performersList)}>исполнителю</S.FilterButton>
                 <PopupComponent
+                    performersPopup={performersPopup}
                     isOpen={performersPopup.isOpen}
                     content={performersPopup.content}
                     />
@@ -86,6 +87,7 @@ export function SortButtonsComponent() {
             <S.FilterContainer>
                 <S.FilterButton className="button-genre _btn-text" onClick={() => handleGenrePopupToggle(genreSorting)}>жанру</S.FilterButton>
                 <PopupComponent
+                    genrePopup={genrePopup}
                     isOpen={genrePopup.isOpen}
                     content={genrePopup.content}
                 />

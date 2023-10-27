@@ -35,7 +35,9 @@ const playerSlice = createSlice({
     loading: false,
     playlistId: null,
     value: '',
+    toggleSelection: [],
     selectedAuthors: [],
+    selectedGenres: [],
   },
   reducers: {
     setCurrentTrack: (state, action) => {
@@ -83,8 +85,10 @@ const playerSlice = createSlice({
       state.shuffledPlaylist = shuffledArray.sort(() => Math.random() - 0.5);
     },
     toggleTrackStarred: (state, action) => {
+      
       const { track, currentUser } = action.payload;
       const trackIndex = state.tracks.findIndex((el) => el.id === track.id);
+      
       if (trackIndex !== -1) {
         const updatedTrack = { ...state.tracks[trackIndex] };
         const starred = updatedTrack.stared_user.find((user) => user.id === currentUser.id);
@@ -96,6 +100,7 @@ const playerSlice = createSlice({
         }
         
         state.tracks[trackIndex] = updatedTrack;
+        state.currentTrack = updatedTrack;
       }
     },
     setCurrentPlaylist: (state, action) => {
@@ -110,11 +115,7 @@ const playerSlice = createSlice({
       state.favorites = action.payload;
     },
     setPlaylist: (state, action) => {
-      // const {id, items} = action.payload;
-      // console.log(id);
-      // console.log(items);
       state.playlist = action.payload;
-      console.log(state.playlist);
     },
     setValue: (state, action) => {
       state.value = action.payload;
@@ -129,11 +130,15 @@ const playerSlice = createSlice({
         state.selectedAuthors.push(author);
       }
     },
-    // setPlaylistId: (state, action) => {
-    //   state.playlistId = action.payload;
-    //   localStorage.setItem('playlist_id', state.playlistId)
-    //   console.log(action.payload)
-    // }
+    // toggleSelectedGenres: (state, action) => {
+    //   const genre = action.payload;
+    //   const index = state.selectedGenres.indexOf(genre);
+    //   if (index !== -1) {
+    //     state.selectedGenres.splice(index, 1);
+    //   } else {
+    //     state.selectedGenres.push(genre);
+    //   }
+    // },
   },
 });
 
@@ -154,5 +159,7 @@ export const {
   toggleAuthorSelection,
   setFoundTracksLength,
   setPlaylistId,
+  toggleSelectedGenres,
+  setToggleSelection,
 } = playerSlice.actions;
 export default playerSlice.reducer;

@@ -16,19 +16,36 @@ export function TrackListItemsComponent({isLoading, tracks}) {
   const isPlaying = useSelector((state) => state.player.isPlaying);
   const accessToken = useSelector((state) => state.auth.accessToken);
   const value = useSelector((state) => state.player.value);
-  // const sortByAuthor = useSelector((state) => state.player.sortByAuthor);
   const selectedAuthors = useSelector((state) => state.player.selectedAuthors);
+  const selectedGenres = useSelector((state) => state.player.selectedGenres);
 
-  // console.log(sortByAuthor);
+  const filterTracks = () => {
+    let filteredTracks = tracks;
 
-  const filteredTracks = tracks.filter(track => {
+    if (value) {
+      filteredTracks = filteredTracks.filter((track) => 
+        track.name.toLowerCase().includes(value.toLowerCase())
+      );
+    };
+
     if (selectedAuthors.length > 0) {
-      // филтруем если есть исполнители
-      return selectedAuthors.includes(track.author) && track.name.toLowerCase().includes(value.toLowerCase());
-    }
-    return track.name.toLowerCase().includes(value.toLowerCase())
+      filteredTracks = filteredTracks.filter(( {author} ) => 
+        selectedAuthors.includes(author)
+      );
+    };
 
-  })
+    // if (selectedGenres.length > 0) {
+    //   filteredTracks = filteredTracks.filter(( {genre} ) => 
+    //     selectedGenres.includes(genre)
+    //   );
+    // }
+
+    return filteredTracks;
+
+  }
+
+  const filteredTracks = filterTracks();
+
 
   const toggleStarred = (track) => {
     try {

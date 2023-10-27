@@ -9,6 +9,7 @@ import {
   prevTrack,
   initShuffle,
   toggleTrackStarred,
+  setCurrentTrack,
 } from './pages/store/playerSlice';
 
 import { unStarred, addToStarred } from './pages/store/authSlice';
@@ -29,7 +30,7 @@ export function AudioPlayer() {
   const isPlaying = useSelector((state) => state.player.isPlaying);
   const isShuffle = useSelector((state) => state.player.shuffled);
   const accessToken = useSelector((state) => state.auth.accessToken);
-
+  
   const currentPlaylist = useSelector((state) => state.player.currentPlaylist);
   const tracks = useSelector((state) => state.player.tracks);
 
@@ -118,14 +119,15 @@ export function AudioPlayer() {
     return `${formattedMinutes}:${formattedSeconds}`;
   };
 
-  const toggleStarred = (track) => {
+  const toggleStarred = (currentTrack) => {
     try {
-      if (track.stared_user.some((user) => user.id === currentUser.id)) {
-        dispatch(unStarred({ track, accessToken }));
+      if (currentTrack.stared_user.some((user) => user.id === currentUser.id)) {
+        dispatch(unStarred({ track: currentTrack, accessToken }));
       } else {
-        dispatch(addToStarred({ track, accessToken }));
+        dispatch(addToStarred({ track: currentTrack, accessToken }));
       }
-        dispatch(toggleTrackStarred({ track, currentUser }));
+        dispatch(toggleTrackStarred({ track: currentTrack, currentUser }));
+        
     } catch (error) {
       console.error(error.message);
     }
@@ -245,7 +247,10 @@ export function AudioPlayer() {
                 <S.TrackPlayLikeDis>
                   <S.TrackPlayLikeButton
                     className="_btn-icon"
-                    // onClick={toggleStarred(currentTrack)}
+                    onClick={(e) => {
+                      toggleStarred(currentTrack)
+                      e.stopPropagation()
+                    }}
                   >
                     <S.TrackPlayLikeSvg alt="like">
 
