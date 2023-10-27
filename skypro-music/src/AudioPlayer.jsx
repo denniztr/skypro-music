@@ -119,19 +119,27 @@ export function AudioPlayer() {
     return `${formattedMinutes}:${formattedSeconds}`;
   };
 
-  const toggleStarred = (currentTrack) => {
-    try {
-      if (currentTrack.stared_user.some((user) => user.id === currentUser.id)) {
-        dispatch(unStarred({ track: currentTrack, accessToken }));
-      } else {
-        dispatch(addToStarred({ track: currentTrack, accessToken }));
-      }
-        dispatch(toggleTrackStarred({ track: currentTrack, currentUser }));
-        
-    } catch (error) {
-      console.error(error.message);
-    }
+  const starredTrack = (currentTrack) => {
+    dispatch(addToStarred({ track: currentTrack, accessToken }));
+    dispatch(toggleTrackStarred({ track: currentTrack, currentUser }));
   }
+  // const unStarredTrack = (currentTrack) => {
+  //   dispatch(unStarred({ track: currentTrack, accessToken }));
+  // }
+
+  // const toggleStarred = (currentTrack) => {
+  //   try {
+  //     if (currentTrack.stared_user.some((user) => user.id === currentUser.id)) {
+  //       dispatch(unStarred({ track: currentTrack, accessToken }));
+  //     } else {
+  //       dispatch(addToStarred({ track: currentTrack, accessToken }));
+  //     }
+  //       dispatch(toggleTrackStarred({ track: currentTrack, currentUser }));
+        
+  //   } catch (error) {
+  //     console.error(error.message);
+  //   }
+  // }
 
   return (
     <>
@@ -243,40 +251,29 @@ export function AudioPlayer() {
                     </S.TrackPlayAlbumLink>
                   </S.TrackPlayAlbum>
                 </S.TrackPlayContain>
-
-                <S.TrackPlayLikeDis>
-                  <S.TrackPlayLikeButton
-                    className="_btn-icon"
-                    onClick={(e) => {
-                      toggleStarred(currentTrack)
-                      e.stopPropagation()
-                    }}
-                  >
-                    <S.TrackPlayLikeSvg alt="like">
-
-                    {currentTrack.stared_user.find((user) => user.id === currentUser.id) ? ( 
-                                <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8.36529 12.751C14.2458 9.25098 17.3111 3.96019 13.9565 1.51832C11.7563 -0.0832586 9.29718 1.19273 8.36529 2.00669H8.34378H8.34372H8.32221C7.39032 1.19273 4.93121 -0.0832586 2.73102 1.51832C-0.623552 3.96019 2.44172 9.25098 8.32221 12.751H8.34372H8.34378H8.36529Z" fill="#B672FF"/>
-                                <path d="M8.34372 2.00669H8.36529C9.29718 1.19273 11.7563 -0.0832586 13.9565 1.51832C17.3111 3.96019 14.2458 9.25098 8.36529 12.751H8.34372M8.34378 2.00669H8.32221C7.39032 1.19273 4.93121 -0.0832586 2.73102 1.51832C-0.623552 3.96019 2.44172 9.25098 8.32221 12.751H8.34378" stroke="#B672FF"/>
-                                </svg> 
-                              ) : (
-                                <use xlinkHref="/img/icon/sprite.svg#icon-like"></use> 
-                              )}
-
-                    </S.TrackPlayLikeSvg>
-                  </S.TrackPlayLikeButton>
-
-                  {/* <S.TrackPlayDislikeButton
-                    className="_btn-icon"
-                    onClick={aintReadyYet}
-                  >
-                    <S.TrackPlayDislikeSvg alt="dislike">
-                      <use xlinkHref="../img/icon/sprite.svg#icon-dislike"></use>
-                    </S.TrackPlayDislikeSvg>
-                    
-                  </S.TrackPlayDislikeButton> */}
-
-                </S.TrackPlayLikeDis>
+            <S.TrackPlayLikeDis>
+                <S.TrackPlayLikeButton className="_btn-icon" onClick={(e) => {
+                  dispatch(addToStarred({ track: currentTrack, accessToken }));
+                  dispatch(toggleTrackStarred({ track: currentTrack, currentUser }));
+                  e.stopPropagation()
+                }}>
+                  <S.TrackPlayLikeSvg alt="like">
+                    <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8.36529 12.751C14.2458 9.25098 17.3111 3.96019 13.9565 1.51832C11.7563 -0.0832586 9.29718 1.19273 8.36529 2.00669H8.34378H8.34372H8.32221C7.39032 1.19273 4.93121 -0.0832586 2.73102 1.51832C-0.623552 3.96019 2.44172 9.25098 8.32221 12.751H8.34372H8.34378H8.36529Z" fill="#B672FF"/>
+                      <path d="M8.34372 2.00669H8.36529C9.29718 1.19273 11.7563 -0.0832586 13.9565 1.51832C17.3111 3.96019 14.2458 9.25098 8.36529 12.751H8.34372M8.34378 2.00669H8.32221C7.39032 1.19273 4.93121 -0.0832586 2.73102 1.51832C-0.623552 3.96019 2.44172 9.25098 8.32221 12.751H8.34378" stroke="#B672FF"/>
+                    </svg> 
+                  </S.TrackPlayLikeSvg>
+                </S.TrackPlayLikeButton>
+                <S.TrackPlayDislikeButton className="_btn-icon" onClick={(e) => {
+                  dispatch(unStarred({ track: currentTrack, accessToken }));
+                  dispatch(toggleTrackStarred({ track: currentTrack, currentUser }));
+                  e.stopPropagation()
+                }}>
+                  <S.TrackPlayDislikeSvg alt="dislike" >
+                    <use xlinkHref="../img/icon/sprite.svg#icon-dislike"></use>
+                  </S.TrackPlayDislikeSvg>
+                </S.TrackPlayDislikeButton>
+              </S.TrackPlayLikeDis>
               </S.PlayerTrackPlay>
             </S.BarPlayer>
             <S.BarVolumeBlock>

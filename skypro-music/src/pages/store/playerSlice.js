@@ -100,7 +100,7 @@ const playerSlice = createSlice({
         }
         
         state.tracks[trackIndex] = updatedTrack;
-        state.currentTrack = updatedTrack;
+        // state.currentTrack = updatedTrack;
       }
     },
     setCurrentPlaylist: (state, action) => {
