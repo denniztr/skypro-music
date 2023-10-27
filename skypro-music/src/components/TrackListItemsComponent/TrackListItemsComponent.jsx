@@ -34,11 +34,11 @@ export function TrackListItemsComponent({isLoading, tracks}) {
       );
     };
 
-    // if (selectedGenres.length > 0) {
-    //   filteredTracks = filteredTracks.filter(( {genre} ) => 
-    //     selectedGenres.includes(genre)
-    //   );
-    // }
+    if (selectedGenres.length > 0) {
+      filteredTracks = filteredTracks.filter(( {genre} ) => 
+        selectedGenres.includes(genre)
+      );
+    }
 
     return filteredTracks;
 

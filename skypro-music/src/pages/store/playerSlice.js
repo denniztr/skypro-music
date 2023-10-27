@@ -131,15 +131,21 @@ const playerSlice = createSlice({
         state.selectedAuthors.push(author);
       }
     },
-    // toggleSelectedGenres: (state, action) => {
-    //   const genre = action.payload;
-    //   const index = state.selectedGenres.indexOf(genre);
-    //   if (index !== -1) {
-    //     state.selectedGenres.splice(index, 1);
-    //   } else {
-    //     state.selectedGenres.push(genre);
-    //   }
-    // },
+    toggleSelectedGenres: (state, action) => {
+      const genre = action.payload;
+      const index = state.selectedGenres.indexOf(genre);
+     //  console.log(index);
+      if (index !== -1) {
+        state.selectedGenres.splice(index, 1);
+      } else {
+        state.selectedGenres.push(genre);
+      }
+    },
+    // setToggleSelection: (state, action) => {
+    //   const { content, el } = action.payload;
+    //   console.log(content);
+    //   console.log(el)
+    // }
   },
 });
 
