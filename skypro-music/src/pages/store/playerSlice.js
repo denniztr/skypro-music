@@ -90,7 +90,7 @@ const playerSlice = createSlice({
       const trackIndex = state.tracks.findIndex((el) => el.id === track.id);
       
       if (trackIndex !== -1) {
-        const updatedTrack = { ...state.tracks[trackIndex] };
+        const updatedTrack = { ...state.tracks[trackIndex] } || { ...state.playlist[trackIndex] };
         const starred = updatedTrack.stared_user.find((user) => user.id === currentUser.id);
         
         if (starred) {
@@ -98,9 +98,9 @@ const playerSlice = createSlice({
         } else {
           updatedTrack.stared_user.push(currentUser);
         }
-        
+  
         state.tracks[trackIndex] = updatedTrack;
-        // state.currentTrack = updatedTrack;
+        state.playlist[trackIndex] = updatedTrack;
       }
     },
     setCurrentPlaylist: (state, action) => {
@@ -116,6 +116,7 @@ const playerSlice = createSlice({
     },
     setPlaylist: (state, action) => {
       state.playlist = action.payload;
+      console.log(state.playlist);
     },
     setValue: (state, action) => {
       state.value = action.payload;

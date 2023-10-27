@@ -4,8 +4,6 @@ import { SearchComponent } from '../../components/SearchComponent/SearchComponen
 import { TrackListItemsComponent } from '../../components/TrackListItemsComponent/TrackListItemsComponent';
 import { SideBarComponent } from '../../components/SideBarComponent/SideBarComponent';
 import { useParams } from 'react-router-dom';
-import { PLAYLISTS } from '../../constants';
-// import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPlaylist } from '../store/playerSlice';

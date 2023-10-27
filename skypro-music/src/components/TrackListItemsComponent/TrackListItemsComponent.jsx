@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { LoadingComponent } from '../LoadingComponent/LoadingComponent';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentTrack, setIsPlaying, toggleTrackStarred, setCurrentPlaylist, setIsSortByAuthor } from '../../pages/store/playerSlice';
+import { setCurrentTrack, setIsPlaying, toggleTrackStarred, setCurrentPlaylist } from '../../pages/store/playerSlice';
 import { addToStarred, unStarred } from '../../pages/store/authSlice';
 import { UserContext } from '../../context';
 import * as S from './TrackListItems.styles';
