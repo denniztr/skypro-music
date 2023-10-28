@@ -4,13 +4,17 @@ import * as S from './SideBar.styles';
 import { PLAYLISTS } from '../../constants';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context';
+import { useSelector } from 'react-redux';
 
 
 export function SideBarComponent() {
+
+
   const [user] = useContext(UserContext);
   
   const navigate = useNavigate();
- 
+  const selectedItems = useSelector((state) => state.player.selectedItems);
+  
   const buttonClick = () => {
     window.localStorage.removeItem('user');
     // setUser(window.localStorage.getItem('user'));

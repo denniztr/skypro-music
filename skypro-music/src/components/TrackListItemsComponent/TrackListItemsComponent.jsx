@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { LoadingComponent } from '../LoadingComponent/LoadingComponent';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentTrack, setIsPlaying, toggleTrackStarred, setCurrentPlaylist } from '../../pages/store/playerSlice';
+import { setCurrentTrack, setIsPlaying, toggleTrackStarred, setCurrentPlaylist, setSelectedItems } from '../../pages/store/playerSlice';
 import { addToStarred, unStarred } from '../../pages/store/authSlice';
 import { UserContext } from '../../context';
 import { DEFAULT_SORT_VALUE, ASC_SORT_VALUE, DESC_SORT_VALUE } from '../../constants';
@@ -23,9 +23,6 @@ export function TrackListItemsComponent({isLoading, tracks}) {
   const selectedAuthors = useSelector((state) => state.player.selectedAuthors);
   const selectedGenres = useSelector((state) => state.player.selectedGenres);
   const selectedSort = useSelector((state) => state.player.selectedSort);
-
-
-  const playlist = useSelector((state) => state.player.playlist);
 
   const filterTracks = () => {
     let filteredTracks = tracks;
@@ -58,7 +55,7 @@ export function TrackListItemsComponent({isLoading, tracks}) {
       filteredTracks = [...filteredTracks].sort((a, b) =>
         compareDesc(new Date(a.release_date), new Date(b.release_date)),
       )
-    }
+    } 
 
     return filteredTracks;
 
@@ -90,7 +87,7 @@ export function TrackListItemsComponent({isLoading, tracks}) {
     return `${formattedMinutes}:${formattedSeconds}`;
   };
 
-  console.log(filteredTracks);
+ 
 
   return (
     <S.ContentPlaylist>

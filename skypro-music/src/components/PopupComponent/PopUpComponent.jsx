@@ -1,10 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as S from './PopUp.styles'
-import { toggleAuthorSelection, toggleSelectedGenres, toggleSelectedSort } from '../../pages/store/playerSlice';
+import { setSelectedItems, toggleAuthorSelection, toggleSelectedGenres, toggleSelectedSort } from '../../pages/store/playerSlice';
 
 
-export function PopupComponent ({ isOpen, content, performersPopup, genrePopup, year, isMultipleChoice })  {
+export function PopupComponent ({ isOpen, content, performersPopup, genrePopup, year })  {
   const dispatch = useDispatch();
 
   const selectedAuthors = useSelector((state) => state.player.selectedAuthors);
@@ -21,6 +21,7 @@ export function PopupComponent ({ isOpen, content, performersPopup, genrePopup, 
     if (year) {
       dispatch(toggleSelectedSort(el))
     }
+   
   }
 
   return isOpen ? (
@@ -31,6 +32,7 @@ export function PopupComponent ({ isOpen, content, performersPopup, genrePopup, 
             <S.PopupListItem key={i} 
             onClick={() => {
               handleSortClick(el)
+              //dispatch(setSelectedItems(el))
               }}
               style={{ color: selectedAuthors.includes(el) || selectedGenres.includes(el) || selectedSort.includes(el) ? 'rgba(182, 114, 255, 1)' : '#ffffff' }}
               >

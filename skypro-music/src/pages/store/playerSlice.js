@@ -38,6 +38,7 @@ const playerSlice = createSlice({
     selectedAuthors: [],
     selectedGenres: [],
     selectedSort: [DEFAULT_SORT_VALUE],
+    selectedItems: [],
   },
   reducers: {
     setCurrentTrack: (state, action) => {
@@ -128,6 +129,9 @@ const playerSlice = createSlice({
       } else {
         state.selectedAuthors.push(author);
       }
+      
+      // console.log(state.selectedAuthors.length)
+      // state.selectedItems = [...state.selectedAuthors];
     },
     toggleSelectedGenres: (state, action) => {
       const genre = action.payload;
@@ -137,12 +141,17 @@ const playerSlice = createSlice({
       } else {
         state.selectedGenres.push(genre);
       }
+      state.selectedItems = [...state.selectedGenres];
     },
     toggleSelectedSort: (state, action) => {
       const sort = action.payload;
       state.selectedSort = [];
       state.selectedSort.push(sort);
-    }
+    },
+    setSelectedItems: (state, action) => {
+      state.selectedItems = action.payload;
+      console.log(state.selectedItems);
+    },
   },
 });
 
@@ -166,5 +175,6 @@ export const {
   toggleSelectedGenres,
   setToggleSelection,
   toggleSelectedSort,
+  setSelectedItems,
 } = playerSlice.actions;
 export default playerSlice.reducer;
