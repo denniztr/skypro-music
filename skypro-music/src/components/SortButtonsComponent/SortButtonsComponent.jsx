@@ -11,6 +11,7 @@ import {
 import * as S from './SortButtons.styles';
 
 export function SortButtonsComponent() {
+
   const selectedItemsContainer = {
     position: 'absolute',
     right: '0',
@@ -26,6 +27,7 @@ export function SortButtonsComponent() {
   const selectedItemsAmount = {
     position: 'absolute',
     left: '8.5px',
+    top: '2px',
   };
 
   const tracks = useSelector((state) => state.player.tracks);
@@ -96,9 +98,9 @@ export function SortButtonsComponent() {
           исполнителю
         </S.FilterButton>
         {selectedAuthors.length > 0 ? (      
-        <span style={selectedItemsContainer}>
+        <div style={selectedItemsContainer}>
          
-            <span style={selectedItemsContent}>
+            <div style={selectedItemsContent}>
               
                 <svg
                   width="26"
@@ -116,11 +118,11 @@ export function SortButtonsComponent() {
                   />
                 </svg>
 
-                <span style={selectedItemsAmount}>{selectedAuthors.length}</span>
+                <div style={selectedItemsAmount}>{selectedAuthors.length}</div>
               
-            </span>
+            </div>
           
-        </span>):(null)}
+        </div>):(null)}
         <PopupComponent
           performersPopup={performersPopup}
           isOpen={performersPopup.isOpen}
@@ -135,10 +137,10 @@ export function SortButtonsComponent() {
           году выпуска
         </S.FilterButton>
         {selectedSort.length > 0 ? (      
-        <span style={selectedItemsContainer}>
-          <span>
-            <span style={selectedItemsContent}>
-              <span >
+        <div style={selectedItemsContainer}>
+          <div>
+            <div style={selectedItemsContent}>
+              <div >
                 <svg
                   width="26"
                   height="26"
@@ -155,11 +157,11 @@ export function SortButtonsComponent() {
                   />
                 </svg>
 
-                <span style={selectedItemsAmount}>{selectedSort.length}</span>
-              </span>
-            </span>
-          </span>
-        </span>):(null)}
+                <div style={selectedItemsAmount}>{selectedSort.length}</div>
+              </div>
+            </div>
+          </div>
+        </div>):(null)}
         <PopupComponent
           year={year}
           isOpen={sortingPopup.isOpen}
@@ -175,10 +177,10 @@ export function SortButtonsComponent() {
           жанру
         </S.FilterButton>
         {selectedGenres.length > 0 ? (      
-        <span style={selectedItemsContainer}>
-          <span>
-            <span style={selectedItemsContent}>
-              <span >
+        <div style={selectedItemsContainer}>
+          <div>
+            <div style={selectedItemsContent}>
+              <div >
                 <svg
                   width="26"
                   height="26"
@@ -195,11 +197,11 @@ export function SortButtonsComponent() {
                   />
                 </svg>
 
-                <span style={selectedItemsAmount}>{selectedGenres.length}</span>
-              </span>
-            </span>
-          </span>
-        </span>):(null)}
+                <div style={selectedItemsAmount}>{selectedGenres.length}</div>
+              </div>
+            </div>
+          </div>
+        </div>):(null)}
         <PopupComponent
           genrePopup={genrePopup}
           isOpen={genrePopup.isOpen}
