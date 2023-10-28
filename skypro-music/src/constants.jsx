@@ -18,3 +18,7 @@ export const PLAYLISTS = [
         alt: 'Playlist',
     },
 ]
+
+export const DEFAULT_SORT_VALUE = 'По умолчанию'
+export const ASC_SORT_VALUE = 'Сначала старые'
+export const DESC_SORT_VALUE = 'Сначала новые'

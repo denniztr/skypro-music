@@ -52,10 +52,10 @@ export const updateToken = createAsyncThunk(
         }
       );
 
-      if (!response.ok)
-        throw new Error('an Error occurred in updateToken function');
+      if (!response.ok) throw new Error('an Error occurred in updateToken function');
 
       const data = await response.json();
+      
       const updatedAccessToken = data.access;
       dispatch(setAccessToken(updatedAccessToken));
 

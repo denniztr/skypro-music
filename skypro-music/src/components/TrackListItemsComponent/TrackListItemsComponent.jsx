@@ -18,6 +18,7 @@ export function TrackListItemsComponent({isLoading, tracks}) {
   const value = useSelector((state) => state.player.value);
   const selectedAuthors = useSelector((state) => state.player.selectedAuthors);
   const selectedGenres = useSelector((state) => state.player.selectedGenres);
+  const playlist = useSelector((state) => state.player.playlist);
 
   const filterTracks = () => {
     let filteredTracks = tracks;
@@ -70,7 +71,7 @@ export function TrackListItemsComponent({isLoading, tracks}) {
     return `${formattedMinutes}:${formattedSeconds}`;
   };
 
-  console.log(tracks)
+  console.log(filteredTracks);
 
   return (
     <S.ContentPlaylist>

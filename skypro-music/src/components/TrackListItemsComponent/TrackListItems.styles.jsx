@@ -1,7 +1,7 @@
 import  { keyframes, styled } from 'styled-components';
 
 export const ContentPlaylist = styled.div`
-    height: 1000px;
+    height: 900px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;

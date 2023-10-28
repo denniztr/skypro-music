@@ -1,4 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { DEFAULT_SORT_VALUE, ASC_SORT_VALUE, DESC_SORT_VALUE } from '../../constants';
+
 
 export const getPlaylist = createAsyncThunk(
   'player/getPlaylist',
@@ -11,10 +13,7 @@ export const getPlaylist = createAsyncThunk(
       const data = await response.json();
       
       dispatch(setPlaylist(data))
-      // dispatch(setPlaylistId(id))
       dispatch(setIsLoading(false))
-      // console.log(data)
-      // return data
     } catch (error) {
       return rejectWithValue(error.message)
     }
@@ -38,6 +37,7 @@ const playerSlice = createSlice({
     toggleSelection: [],
     selectedAuthors: [],
     selectedGenres: [],
+    selectedSort: DEFAULT_SORT_VALUE,
   },
   reducers: {
     setCurrentTrack: (state, action) => {
@@ -90,17 +90,17 @@ const playerSlice = createSlice({
       const trackIndex = state.tracks.findIndex((el) => el.id === track.id);
       
       if (trackIndex !== -1) {
-        const updatedTrack = { ...state.tracks[trackIndex] } || { ...state.playlist[trackIndex] };
+        const updatedTrack = { ...state.tracks[trackIndex]};
         const starred = updatedTrack.stared_user.find((user) => user.id === currentUser.id);
-        
+        console.log(updatedTrack);
         if (starred) {
           updatedTrack.stared_user = updatedTrack.stared_user.filter((user) => user.id !== currentUser.id);
         } else {
           updatedTrack.stared_user.push(currentUser);
         }
-  
+        console.log(trackIndex);
         state.tracks[trackIndex] = updatedTrack;
-        state.playlist[trackIndex] = updatedTrack;
+        // state.playlist[trackIndex] = updatedTrack;
       }
     },
     setCurrentPlaylist: (state, action) => {
@@ -115,12 +115,10 @@ const playerSlice = createSlice({
       state.favorites = action.payload;
     },
     setPlaylist: (state, action) => {
-      state.playlist = action.payload;
-      console.log(state.playlist);
+      state.playlist = action.payload;  
     },
     setValue: (state, action) => {
       state.value = action.payload;
-      console.log(state.value);
     },
     toggleAuthorSelection: (state, action) => {
       const author = action.payload;
@@ -134,18 +132,15 @@ const playerSlice = createSlice({
     toggleSelectedGenres: (state, action) => {
       const genre = action.payload;
       const index = state.selectedGenres.indexOf(genre);
-     //  console.log(index);
       if (index !== -1) {
         state.selectedGenres.splice(index, 1);
       } else {
         state.selectedGenres.push(genre);
       }
     },
-    // setToggleSelection: (state, action) => {
-    //   const { content, el } = action.payload;
-    //   console.log(content);
-    //   console.log(el)
-    // }
+    toggleSelectedSort: (state, action) => {
+      console.log(action.payload);
+    }
   },
 });
 
@@ -168,5 +163,6 @@ export const {
   setPlaylistId,
   toggleSelectedGenres,
   setToggleSelection,
+  toggleSelectedSort,
 } = playerSlice.actions;
 export default playerSlice.reducer;
