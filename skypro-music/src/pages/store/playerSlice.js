@@ -37,7 +37,7 @@ const playerSlice = createSlice({
     toggleSelection: [],
     selectedAuthors: [],
     selectedGenres: [],
-    selectedSort: DEFAULT_SORT_VALUE,
+    selectedSort: [DEFAULT_SORT_VALUE],
   },
   reducers: {
     setCurrentTrack: (state, action) => {
@@ -139,7 +139,9 @@ const playerSlice = createSlice({
       }
     },
     toggleSelectedSort: (state, action) => {
-      console.log(action.payload);
+      const sort = action.payload;
+      state.selectedSort = [];
+      state.selectedSort.push(sort);
     }
   },
 });

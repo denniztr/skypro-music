@@ -4,6 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentTrack, setIsPlaying, toggleTrackStarred, setCurrentPlaylist } from '../../pages/store/playerSlice';
 import { addToStarred, unStarred } from '../../pages/store/authSlice';
 import { UserContext } from '../../context';
+import { DEFAULT_SORT_VALUE, ASC_SORT_VALUE, DESC_SORT_VALUE } from '../../constants';
+
+import { compareAsc, compareDesc } from 'date-fns'
+
 import * as S from './TrackListItems.styles';
 
 export function TrackListItemsComponent({isLoading, tracks}) {
@@ -18,6 +22,9 @@ export function TrackListItemsComponent({isLoading, tracks}) {
   const value = useSelector((state) => state.player.value);
   const selectedAuthors = useSelector((state) => state.player.selectedAuthors);
   const selectedGenres = useSelector((state) => state.player.selectedGenres);
+  const selectedSort = useSelector((state) => state.player.selectedSort);
+
+
   const playlist = useSelector((state) => state.player.playlist);
 
   const filterTracks = () => {
@@ -39,6 +46,18 @@ export function TrackListItemsComponent({isLoading, tracks}) {
       filteredTracks = filteredTracks.filter(( {genre} ) => 
         selectedGenres.includes(genre)
       );
+    }
+
+    if (selectedSort[0] === ASC_SORT_VALUE) {
+      filteredTracks = [...filteredTracks].sort((a, b) => 
+        compareAsc(new Date(a.release_date), new Date(b.release_date))
+      )
+    }
+
+    if (selectedSort[0] === DESC_SORT_VALUE) {
+      filteredTracks = [...filteredTracks].sort((a, b) =>
+        compareDesc(new Date(a.release_date), new Date(b.release_date)),
+      )
     }
 
     return filteredTracks;

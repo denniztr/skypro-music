@@ -19,6 +19,6 @@ export const PLAYLISTS = [
     },
 ]
 
-export const DEFAULT_SORT_VALUE = 'По умолчанию'
-export const ASC_SORT_VALUE = 'Сначала старые'
-export const DESC_SORT_VALUE = 'Сначала новые'
+export const DEFAULT_SORT_VALUE = 'По умолчанию';
+export const ASC_SORT_VALUE = 'Сначала старые';
+export const DESC_SORT_VALUE = 'Сначала новые';

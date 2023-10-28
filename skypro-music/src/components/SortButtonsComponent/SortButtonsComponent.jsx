@@ -8,21 +8,12 @@ import { DEFAULT_SORT_VALUE, ASC_SORT_VALUE, DESC_SORT_VALUE } from '../../const
 import * as S from './SortButtons.styles';
 
 export function SortButtonsComponent() {
-    const dispatch = useDispatch();
-
+  
     const tracks = useSelector((state) => state.player.tracks);
 
     const unfilteredPerformersList = tracks.map(authors => authors.author);
     const performersList = [...new Set(unfilteredPerformersList)];
     const year = [DEFAULT_SORT_VALUE, ASC_SORT_VALUE, DESC_SORT_VALUE];
-
-    
-
-      const sortingList = [
-        'По умолчанию', 
-        'Сначала новые', 
-        'Сначала старые'
-      ];
     
     const unfilteredGenreSorting = tracks.map(genres => genres.genre);
     const genreSorting = [...new Set(unfilteredGenreSorting)];
