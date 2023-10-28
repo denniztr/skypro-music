@@ -33,5 +33,17 @@ export const FilterButton = styled.div`
     border: 1px solid #ffffff;
     border-radius: 60px;
     padding: 6px 20px;
+    &:hover {
+        color: rgba(182, 114, 255, 1);
+        text-decoration-color: rgba(182, 114, 255, 1);  
+        cursor: pointer;
+        border-color: rgba(182, 114, 255, 1); 
+    }
+        &.opened {
+        cursor: pointer; 
+        color: rgba(182, 114, 255, 1);
+        text-decoration-color: rgba(182, 114, 255, 1);  
+        border-color: rgba(182, 114, 255, 1);  
+    }
 `
 

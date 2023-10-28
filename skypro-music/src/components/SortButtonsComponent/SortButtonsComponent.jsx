@@ -90,7 +90,7 @@ export function SortButtonsComponent() {
       <S.FilterTitle>Искать по:</S.FilterTitle>
       <S.FilterContainer>
         <S.FilterButton
-          className="button-author _btn-text"
+          className={`${performersPopup.isOpen ? 'opened' : ''}`}
           onClick={() => handlePerformersPopupToggle(performersList)}
         >
           исполнителю
@@ -129,7 +129,7 @@ export function SortButtonsComponent() {
       </S.FilterContainer>
       <S.FilterContainer>
         <S.FilterButton
-          className="button-year _btn-text"
+          className={`${sortingPopup.isOpen ? 'opened' : ''}`}
           onClick={() => handleSortingPopupToggle(year)}
         >
           году выпуска
@@ -169,7 +169,7 @@ export function SortButtonsComponent() {
       <S.FilterContainer>
      
         <S.FilterButton
-          className="button-genre _btn-text"
+          className={`${genrePopup.isOpen ? 'opened' : ''}`}
           onClick={() => handleGenrePopupToggle(genreSorting)}
         >
           жанру
