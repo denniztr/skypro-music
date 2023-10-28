@@ -23,6 +23,7 @@ export const FilterTitle = styled.div`
 `
 export const FilterContainer = styled.div`
     position: relative;
+    padding-top: 10px;
 `
 export const FilterButton = styled.div`
     font-style: normal;

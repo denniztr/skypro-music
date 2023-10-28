@@ -151,7 +151,9 @@ export const TrackAlbumLink = styled.a`
     line-height: 24px;
     color: #696969;
 `
-export const TrackTime = styled.div``
+
+export const TrackTime = styled.div`
+`
 
 export const TrackTimeSvg = styled.svg`
     width: 16px;

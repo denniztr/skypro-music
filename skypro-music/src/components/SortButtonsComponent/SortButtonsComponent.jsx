@@ -7,7 +7,6 @@ import {
   ASC_SORT_VALUE,
   DESC_SORT_VALUE,
 } from '../../constants';
-// import { toggleSelectedSort } from '../../pages/store/playerSlice';
 
 import * as S from './SortButtons.styles';
 
@@ -15,15 +14,14 @@ export function SortButtonsComponent() {
   const selectedItemsContainer = {
     position: 'absolute',
     right: '0',
+    top: '0',
   };
 
-  const selectedItemsContentContainer = {};
 
   const selectedItemsContent = {
     position: 'relative',
   };
 
-  const selectedItemsSvg = {};
 
   const selectedItemsAmount = {
     position: 'absolute',
@@ -31,7 +29,6 @@ export function SortButtonsComponent() {
   };
 
   const tracks = useSelector((state) => state.player.tracks);
-  const selectedItems = useSelector((state) => state.player.selectedItems);
   const selectedAuthors = useSelector((state) => state.player.selectedAuthors);
   const selectedGenres = useSelector((state) => state.player.selectedGenres);
   const selectedSort = useSelector((state) => state.player.selectedSort);
@@ -92,11 +89,17 @@ export function SortButtonsComponent() {
     <S.CenterblockFilter>
       <S.FilterTitle>Искать по:</S.FilterTitle>
       <S.FilterContainer>
+        <S.FilterButton
+          className="button-author _btn-text"
+          onClick={() => handlePerformersPopupToggle(performersList)}
+        >
+          исполнителю
+        </S.FilterButton>
         {selectedAuthors.length > 0 ? (      
         <span style={selectedItemsContainer}>
-          <span style={selectedItemsContentContainer}>
+         
             <span style={selectedItemsContent}>
-              <span style={selectedItemsSvg}>
+              
                 <svg
                   width="26"
                   height="26"
@@ -114,16 +117,10 @@ export function SortButtonsComponent() {
                 </svg>
 
                 <span style={selectedItemsAmount}>{selectedAuthors.length}</span>
-              </span>
+              
             </span>
-          </span>
+          
         </span>):(null)}
-        <S.FilterButton
-          className="button-author _btn-text"
-          onClick={() => handlePerformersPopupToggle(performersList)}
-        >
-          исполнителю
-        </S.FilterButton>
         <PopupComponent
           performersPopup={performersPopup}
           isOpen={performersPopup.isOpen}
@@ -131,11 +128,17 @@ export function SortButtonsComponent() {
         />
       </S.FilterContainer>
       <S.FilterContainer>
-      {selectedSort.length > 0 ? (      
+        <S.FilterButton
+          className="button-year _btn-text"
+          onClick={() => handleSortingPopupToggle(year)}
+        >
+          году выпуска
+        </S.FilterButton>
+        {selectedSort.length > 0 ? (      
         <span style={selectedItemsContainer}>
-          <span style={selectedItemsContentContainer}>
+          <span>
             <span style={selectedItemsContent}>
-              <span style={selectedItemsSvg}>
+              <span >
                 <svg
                   width="26"
                   height="26"
@@ -157,12 +160,6 @@ export function SortButtonsComponent() {
             </span>
           </span>
         </span>):(null)}
-        <S.FilterButton
-          className="button-year _btn-text"
-          onClick={() => handleSortingPopupToggle(year)}
-        >
-          году выпуска
-        </S.FilterButton>
         <PopupComponent
           year={year}
           isOpen={sortingPopup.isOpen}
@@ -170,11 +167,18 @@ export function SortButtonsComponent() {
         />
       </S.FilterContainer>
       <S.FilterContainer>
-      {selectedGenres.length > 0 ? (      
+     
+        <S.FilterButton
+          className="button-genre _btn-text"
+          onClick={() => handleGenrePopupToggle(genreSorting)}
+        >
+          жанру
+        </S.FilterButton>
+        {selectedGenres.length > 0 ? (      
         <span style={selectedItemsContainer}>
-          <span style={selectedItemsContentContainer}>
+          <span>
             <span style={selectedItemsContent}>
-              <span style={selectedItemsSvg}>
+              <span >
                 <svg
                   width="26"
                   height="26"
@@ -196,12 +200,6 @@ export function SortButtonsComponent() {
             </span>
           </span>
         </span>):(null)}
-        <S.FilterButton
-          className="button-genre _btn-text"
-          onClick={() => handleGenrePopupToggle(genreSorting)}
-        >
-          жанру
-        </S.FilterButton>
         <PopupComponent
           genrePopup={genrePopup}
           isOpen={genrePopup.isOpen}

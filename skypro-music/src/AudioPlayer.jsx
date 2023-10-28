@@ -9,7 +9,6 @@ import {
   prevTrack,
   initShuffle,
   toggleTrackStarred,
-  setCurrentTrack,
 } from './pages/store/playerSlice';
 
 import { unStarred, addToStarred } from './pages/store/authSlice';
@@ -19,8 +18,10 @@ import * as S from './AudioPlayer.styles';
 
 const PrevSvg = './prev.svg';
 
+
 export function AudioPlayer() {
   const dispatch = useDispatch();
+  const [isLiked, setIsLiked] = useState(false);
 
   const [user] = useContext(UserContext);
   const currentUser = user;
@@ -31,8 +32,6 @@ export function AudioPlayer() {
   const isShuffle = useSelector((state) => state.player.shuffled);
   const accessToken = useSelector((state) => state.auth.accessToken);
   
-  const currentPlaylist = useSelector((state) => state.player.currentPlaylist);
-  const tracks = useSelector((state) => state.player.tracks);
 
   const [currentTime, setCurrentTime] = useState(0);
   const [looping, setLooping] = useState(false);
@@ -118,28 +117,6 @@ export function AudioPlayer() {
 
     return `${formattedMinutes}:${formattedSeconds}`;
   };
-
-  const starredTrack = (currentTrack) => {
-    dispatch(addToStarred({ track: currentTrack, accessToken }));
-    dispatch(toggleTrackStarred({ track: currentTrack, currentUser }));
-  }
-  // const unStarredTrack = (currentTrack) => {
-  //   dispatch(unStarred({ track: currentTrack, accessToken }));
-  // }
-
-  // const toggleStarred = (currentTrack) => {
-  //   try {
-  //     if (currentTrack.stared_user.some((user) => user.id === currentUser.id)) {
-  //       dispatch(unStarred({ track: currentTrack, accessToken }));
-  //     } else {
-  //       dispatch(addToStarred({ track: currentTrack, accessToken }));
-  //     }
-  //       dispatch(toggleTrackStarred({ track: currentTrack, currentUser }));
-        
-  //   } catch (error) {
-  //     console.error(error.message);
-  //   }
-  // }
 
   return (
     <>
@@ -252,11 +229,18 @@ export function AudioPlayer() {
                   </S.TrackPlayAlbum>
                 </S.TrackPlayContain>
             <S.TrackPlayLikeDis>
-                <S.TrackPlayLikeButton className="_btn-icon" onClick={(e) => {
-                  dispatch(addToStarred({ track: currentTrack, accessToken }));
-                  dispatch(toggleTrackStarred({ track: currentTrack, currentUser }));
-                  e.stopPropagation()
-                }}>
+                <S.TrackPlayLikeButton 
+                  className={`_btn-icon ${isLiked ? "like-animation" : ""}`} 
+                  onClick={(e) => {
+                    dispatch(addToStarred({ track: currentTrack, accessToken }));
+                    dispatch(toggleTrackStarred({ track: currentTrack, currentUser }));
+                    setIsLiked(true)
+                    setTimeout(() => {
+                      setIsLiked(false)
+                    }, 750);
+                    e.stopPropagation()
+                }}
+                >
                   <S.TrackPlayLikeSvg alt="like">
                     <svg width="14.34" height="13" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M8.36529 12.751C14.2458 9.25098 17.3111 3.96019 13.9565 1.51832C11.7563 -0.0832586 9.29718 1.19273 8.36529 2.00669H8.34378H8.34372H8.32221C7.39032 1.19273 4.93121 -0.0832586 2.73102 1.51832C-0.623552 3.96019 2.44172 9.25098 8.32221 12.751H8.34372H8.34378H8.36529Z" fill="#B672FF"/>

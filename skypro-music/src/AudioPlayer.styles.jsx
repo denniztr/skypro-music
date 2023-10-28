@@ -1,4 +1,4 @@
-import { styled } from 'styled-components';
+import { keyframes, styled } from 'styled-components';
 
 export const Bar = styled.div`
     position: absolute;
@@ -241,10 +241,47 @@ export const TrackPlayLikeDis = styled.div`
     /* margin-left: 26%; */
     margin-left: 50px;
 `
+const bounceInAnimation = keyframes`
+ 0%, 20%, 40%, 60%, 80%, 100% {
+    transform: scale3d(0.3, 0.3, 0.3);
+    transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+  0% {
+    opacity: 0;
+  }
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+  40% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+  80% {
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+`
 
 export const TrackPlayLikeButton = styled.div`
     padding: 5px;
+    &:hover {
+        path {
+            fill:#7a00fc;
+            stroke: #7a00fc;
+        }
+    }
+    &.like-animation {
+    animation: ${bounceInAnimation} 0.75s;
+    }
+
 `
+
 export const TrackPlayDislikeButton = styled(TrackPlayLikeButton)`
     margin-left: 28.5px;
 `
