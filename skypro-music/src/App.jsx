@@ -146,7 +146,7 @@ const App = () => {
       <GlobalStyle />
       <UserContext.Provider value={[user, setUser]}>
         <AppRoutes />
-        {currentTrack ? <AudioPlayer /> : null}
+        {currentTrack && user ? <AudioPlayer /> : null}
       </UserContext.Provider>
     </>
   );

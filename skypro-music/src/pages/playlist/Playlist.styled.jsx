@@ -7,7 +7,8 @@ export const Wrapper = styled.div`
     background-color: #383838;
 `
 export const Container = styled.div`
-    max-width: 1920px;
+    //max-width: 1920px;
+    width: 100vw;
     height: 100vh;
     margin: 0 auto;
     position: relative;

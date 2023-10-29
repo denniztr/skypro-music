@@ -99,14 +99,6 @@ export function AudioPlayer() {
     }
   };
 
-  const aintReadyYet = () => {
-    if (aintReadyYet) {
-      audioRef.current.pause();
-      alert('Ещё не реализовано');
-    }
-    audioRef.current.play();
-  };
-
   const formatTime = (decimalNumber) => {
     const wholeNumber = Math.floor(decimalNumber);
     const minutes = Math.floor(wholeNumber / 60);

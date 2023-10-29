@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { DEFAULT_SORT_VALUE, ASC_SORT_VALUE, DESC_SORT_VALUE } from '../../constants';
+import { DEFAULT_SORT_VALUE } from '../../constants';
 
 
 export const getPlaylist = createAsyncThunk(
@@ -84,7 +84,7 @@ const playerSlice = createSlice({
       state.shuffledPlaylist = shuffledArray.sort(() => Math.random() - 0.5);
     },
     toggleTrackStarred: (state, action) => {
-      
+      console.log(action.payload);
       const { track, currentUser } = action.payload;
       const trackIndex = state.tracks.findIndex((el) => el.id === track.id);
       
@@ -97,13 +97,12 @@ const playerSlice = createSlice({
         } else {
           updatedTrack.stared_user.push(currentUser);
         }
-        console.log(trackIndex);
+
         state.tracks[trackIndex] = updatedTrack;
         // state.playlist[trackIndex] = updatedTrack;
       }
     },
     setCurrentPlaylist: (state, action) => {
-      // state.tracks = action.payload;
       state.currentPlaylist = action.payload;
       console.log(state.currentPlaylist)
     },

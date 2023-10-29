@@ -17,6 +17,7 @@ export function NavMenuComponent() {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const navigate = useNavigate();
+  
   const handleLogout = () => {
     setUser(localStorage.clear()); 
     navigate('/login', { replace: true });

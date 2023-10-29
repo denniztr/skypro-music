@@ -143,6 +143,7 @@ export const unStarred = createAsyncThunk(
       dispatch(getFavoriteTracks(accessToken))
 
       dispatch(setIsLoading(false))
+      console.log(data);
       return data
     } catch (error) {
       return rejectWithValue(error.message)
