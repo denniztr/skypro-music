@@ -13,6 +13,7 @@ export const CenterblockFilter = styled.div`
     align-items: center;
     margin-bottom: 51px;
     gap: 10px;
+    position: relative;
 `
 export const FilterTitle = styled.div`
     font-style: normal;

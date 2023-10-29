@@ -11,18 +11,15 @@ import {
 import * as S from './SortButtons.styles';
 
 export function SortButtonsComponent() {
-
   const selectedItemsContainer = {
     position: 'absolute',
     right: '0',
     top: '0',
   };
 
-
   const selectedItemsContent = {
     position: 'relative',
   };
-
 
   const selectedItemsAmount = {
     position: 'absolute',
@@ -90,6 +87,7 @@ export function SortButtonsComponent() {
   return (
     <S.CenterblockFilter>
       <S.FilterTitle>Искать по:</S.FilterTitle>
+
       <S.FilterContainer>
         <S.FilterButton
           className={`${performersPopup.isOpen ? 'opened' : ''}`}
@@ -97,117 +95,114 @@ export function SortButtonsComponent() {
         >
           исполнителю
         </S.FilterButton>
-        {selectedAuthors.length > 0 ? (      
-        <div style={selectedItemsContainer}>
-         
+        {selectedAuthors.length > 0 ? (
+          <div style={selectedItemsContainer}>
             <div style={selectedItemsContent}>
-              
-                <svg
-                  width="26"
-                  height="26"
-                  viewBox="0 0 26 26"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <ellipse
-                    cx="13"
-                    cy="12.75"
-                    rx="13"
-                    ry="12.75"
-                    fill="#AD61FF"
-                  />
-                </svg>
+              <svg
+                width="26"
+                height="26"
+                viewBox="0 0 26 26"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <ellipse cx="13" cy="12.75" rx="13" ry="12.75" fill="#AD61FF" />
+              </svg>
 
-                <div style={selectedItemsAmount}>{selectedAuthors.length}</div>
-              
+              <div style={selectedItemsAmount}>{selectedAuthors.length}</div>
             </div>
-          
-        </div>):(null)}
+          </div>
+        ) : null}
         <PopupComponent
           performersPopup={performersPopup}
           isOpen={performersPopup.isOpen}
           content={performersPopup.content}
         />
       </S.FilterContainer>
-      <S.FilterContainer>
+      <p style={{position: 'absolute', right: '160px', paddingTop: '10px'}}>Сортировка: </p>
+      <S.FilterContainer style={{order: '1', position: 'absolute', right: '0'}}>
+      
         <S.FilterButton
           className={`${sortingPopup.isOpen ? 'opened' : ''}`}
           onClick={() => handleSortingPopupToggle(year)}
+          
         >
           году выпуска
         </S.FilterButton>
-        {selectedSort.length > 0 ? (      
-        <div style={selectedItemsContainer}>
-          <div>
-            <div style={selectedItemsContent}>
-              <div >
-                <svg
-                  width="26"
-                  height="26"
-                  viewBox="0 0 26 26"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <ellipse
-                    cx="13"
-                    cy="12.75"
-                    rx="13"
-                    ry="12.75"
-                    fill="#AD61FF"
-                  />
-                </svg>
+        {selectedSort.length > 0 ? (
+          <div style={selectedItemsContainer}>
+            <div>
+              <div style={selectedItemsContent}>
+                <div>
+                  <svg
+                    width="26"
+                    height="26"
+                    viewBox="0 0 26 26"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <ellipse
+                      cx="13"
+                      cy="12.75"
+                      rx="13"
+                      ry="12.75"
+                      fill="#AD61FF"
+                    />
+                  </svg>
 
-                <div style={selectedItemsAmount}>{selectedSort.length}</div>
+                  <div style={selectedItemsAmount}>{selectedSort.length}</div>
+                </div>
               </div>
             </div>
           </div>
-        </div>):(null)}
+        ) : null}
         <PopupComponent
           year={year}
           isOpen={sortingPopup.isOpen}
           content={sortingPopup.content}
         />
       </S.FilterContainer>
+
       <S.FilterContainer>
-     
         <S.FilterButton
           className={`${genrePopup.isOpen ? 'opened' : ''}`}
           onClick={() => handleGenrePopupToggle(genreSorting)}
         >
           жанру
         </S.FilterButton>
-        {selectedGenres.length > 0 ? (      
-        <div style={selectedItemsContainer}>
-          <div>
-            <div style={selectedItemsContent}>
-              <div >
-                <svg
-                  width="26"
-                  height="26"
-                  viewBox="0 0 26 26"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <ellipse
-                    cx="13"
-                    cy="12.75"
-                    rx="13"
-                    ry="12.75"
-                    fill="#AD61FF"
-                  />
-                </svg>
+        {selectedGenres.length > 0 ? (
+          <div style={selectedItemsContainer}>
+            <div>
+              <div style={selectedItemsContent}>
+                <div>
+                  <svg
+                    width="26"
+                    height="26"
+                    viewBox="0 0 26 26"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <ellipse
+                      cx="13"
+                      cy="12.75"
+                      rx="13"
+                      ry="12.75"
+                      fill="#AD61FF"
+                    />
+                  </svg>
 
-                <div style={selectedItemsAmount}>{selectedGenres.length}</div>
+                  <div style={selectedItemsAmount}>{selectedGenres.length}</div>
+                </div>
               </div>
             </div>
           </div>
-        </div>):(null)}
+        ) : null}
         <PopupComponent
           genrePopup={genrePopup}
           isOpen={genrePopup.isOpen}
           content={genrePopup.content}
         />
       </S.FilterContainer>
+
     </S.CenterblockFilter>
   );
 }
