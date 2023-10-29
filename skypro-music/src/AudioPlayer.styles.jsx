@@ -238,7 +238,7 @@ export const TrackPlayLikeDis = styled.div`
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    /* margin-left: 26%; */
+    margin-left: 26%;
     margin-left: 50px;
 `
 const bounceInAnimation = keyframes`
@@ -270,16 +270,9 @@ const bounceInAnimation = keyframes`
 
 export const TrackPlayLikeButton = styled.div`
     padding: 5px;
-    &:hover {
-        path {
-            fill:#7a00fc;
-            stroke: #7a00fc;
-        }
-    }
     &.like-animation {
     animation: ${bounceInAnimation} 0.75s;
     }
-
 `
 
 export const TrackPlayDislikeButton = styled(TrackPlayLikeButton)`
@@ -290,6 +283,12 @@ export const TrackPlayLikeSvg = styled.svg`
     height: 12px;
     fill: transparent;
     stroke: #696969;
+    /* &:hover {
+        -webkit-box-shadow: 0px 0px 9px 4px rgba(182, 114, 255, 0.83);
+        -moz-box-shadow: 0px 0px 9px 4px rgba(182, 114, 255, 0.83);
+        box-shadow: 0px 0px 9px 4px rgba(182, 114, 255, 0.83);
+    } */
+
 `
 export const TrackPlayDislikeSvg = styled.svg`
     width: 14.34px;

@@ -12,7 +12,6 @@ import * as S from './TrackListItems.styles';
 export function TrackListItemsComponent({isLoading, tracks}) {
   const dispatch = useDispatch();
 
-
   const [user] = useContext(UserContext);
   const currentUser = user;
 
@@ -71,7 +70,7 @@ export function TrackListItemsComponent({isLoading, tracks}) {
       } else {
         dispatch(addToStarred({ track, accessToken }));
       }
-        dispatch(toggleTrackStarred({ track, currentUser }));
+        dispatch(toggleTrackStarred({ track, filteredTracks, currentUser }));
     } catch (error) {
       console.error(error.message);
     }
