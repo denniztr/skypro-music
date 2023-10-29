@@ -79,9 +79,13 @@ const playerSlice = createSlice({
       }
     },
     initShuffle: (state, action) => {
-      state.shuffled = !state.shuffled;
-      const shuffledArray = state.tracks.map((track, index) => ({...track, index}));
+      const shuffledArray = state.currentPlaylist.map((track, index) => ({...track, index}));
       state.shuffledPlaylist = shuffledArray.sort(() => Math.random() - 0.5);
+      console.log(state.shuffledPlaylist);
+    },
+    setShuffled: (state, action) => {
+      state.shuffled = !state.shuffled;
+
     },
     toggleTrackStarred: (state, action) => {
 
@@ -102,7 +106,6 @@ const playerSlice = createSlice({
         state.tracks[trackIndex] = updatedTrack;
         
       }
-      // console.log(state.playlist.items)
     },
     setCurrentPlaylist: (state, action) => {
       state.currentPlaylist = action.payload;
@@ -168,5 +171,6 @@ export const {
   toggleSelectedGenres,
   setToggleSelection,
   toggleSelectedSort,
+  setShuffled,
 } = playerSlice.actions;
 export default playerSlice.reducer;

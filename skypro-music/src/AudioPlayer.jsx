@@ -9,6 +9,7 @@ import {
   prevTrack,
   initShuffle,
   toggleTrackStarred,
+  setShuffled,
 } from './pages/store/playerSlice';
 
 import { unStarred, addToStarred } from './pages/store/authSlice';
@@ -31,7 +32,7 @@ export function AudioPlayer() {
   const isPlaying = useSelector((state) => state.player.isPlaying);
   const isShuffle = useSelector((state) => state.player.shuffled);
   const accessToken = useSelector((state) => state.auth.accessToken);
-  
+  const currentPlaylist = useSelector((state) => state.player.currentPlaylist);
 
   const [currentTime, setCurrentTime] = useState(0);
   const [looping, setLooping] = useState(false);
@@ -189,7 +190,10 @@ export function AudioPlayer() {
                 </S.PlayerButtonRepeat>
                 <S.PlayerButtonShuffle
                   className="_btn-icon"
-                  onClick={() => dispatch(initShuffle())}
+                  onClick={() => {
+                    dispatch(initShuffle())
+                    dispatch(setShuffled())
+                  }}
                 >
                   {isShuffle ? (
                     <S.PlayerButtonShuffleSvgActive>
