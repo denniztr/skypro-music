@@ -48,7 +48,7 @@ const playerSlice = createSlice({
     setTracks: (state, action) => {
       state.tracks = action.payload;
     },
-    nextTrack: (state, action) => {
+    nextTrack: (state) => {
       const selectedTrack = state.currentTrack;
       
       const selectedPlaylist = state.shuffled ? state.shuffledPlaylist : state.currentPlaylist;
@@ -64,7 +64,7 @@ const playerSlice = createSlice({
         state.currentTrack = state.currentPlaylist[selectedTrackId + 1];
       }
     },
-    prevTrack: (state, action) => {
+    prevTrack: (state) => {
       const selectedTrack = state.currentTrack;
       const selectedPlaylist = state.shuffled
         ? state.shuffledPlaylist
@@ -78,14 +78,12 @@ const playerSlice = createSlice({
         state.currentTrack = state.currentPlaylist[selectedTrackId - 1];
       }
     },
-    initShuffle: (state, action) => {
+    initShuffle: (state) => {
       const shuffledArray = state.currentPlaylist.map((track, index) => ({...track, index}));
       state.shuffledPlaylist = shuffledArray.sort(() => Math.random() - 0.5);
-      console.log(state.shuffledPlaylist);
     },
-    setShuffled: (state, action) => {
+    setShuffled: (state) => {
       state.shuffled = !state.shuffled;
-
     },
     toggleTrackStarred: (state, action) => {
 

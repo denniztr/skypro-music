@@ -75,8 +75,9 @@ const GlobalStyle = createGlobalStyle`
 
   ._btn-icon:hover svg {
     fill: transparent;
-    stroke: #acacac;
+    stroke: #ffffff;
     cursor: pointer;
+    transition: stroke 0.3s ease-out;
   } 
 
   ._btn-icon:active svg {
@@ -91,7 +92,6 @@ const GlobalStyle = createGlobalStyle`
     stroke: #ffffff;
     cursor: pointer;
   }
-
 
   ::-webkit-scrollbar {
       width: 4px;

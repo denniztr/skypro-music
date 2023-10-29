@@ -175,7 +175,8 @@ export function AudioPlayer() {
                   </S.PlayerButtonNextSvg>
                 </S.PlayerButtonNext>
                 <S.PlayerButtonRepeat
-                  className="_btn-icon"
+                  // style={`${looping ? '' : '_btn-icon'}`}
+                   className="_btn-icon"
                   onClick={toggleLoop}
                 >
                   {looping ? (
