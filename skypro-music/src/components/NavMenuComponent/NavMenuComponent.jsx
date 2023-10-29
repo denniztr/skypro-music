@@ -14,10 +14,8 @@ export function NavMenuComponent() {
     fontSize: '16px',
     lineHeight: '24px',
   };
-  const dispatch = useDispatch();
-  const accessToken = useSelector((state) => state.auth.accessToken);
 
-  const [setUser] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -54,7 +52,7 @@ export function NavMenuComponent() {
               </Link>
             </S.MenuItem>
             <S.MenuItem>
-              {setUser ? (
+              {user ? (
                 <S.MenuLink onClick={handleLogout}>Выйти</S.MenuLink>
               ) : (
                 <Link to="/login">
