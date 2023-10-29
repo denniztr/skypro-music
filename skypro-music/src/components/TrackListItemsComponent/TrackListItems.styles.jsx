@@ -12,12 +12,12 @@ export const ContentPlaylist = styled.div`
     overflow: auto;
 
         /* Скрываем вертикальную полосу прокрутки */
-    scrollbar-width: thin;
+    scrollbar-width: none;
     scrollbar-color: transparent transparent;
 
     /* Стилизация полосы прокрутки в браузерах, поддерживающих вендорные префиксы */
     &::-webkit-scrollbar {
-        width: 5px; /* Ширина полосы прокрутки */
+        width: 0px; /* Ширина полосы прокрутки */
     }
 
     &::-webkit-scrollbar-thumb {

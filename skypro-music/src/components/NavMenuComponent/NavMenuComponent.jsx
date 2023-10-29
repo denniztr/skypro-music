@@ -1,11 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context';
-import { getFavoriteTracks } from '../../pages/store/authSlice';
-
 import * as S from './NavMenu.styles';
-
-import { useDispatch, useSelector } from 'react-redux';
 
 export function NavMenuComponent() {
   const linkStyle = {
