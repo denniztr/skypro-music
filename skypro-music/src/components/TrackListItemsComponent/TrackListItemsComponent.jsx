@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { LoadingComponent } from '../LoadingComponent/LoadingComponent';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentTrack, setIsPlaying, toggleTrackStarred, setCurrentPlaylist } from '../../pages/store/playerSlice';
-import { addToStarred, unStarred } from '../../pages/store/authSlice';
+import { addToStarred, unStarred, updateToken } from '../../pages/store/authSlice';
 import { UserContext } from '../../context';
 import { ASC_SORT_VALUE, DESC_SORT_VALUE } from '../../constants';
 import { compareAsc, compareDesc } from 'date-fns'
@@ -70,7 +70,7 @@ export function TrackListItemsComponent({isLoading, tracks}) {
       } else {
         dispatch(addToStarred({ track, accessToken }));
       }
-        dispatch(toggleTrackStarred({ track, filteredTracks, currentUser }));
+        dispatch(toggleTrackStarred({ track, currentUser }));
     } catch (error) {
       console.error(error.message);
     }

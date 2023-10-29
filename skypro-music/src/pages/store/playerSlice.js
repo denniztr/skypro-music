@@ -86,11 +86,11 @@ const playerSlice = createSlice({
     toggleTrackStarred: (state, action) => {
 
       const { track, currentUser } = action.payload;
-
+      
       const trackIndex = state.tracks.findIndex((el) => el.id === track.id);
       
       if (trackIndex !== -1) {
-        const updatedTrack = { ...state.tracks[trackIndex] } || { ...state.playlist.items[trackIndex]};
+        const updatedTrack = { ...state.tracks[trackIndex] };
         const starred = updatedTrack.stared_user.find((user) => user.id === currentUser.id);
         console.log(updatedTrack);
         if (starred) {
@@ -100,7 +100,6 @@ const playerSlice = createSlice({
         }
 
         state.tracks[trackIndex] = updatedTrack;
-        state.playlist.items[trackIndex] = updatedTrack;
         
       }
       // console.log(state.playlist.items)
