@@ -100,6 +100,7 @@ export function AudioPlayer() {
     }
   };
 
+
   const formatTime = (decimalNumber) => {
     const wholeNumber = Math.floor(decimalNumber);
     const minutes = Math.floor(wholeNumber / 60);
@@ -175,8 +176,7 @@ export function AudioPlayer() {
                   </S.PlayerButtonNextSvg>
                 </S.PlayerButtonNext>
                 <S.PlayerButtonRepeat
-                  // style={`${looping ? '' : '_btn-icon'}`}
-                   className="_btn-icon"
+                  className="_btn-icon"
                   onClick={toggleLoop}
                 >
                   {looping ? (

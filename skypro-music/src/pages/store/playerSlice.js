@@ -14,6 +14,7 @@ export const getPlaylist = createAsyncThunk(
       
       dispatch(setPlaylist(data))
       dispatch(setIsLoading(false))
+      
     } catch (error) {
       return rejectWithValue(error.message)
     }
@@ -94,7 +95,7 @@ const playerSlice = createSlice({
       if (trackIndex !== -1) {
         const updatedTrack = { ...state.tracks[trackIndex] };
         const starred = updatedTrack.stared_user.find((user) => user.id === currentUser.id);
-        console.log(updatedTrack);
+
         if (starred) {
           updatedTrack.stared_user = updatedTrack.stared_user.filter((user) => user.id !== currentUser.id);
         } else {
@@ -102,7 +103,6 @@ const playerSlice = createSlice({
         }
 
         state.tracks[trackIndex] = updatedTrack;
-        
       }
     },
     setCurrentPlaylist: (state, action) => {
@@ -117,7 +117,6 @@ const playerSlice = createSlice({
     },
     setPlaylist: (state, action) => {
       state.playlist = action.payload;  
-      console.log(state.playlist);
     },
     setValue: (state, action) => {
       state.value = action.payload;

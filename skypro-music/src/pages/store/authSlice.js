@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { setFavorites } from './playerSlice';
+import { setFavorites, getPlaylist } from './playerSlice';
 
 export const getToken = createAsyncThunk(
   'auth/getToken',
@@ -107,7 +107,7 @@ export const getFavoriteTracks = createAsyncThunk(
 
 export const addToStarred = createAsyncThunk(
   'auth/addToStarred',
-  async function({track, accessToken}, { rejectWithValue }) {
+  async function({track, accessToken}, { rejectWithValue, dispatch, getState }) {
     try {
       const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${track.id}/favorite/`, {
         method: 'POST',
@@ -117,10 +117,10 @@ export const addToStarred = createAsyncThunk(
       })
       if (!response.ok) {
         throw new Error('Cant toggle like. Server error.');
-    }
-       const data = await response.json();
-      console.log(data);
-      return data
+      }
+      const data = await response.json();
+
+      return data;
     } catch (error) {
       return rejectWithValue(error.message)
     }
@@ -143,7 +143,7 @@ export const unStarred = createAsyncThunk(
       dispatch(getFavoriteTracks(accessToken))
 
       dispatch(setIsLoading(false))
-      console.log(data);
+
       return data
     } catch (error) {
       return rejectWithValue(error.message)

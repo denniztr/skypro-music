@@ -6,7 +6,7 @@ import { SideBarComponent } from '../../components/SideBarComponent/SideBarCompo
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPlaylist } from '../store/playerSlice';
+import { getPlaylist, setPlaylist } from '../store/playerSlice';
 
 
 export const Playlist = () => {
@@ -18,9 +18,16 @@ export const Playlist = () => {
   // const playlist = PLAYLISTS.find((playlist) => playlist.id === Number(params.id)
   // );
 
+  const allTracks = useSelector((state) => state.player.tracks);
+  
   useEffect(() => {
-    dispatch(getPlaylist(params.id))
-  }, [params.id, dispatch])
+ try {
+  dispatch(getPlaylist(params.id))
+  dispatch(setPlaylist(allTracks))
+ } catch (error) {
+  console.error(error.message)
+ }
+  }, [params.id, dispatch, allTracks])
 
 
   const playlist = useSelector((state) => state.player.playlist);

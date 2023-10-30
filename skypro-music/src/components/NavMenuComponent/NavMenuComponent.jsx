@@ -45,7 +45,7 @@ export function NavMenuComponent() {
             </S.MenuItem>
             <S.MenuItem>
               <Link to="/favorites" style={linkStyle} >
-                Мой плейслист
+                Мои плейлист
               </Link>
             </S.MenuItem>
             <S.MenuItem>
