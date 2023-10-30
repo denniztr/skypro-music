@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { LoadingComponent } from '../LoadingComponent/LoadingComponent';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentTrack, setIsPlaying, toggleTrackStarred, setCurrentPlaylist, getPlaylist } from '../../pages/store/playerSlice';
+import { setCurrentTrack, setIsPlaying, toggleTrackStarred, setCurrentPlaylist, getPlaylist, updateTrackInPlaylist } from '../../pages/store/playerSlice';
 import { addToStarred, unStarred, updateToken } from '../../pages/store/authSlice';
 import { UserContext } from '../../context';
 import { ASC_SORT_VALUE, DESC_SORT_VALUE } from '../../constants';
@@ -64,14 +64,19 @@ export function TrackListItemsComponent({isLoading, tracks, paramsId}) {
 
 
   const toggleStarred = (track) => {
+
     try {
       if (track.stared_user.some((user) => user.id === currentUser.id)) {
         dispatch(unStarred({ track, accessToken }));
+        
       } else {
         dispatch(addToStarred({ track, accessToken }));
       }
-        paramsId && dispatch(getPlaylist(paramsId))
-        dispatch(toggleTrackStarred({ track, currentUser }));
+
+      //paramsId && dispatch(getPlaylist(paramsId));
+
+
+      dispatch(toggleTrackStarred({ track, currentUser, paramsId }));
     } catch (error) {
       console.error(error.message);
     }

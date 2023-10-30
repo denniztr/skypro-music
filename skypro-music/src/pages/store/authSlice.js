@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { setFavorites, getPlaylist } from './playerSlice';
+import { setFavorites } from './playerSlice';
 
 export const getToken = createAsyncThunk(
   'auth/getToken',

@@ -12,11 +12,10 @@ export const getPlaylist = createAsyncThunk(
       });
       const data = await response.json();
       
-      
-
       dispatch(setIsLoading(false))
       dispatch(setPlaylist(data))
-      
+
+
       return data
     } catch (error) {
       return rejectWithValue(error.message)
@@ -91,22 +90,54 @@ const playerSlice = createSlice({
     },
     toggleTrackStarred: (state, action) => {
 
-      const { track, currentUser } = action.payload;
+      const { track, currentUser, paramsId } = action.payload;
       
-      const trackIndex = state.tracks.findIndex((el) => el.id === track.id);
+      //const trackIndex = state.tracks.findIndex((el) => el.id === track.id);
       
-      if (trackIndex !== -1) {
-        const updatedTrack = { ...state.tracks[trackIndex] };
-        const starred = updatedTrack.stared_user.find((user) => user.id === currentUser.id);
+      if (paramsId) {
+       
+          const trackIndex = state.playlist.items.findIndex((el) => el.id === track.id);
+          const updatedTrack = { ...state.playlist.items[trackIndex] };
+          const starred = updatedTrack.stared_user.find((user) => user.id === currentUser.id);
+  
+          if (starred) {
+            updatedTrack.stared_user = updatedTrack.stared_user.filter((user) => user.id !== currentUser.id);
+          } else {
+            updatedTrack.stared_user.push(currentUser);
+          }
+          paramsId && console.log(paramsId);
+          state.playlist.items[trackIndex] = updatedTrack;
+  
+ 
 
-        if (starred) {
-          updatedTrack.stared_user = updatedTrack.stared_user.filter((user) => user.id !== currentUser.id);
-        } else {
-          updatedTrack.stared_user.push(currentUser);
-        }
+      } else {
+         const trackIndex = state.tracks.findIndex((el) => el.id === track.id);
+          const updatedTrack = { ...state.tracks[trackIndex] };
+          const starred = updatedTrack.stared_user.find((user) => user.id === currentUser.id);
+  
+          if (starred) {
+            updatedTrack.stared_user = updatedTrack.stared_user.filter((user) => user.id !== currentUser.id);
+          } else {
+            updatedTrack.stared_user.push(currentUser);
+          }
+          state.tracks[trackIndex] = updatedTrack;
+  
 
-        state.tracks[trackIndex] = updatedTrack;
       }
+
+      // if (trackIndex !== -1) {
+      //   const updatedTrack = { ...state.tracks[trackIndex] };
+      //   const starred = updatedTrack.stared_user.find((user) => user.id === currentUser.id);
+
+      //   if (starred) {
+      //     updatedTrack.stared_user = updatedTrack.stared_user.filter((user) => user.id !== currentUser.id);
+      //   } else {
+      //     updatedTrack.stared_user.push(currentUser);
+      //   }
+      //   paramsId && console.log(paramsId);
+      //   state.tracks[trackIndex] = updatedTrack;
+
+      // }
     },
     setCurrentPlaylist: (state, action) => {
       state.currentPlaylist = action.payload;

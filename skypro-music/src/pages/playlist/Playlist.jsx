@@ -18,7 +18,7 @@ export const Playlist = () => {
   // const playlist = PLAYLISTS.find((playlist) => playlist.id === Number(params.id)
   // );
 
-  
+
   useEffect(() => {
     dispatch(getPlaylist(params.id))
   }, [params.id, dispatch])
