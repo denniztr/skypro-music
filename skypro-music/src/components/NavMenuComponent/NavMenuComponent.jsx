@@ -1,10 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context';
-
 import * as S from './NavMenu.styles';
-
-const Logo = './logo.png';
 
 export function NavMenuComponent() {
   const linkStyle = {
@@ -14,12 +11,13 @@ export function NavMenuComponent() {
     lineHeight: '24px',
   };
 
-  const [setUser] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const navigate = useNavigate();
+  
   const handleLogout = () => {
     setUser(localStorage.clear()); 
     navigate('/login', { replace: true });
@@ -29,7 +27,7 @@ export function NavMenuComponent() {
     <S.MainNav>
       <S.NavLogo>
         <Link to="/">
-          <S.LogoImage src={Logo} alt="logo" />
+          <S.LogoImage src="../logo.png" alt="logo" />
         </Link>
       </S.NavLogo>
       <S.NavBurger onClick={toggleMenu}>
@@ -46,12 +44,12 @@ export function NavMenuComponent() {
               </Link>
             </S.MenuItem>
             <S.MenuItem>
-              <Link to="/favorites" style={linkStyle}>
-                Мой плейслист
+              <Link to="/favorites" style={linkStyle} >
+                Мои плейлист
               </Link>
             </S.MenuItem>
             <S.MenuItem>
-              {setUser ? (
+              {user ? (
                 <S.MenuLink onClick={handleLogout}>Выйти</S.MenuLink>
               ) : (
                 <Link to="/login">

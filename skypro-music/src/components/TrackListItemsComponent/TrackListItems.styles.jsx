@@ -1,7 +1,7 @@
 import  { keyframes, styled } from 'styled-components';
 
 export const ContentPlaylist = styled.div`
-    height: 1000px;
+    height: 900px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -12,12 +12,12 @@ export const ContentPlaylist = styled.div`
     overflow: auto;
 
         /* Скрываем вертикальную полосу прокрутки */
-    scrollbar-width: thin;
+    scrollbar-width: none;
     scrollbar-color: transparent transparent;
 
     /* Стилизация полосы прокрутки в браузерах, поддерживающих вендорные префиксы */
     &::-webkit-scrollbar {
-        width: 5px; /* Ширина полосы прокрутки */
+        width: 0px; /* Ширина полосы прокрутки */
     }
 
     &::-webkit-scrollbar-thumb {
@@ -151,7 +151,9 @@ export const TrackAlbumLink = styled.a`
     line-height: 24px;
     color: #696969;
 `
-export const TrackTime = styled.div``
+
+export const TrackTime = styled.div`
+`
 
 export const TrackTimeSvg = styled.svg`
     width: 16px;

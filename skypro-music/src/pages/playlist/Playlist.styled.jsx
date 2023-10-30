@@ -95,3 +95,5 @@ export const PlaylistTitleSvg = styled.svg`
     fill: transparent;
     stroke: #696969;
 `
+
+

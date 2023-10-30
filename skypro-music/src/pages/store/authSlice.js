@@ -52,11 +52,12 @@ export const updateToken = createAsyncThunk(
         }
       );
 
-      if (!response.ok)
-        throw new Error('an Error occurred in updateToken function');
+      if (!response.ok) throw new Error('an Error occurred in updateToken function');
 
       const data = await response.json();
+      
       const updatedAccessToken = data.access;
+      dispatch(setAccessToken(updatedAccessToken));
 
       dispatch(getFavoriteTracks(updatedAccessToken));
 
@@ -106,7 +107,7 @@ export const getFavoriteTracks = createAsyncThunk(
 
 export const addToStarred = createAsyncThunk(
   'auth/addToStarred',
-  async function({track, accessToken}, { rejectWithValue }) {
+  async function({track, accessToken}, { rejectWithValue, dispatch, getState }) {
     try {
       const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${track.id}/favorite/`, {
         method: 'POST',
@@ -116,10 +117,10 @@ export const addToStarred = createAsyncThunk(
       })
       if (!response.ok) {
         throw new Error('Cant toggle like. Server error.');
-    }
-       const data = await response.json();
+      }
+      const data = await response.json();
 
-      return data
+      return data;
     } catch (error) {
       return rejectWithValue(error.message)
     }
@@ -139,9 +140,10 @@ export const unStarred = createAsyncThunk(
       })
       const data = await response.json()
 
-
       dispatch(getFavoriteTracks(accessToken))
+
       dispatch(setIsLoading(false))
+
       return data
     } catch (error) {
       return rejectWithValue(error.message)

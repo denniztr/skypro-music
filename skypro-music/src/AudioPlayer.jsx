@@ -1,26 +1,38 @@
 import { useRef, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { UserContext } from './context';
+import { useContext } from 'react';
 
 import {
   setIsPlaying,
   nextTrack,
   prevTrack,
   initShuffle,
+  toggleTrackStarred,
+  setShuffled,
 } from './pages/store/playerSlice';
+
+import { unStarred, addToStarred } from './pages/store/authSlice';
 
 import ProgressBar from './ProgressBar';
 import * as S from './AudioPlayer.styles';
 
 const PrevSvg = './prev.svg';
 
+
 export function AudioPlayer() {
   const dispatch = useDispatch();
+  const [isLiked, setIsLiked] = useState(false);
+
+  const [user] = useContext(UserContext);
+  const currentUser = user;
+
 
   const currentTrack = useSelector((state) => state.player.currentTrack);
   const isPlaying = useSelector((state) => state.player.isPlaying);
   const isShuffle = useSelector((state) => state.player.shuffled);
+  const accessToken = useSelector((state) => state.auth.accessToken);
   const currentPlaylist = useSelector((state) => state.player.currentPlaylist);
-  const tracks = useSelector((state) => state.player.tracks);
 
   const [currentTime, setCurrentTime] = useState(0);
   const [looping, setLooping] = useState(false);
@@ -88,13 +100,6 @@ export function AudioPlayer() {
     }
   };
 
-  const aintReadyYet = () => {
-    if (aintReadyYet) {
-      audioRef.current.pause();
-      alert('Ещё не реализовано');
-    }
-    audioRef.current.play();
-  };
 
   const formatTime = (decimalNumber) => {
     const wholeNumber = Math.floor(decimalNumber);
@@ -138,7 +143,7 @@ export function AudioPlayer() {
                     alt="prev"
                     onClick={() => dispatch(prevTrack())}
                   >
-                    <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
+                    <use xlinkHref="/img/icon/sprite.svg#icon-prev"></use>
                   </S.PlayerButtonPrevSvg>
                 </S.PlayerButtonPrev>
                 <S.PlayerButtonPlay className="_btn" onClick={togglePlay}>
@@ -157,7 +162,7 @@ export function AudioPlayer() {
                     </S.PlayerButtonPlaySvg>
                   ) : (
                     <S.PlayerButtonPlaySvg alt="play">
-                      <use xlinkHref="img/icon/sprite.svg#icon-play"></use>
+                      <use xlinkHref="/img/icon/sprite.svg#icon-play"></use>
                     </S.PlayerButtonPlaySvg>
                   )}
                 </S.PlayerButtonPlay>
@@ -167,7 +172,7 @@ export function AudioPlayer() {
                     alt="next"
                     onClick={() => dispatch(nextTrack())}
                   >
-                    <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
+                    <use xlinkHref="/img/icon/sprite.svg#icon-next"></use>
                   </S.PlayerButtonNextSvg>
                 </S.PlayerButtonNext>
                 <S.PlayerButtonRepeat
@@ -176,25 +181,28 @@ export function AudioPlayer() {
                 >
                   {looping ? (
                     <S.PlayerButtonRepeatSvgActive>
-                      <use xlinkHref="img/icon/sprite.svg#icon-repeat"></use>
+                      <use xlinkHref="/img/icon/sprite.svg#icon-repeat"></use>
                     </S.PlayerButtonRepeatSvgActive>
                   ) : (
                     <S.PlayerButtonRepeatSvg alt="repeat">
-                      <use xlinkHref="img/icon/sprite.svg#icon-repeat"></use>
+                      <use xlinkHref="/img/icon/sprite.svg#icon-repeat"></use>
                     </S.PlayerButtonRepeatSvg>
                   )}
                 </S.PlayerButtonRepeat>
                 <S.PlayerButtonShuffle
                   className="_btn-icon"
-                  onClick={() => dispatch(initShuffle())}
+                  onClick={() => {
+                    dispatch(initShuffle())
+                    dispatch(setShuffled())
+                  }}
                 >
                   {isShuffle ? (
                     <S.PlayerButtonShuffleSvgActive>
-                      <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
+                      <use xlinkHref="/img/icon/sprite.svg#icon-shuffle"></use>
                     </S.PlayerButtonShuffleSvgActive>
                   ) : (
                     <S.PlayerButtonShuffleSvg alt="shuffle">
-                      <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
+                      <use xlinkHref="/img/icon/sprite.svg#icon-shuffle"></use>
                     </S.PlayerButtonShuffleSvg>
                   )}
                 </S.PlayerButtonShuffle>
@@ -217,31 +225,47 @@ export function AudioPlayer() {
                     </S.TrackPlayAlbumLink>
                   </S.TrackPlayAlbum>
                 </S.TrackPlayContain>
-                <S.TrackPlayLikeDis>
-                  <S.TrackPlayLikeButton
-                    className="_btn-icon"
-                    onClick={aintReadyYet}
-                  >
-                    <S.TrackPlayLikeSvg alt="like">
-                      <use xlinkHref="../img/icon/sprite.svg#icon-like"></use>
-                    </S.TrackPlayLikeSvg>
-                  </S.TrackPlayLikeButton>
-                  <S.TrackPlayDislikeButton
-                    className="_btn-icon"
-                    onClick={aintReadyYet}
-                  >
-                    <S.TrackPlayDislikeSvg alt="dislike">
-                      <use xlinkHref="../img/icon/sprite.svg#icon-dislike"></use>
-                    </S.TrackPlayDislikeSvg>
-                  </S.TrackPlayDislikeButton>
-                </S.TrackPlayLikeDis>
+            {/* <S.TrackPlayLikeDis>
+                <S.TrackPlayLikeButton 
+                  className={`_btn-icon ${isLiked ? "like-animation" : ""}`} 
+                //   onClick={(e) => {
+                //     dispatch(addToStarred({ track: currentTrack, accessToken }));
+                //     dispatch(toggleTrackStarred({ track: currentTrack, currentUser }));
+                //     setIsLiked(true)
+                //     setTimeout(() => {
+                //       setIsLiked(false)
+                //     }, 750);
+                //     e.stopPropagation()
+                // }}
+                >
+
+                  <S.TrackPlayLikeSvg alt="like">
+                    <svg  viewBox="0 0 17 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8.36529 12.751C14.2458 9.25098 17.3111 3.96019 13.9565 1.51832C11.7563 -0.0832586 9.29718 1.19273 8.36529 2.00669H8.34378H8.34372H8.32221C7.39032 1.19273 4.93121 -0.0832586 2.73102 1.51832C-0.623552 3.96019 2.44172 9.25098 8.32221 12.751H8.34372H8.34378H8.36529Z" fill="#B672FF"/>
+                      <path d="M8.34372 2.00669H8.36529C9.29718 1.19273 11.7563 -0.0832586 13.9565 1.51832C17.3111 3.96019 14.2458 9.25098 8.36529 12.751H8.34372M8.34378 2.00669H8.32221C7.39032 1.19273 4.93121 -0.0832586 2.73102 1.51832C-0.623552 3.96019 2.44172 9.25098 8.32221 12.751H8.34378" stroke="#B672FF"/>
+                    </svg> 
+                  </S.TrackPlayLikeSvg>
+
+                </S.TrackPlayLikeButton>
+                <S.TrackPlayDislikeButton className="_btn-icon" 
+                // onClick={(e) => {
+                //   dispatch(unStarred({ track: currentTrack, accessToken }));
+                //   dispatch(toggleTrackStarred({ track: currentTrack, currentUser }));
+                //   e.stopPropagation()
+                // }}
+                >
+                  <S.TrackPlayDislikeSvg alt="dislike" >
+                    <use xlinkHref="../img/icon/sprite.svg#icon-dislike"></use>
+                  </S.TrackPlayDislikeSvg>
+                </S.TrackPlayDislikeButton>
+              </S.TrackPlayLikeDis> */}
               </S.PlayerTrackPlay>
             </S.BarPlayer>
             <S.BarVolumeBlock>
               <S.VolumeContent>
                 <S.VolumeImage>
                   <S.VolumeSvg alt="volume">
-                    <use xlinkHref="img/icon/sprite.svg#icon-volume"></use>
+                    <use xlinkHref="/img/icon/sprite.svg#icon-volume"></use>
                   </S.VolumeSvg>
                 </S.VolumeImage>
                 <S.VolumeProgress>

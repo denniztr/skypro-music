@@ -36,11 +36,11 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+
+
   @font-face {
     font-family: 'StratosSkyeng';
-    src: local('StratosSkyeng'), local('StratosSkyeng'),
-      url('/public//fonts/StratosSkyeng.woff2') format('woff2'),
-      url('/public/fonts/StratosSkyeng.woff') format('woff');
+    src:  url('../StratosSkyeng.woff') format('woff');
     font-weight: 400;
     font-style: normal;
   }
@@ -75,8 +75,9 @@ const GlobalStyle = createGlobalStyle`
 
   ._btn-icon:hover svg {
     fill: transparent;
-    stroke: #acacac;
+    stroke: #ffffff;
     cursor: pointer;
+    transition: stroke 0.3s ease-out;
   } 
 
   ._btn-icon:active svg {
@@ -92,12 +93,10 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
 
-
   ::-webkit-scrollbar {
       width: 4px;
       background-color: rgba(75, 73, 73, 1)
   }
-
 
   ::-webkit-scrollbar-thumb {
       background-color: #fff;
@@ -146,7 +145,7 @@ const App = () => {
       <GlobalStyle />
       <UserContext.Provider value={[user, setUser]}>
         <AppRoutes />
-        {currentTrack ? <AudioPlayer /> : null}
+        {currentTrack && user ? <AudioPlayer /> : null}
       </UserContext.Provider>
     </>
   );
