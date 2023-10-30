@@ -225,18 +225,18 @@ export function AudioPlayer() {
                     </S.TrackPlayAlbumLink>
                   </S.TrackPlayAlbum>
                 </S.TrackPlayContain>
-            <S.TrackPlayLikeDis>
+            {/* <S.TrackPlayLikeDis>
                 <S.TrackPlayLikeButton 
                   className={`_btn-icon ${isLiked ? "like-animation" : ""}`} 
-                  onClick={(e) => {
-                    dispatch(addToStarred({ track: currentTrack, accessToken }));
-                    dispatch(toggleTrackStarred({ track: currentTrack, currentUser }));
-                    setIsLiked(true)
-                    setTimeout(() => {
-                      setIsLiked(false)
-                    }, 750);
-                    e.stopPropagation()
-                }}
+                //   onClick={(e) => {
+                //     dispatch(addToStarred({ track: currentTrack, accessToken }));
+                //     dispatch(toggleTrackStarred({ track: currentTrack, currentUser }));
+                //     setIsLiked(true)
+                //     setTimeout(() => {
+                //       setIsLiked(false)
+                //     }, 750);
+                //     e.stopPropagation()
+                // }}
                 >
 
                   <S.TrackPlayLikeSvg alt="like">
@@ -247,16 +247,18 @@ export function AudioPlayer() {
                   </S.TrackPlayLikeSvg>
 
                 </S.TrackPlayLikeButton>
-                <S.TrackPlayDislikeButton className="_btn-icon" onClick={(e) => {
-                  dispatch(unStarred({ track: currentTrack, accessToken }));
-                  dispatch(toggleTrackStarred({ track: currentTrack, currentUser }));
-                  e.stopPropagation()
-                }}>
+                <S.TrackPlayDislikeButton className="_btn-icon" 
+                // onClick={(e) => {
+                //   dispatch(unStarred({ track: currentTrack, accessToken }));
+                //   dispatch(toggleTrackStarred({ track: currentTrack, currentUser }));
+                //   e.stopPropagation()
+                // }}
+                >
                   <S.TrackPlayDislikeSvg alt="dislike" >
                     <use xlinkHref="../img/icon/sprite.svg#icon-dislike"></use>
                   </S.TrackPlayDislikeSvg>
                 </S.TrackPlayDislikeButton>
-              </S.TrackPlayLikeDis>
+              </S.TrackPlayLikeDis> */}
               </S.PlayerTrackPlay>
             </S.BarPlayer>
             <S.BarVolumeBlock>
