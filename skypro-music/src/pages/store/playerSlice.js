@@ -92,8 +92,6 @@ const playerSlice = createSlice({
 
       const { track, currentUser, paramsId } = action.payload;
       
-      //const trackIndex = state.tracks.findIndex((el) => el.id === track.id);
-      
       if (paramsId) {
        
           const trackIndex = state.playlist.items.findIndex((el) => el.id === track.id);
@@ -105,12 +103,8 @@ const playerSlice = createSlice({
           } else {
             updatedTrack.stared_user.push(currentUser);
           }
-          paramsId && console.log(paramsId);
           state.playlist.items[trackIndex] = updatedTrack;
-  
- 
-
-      } else {
+        } else {
          const trackIndex = state.tracks.findIndex((el) => el.id === track.id);
           const updatedTrack = { ...state.tracks[trackIndex] };
           const starred = updatedTrack.stared_user.find((user) => user.id === currentUser.id);
@@ -121,27 +115,10 @@ const playerSlice = createSlice({
             updatedTrack.stared_user.push(currentUser);
           }
           state.tracks[trackIndex] = updatedTrack;
-  
-
-      }
-
-      // if (trackIndex !== -1) {
-      //   const updatedTrack = { ...state.tracks[trackIndex] };
-      //   const starred = updatedTrack.stared_user.find((user) => user.id === currentUser.id);
-
-      //   if (starred) {
-      //     updatedTrack.stared_user = updatedTrack.stared_user.filter((user) => user.id !== currentUser.id);
-      //   } else {
-      //     updatedTrack.stared_user.push(currentUser);
-      //   }
-      //   paramsId && console.log(paramsId);
-      //   state.tracks[trackIndex] = updatedTrack;
-
-      // }
+        }
     },
     setCurrentPlaylist: (state, action) => {
       state.currentPlaylist = action.payload;
-      console.log(state.currentPlaylist)
     },
     setIsLoading: (state, action) => {
       state.loading = action.payload;

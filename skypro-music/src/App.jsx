@@ -36,19 +36,17 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-
-
-  @font-face {
+  /* @font-face {
     font-family: 'StratosSkyeng';
     src:  url('../StratosSkyeng.woff') format('woff');
     font-weight: 400;
     font-style: normal;
-  }
+  } */
 
   a,
   a:visited {
     text-decoration: none;
-    font-family: 'StratosSkyeng', sans-serif;
+    font-family: sans-serif;
     cursor: pointer;
   }
 
