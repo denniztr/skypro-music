@@ -8,11 +8,9 @@ import {
   nextTrack,
   prevTrack,
   initShuffle,
-  toggleTrackStarred,
   setShuffled,
 } from './pages/store/playerSlice';
 
-import { unStarred, addToStarred } from './pages/store/authSlice';
 
 import ProgressBar from './ProgressBar';
 import * as S from './AudioPlayer.styles';
@@ -22,7 +20,6 @@ const PrevSvg = './prev.svg';
 
 export function AudioPlayer() {
   const dispatch = useDispatch();
-  const [isLiked, setIsLiked] = useState(false);
 
   const [user] = useContext(UserContext);
   const currentUser = user;
@@ -31,8 +28,6 @@ export function AudioPlayer() {
   const currentTrack = useSelector((state) => state.player.currentTrack);
   const isPlaying = useSelector((state) => state.player.isPlaying);
   const isShuffle = useSelector((state) => state.player.shuffled);
-  const accessToken = useSelector((state) => state.auth.accessToken);
-  const currentPlaylist = useSelector((state) => state.player.currentPlaylist);
 
   const [currentTime, setCurrentTime] = useState(0);
   const [looping, setLooping] = useState(false);
