@@ -18,16 +18,10 @@ export const Playlist = () => {
   // const playlist = PLAYLISTS.find((playlist) => playlist.id === Number(params.id)
   // );
 
-  const allTracks = useSelector((state) => state.player.tracks);
   
   useEffect(() => {
- try {
-  dispatch(getPlaylist(params.id))
-  dispatch(setPlaylist(allTracks))
- } catch (error) {
-  console.error(error.message)
- }
-  }, [params.id, dispatch, allTracks])
+    dispatch(getPlaylist(params.id))
+  }, [params.id, dispatch])
 
 
   const playlist = useSelector((state) => state.player.playlist);
@@ -55,7 +49,7 @@ export const Playlist = () => {
                   </S.PlaylistTitleSvg>
                 </S.Col4>
               </S.ContentTitle>
-              <TrackListItemsComponent isLoading={isLoading} tracks={tracks}/>  
+              <TrackListItemsComponent isLoading={isLoading} tracks={tracks} paramsId={params.id}/>  
             </S.CenterblockContent>
           </S.MainCenterblock>
           <SideBarComponent />

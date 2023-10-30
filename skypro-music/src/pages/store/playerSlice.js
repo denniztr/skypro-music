@@ -12,9 +12,12 @@ export const getPlaylist = createAsyncThunk(
       });
       const data = await response.json();
       
-      dispatch(setPlaylist(data))
-      dispatch(setIsLoading(false))
       
+
+      dispatch(setIsLoading(false))
+      dispatch(setPlaylist(data))
+      
+      return data
     } catch (error) {
       return rejectWithValue(error.message)
     }
