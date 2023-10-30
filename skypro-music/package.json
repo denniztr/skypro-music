@@ -1,7 +1,6 @@
 {
   "name": "skypro-music",
   "version": "0.1.0",
-  "homepage": "https://denniztr.github.io/skypro-music",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.6",
@@ -19,7 +18,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "gh-pages -d build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
